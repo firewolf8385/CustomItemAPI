@@ -18,6 +18,8 @@ public abstract class CustomItem {
      */
     public CustomItem(String id) {
         this.id = id;
+
+        allItems.put(id, this);
     }
 
     /**
