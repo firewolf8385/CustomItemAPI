@@ -20,7 +20,7 @@ public class CustomItemsCMD implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (args.length == 0) {
-            infoCMD.onCommand(sender, cmd, label, Arrays.copyOfRange(args, 1, args.length));
+            infoCMD.onCommand(sender, cmd, label, Arrays.copyOfRange(args, 0, args.length));
             return true;
         }
 

@@ -9,6 +9,7 @@ public class InfoCMD implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         ChatUtils.centeredChat(sender, "&b&lCustomItemAPI");
+        sender.sendMessage("");
         ChatUtils.chat(sender, "  &8» &bAuthor: &ffirewolf8385");
         ChatUtils.chat(sender, "  &8» &bVersion: &f1.0");
         return true;
