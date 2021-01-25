@@ -11,6 +11,11 @@ public final class CustomItemAPI extends JavaPlugin {
     @Override
     public void onEnable() {
         // Plugin startup logic
+
+        // Enables stat tracking through bStats.
+        new MetricsLite(this, 10115);
+
+        // Registers the main plugin command.
         getCommand("customitemsapi").setExecutor(new CustomItemsCMD());
     }
 
