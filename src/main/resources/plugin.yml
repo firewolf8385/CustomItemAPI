@@ -4,3 +4,9 @@ main: com.github.firewolf8385.customitemapi.CustomItemAPI
 api-version: 1.14
 authors: [ firewolf8385 ]
 website: github.com/firewolf8385
+
+commands:
+  customitemsapi:
+    description: Main plugin command.
+    usage: /<command>
+    aliases: [customitems,ci,items]
