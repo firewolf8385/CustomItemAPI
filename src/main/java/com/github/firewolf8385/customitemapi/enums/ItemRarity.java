@@ -3,6 +3,7 @@ package com.github.firewolf8385.customitemapi.enums;
 import net.md_5.bungee.api.ChatColor;
 
 public enum ItemRarity {
+    NONE(ChatColor.WHITE),
     COMMON(ChatColor.WHITE),
     UNCOMMON(ChatColor.GREEN),
     RARE(ChatColor.BLUE),
@@ -22,5 +23,13 @@ public enum ItemRarity {
      */
     public ChatColor getColor() {
         return color;
+    }
+
+    /**
+     * Converts enum to a String
+     * @return String
+     */
+    public String getLore() {
+        return "" + color + ChatColor.BOLD + this.toString();
     }
 }
