@@ -11,4 +11,4 @@ CustomItemAPI is a simple and lightweight plugin for [Spigot](http://www.spigotm
 This plugin is still in early development. Due to this, we do not yet have any proper avenues of support set up. In the meantime, create an issue and I will respond as soon as possible.
 
 ## Useful Links
-* [Plugin Statistics](https://bstats.org/plugin/bukkit/BetterFish/8459)
+* [Plugin Statistics](https://bstats.org/plugin/bukkit/CustomItemAPI/10115)
