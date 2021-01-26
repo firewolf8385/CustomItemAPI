@@ -1,6 +1,5 @@
 package com.github.firewolf8385.customitemapi.objects;
 
-import com.github.firewolf8385.customitemapi.enums.ItemRarity;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
@@ -11,7 +10,6 @@ import java.util.Map;
  */
 public abstract class CustomItem {
     private final String id;
-    private ItemRarity rarity;
     private static Map<String, CustomItem> allItems= new HashMap<>();
 
     /**
@@ -20,7 +18,6 @@ public abstract class CustomItem {
      */
     public CustomItem(String id) {
         this.id = id;
-        rarity = ItemRarity.NONE;
         allItems.put(id, this);
     }
 
@@ -41,24 +38,8 @@ public abstract class CustomItem {
     }
 
     /**
-     * Get the rarity of the item.
-     * @return Rarity of the Item
-     */
-    public ItemRarity getRarity() {
-        return rarity;
-    }
-
-    /**
      * Get the ItemStack of the custom item.
      * @return ItemStack of custom item.
      */
     public abstract ItemStack getItemStack();
-
-    /**
-     * Set the rarity of the item.
-     * @param rarity Rarity of the item.
-     */
-    public void setRarity(ItemRarity rarity) {
-        this.rarity = rarity;
-    }
 }
