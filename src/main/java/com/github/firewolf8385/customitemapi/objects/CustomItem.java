@@ -21,7 +21,6 @@ public abstract class CustomItem {
     public CustomItem(String id) {
         this.id = id;
         rarity = ItemRarity.NONE;
-
         allItems.put(id, this);
     }
 

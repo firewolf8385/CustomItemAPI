@@ -1,8 +1,11 @@
 package com.github.firewolf8385.customitemapi.utils;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -92,6 +95,16 @@ public class ItemBuilder {
      */
     public ItemBuilder setCustomModelData(int data) {
         meta.setCustomModelData(data);
+        return this;
+    }
+
+    public ItemBuilder setCustomDurability(int durability) {
+        NamespacedKey maxDurability = new NamespacedKey(Bukkit.getPluginManager().getPlugin("CustomItemAPI"), "max-durability");
+        NamespacedKey currentDurability = new NamespacedKey(Bukkit.getPluginManager().getPlugin("CustomItemAPI"), "current-durability");
+
+        meta.getPersistentDataContainer().set(maxDurability, PersistentDataType.INTEGER, durability);
+        meta.getPersistentDataContainer().set(currentDurability, PersistentDataType.INTEGER, durability);
+
         return this;
     }
 
