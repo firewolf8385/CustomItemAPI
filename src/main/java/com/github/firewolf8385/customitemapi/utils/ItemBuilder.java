@@ -98,6 +98,11 @@ public class ItemBuilder {
         return this;
     }
 
+    /**
+     * Set the custom durability of the item.
+     * @param durability Durability to set
+     * @return ItemBuilder
+     */
     public ItemBuilder setCustomDurability(int durability) {
         NamespacedKey maxDurability = new NamespacedKey(Bukkit.getPluginManager().getPlugin("CustomItemAPI"), "max-durability");
         NamespacedKey currentDurability = new NamespacedKey(Bukkit.getPluginManager().getPlugin("CustomItemAPI"), "current-durability");
@@ -133,6 +138,30 @@ public class ItemBuilder {
      */
     public ItemBuilder setLore(String... lore) {
         meta.setLore(Arrays.asList(lore));
+        return this;
+    }
+
+    /**
+     * Save persistent data to the item.
+     * @param key Key
+     * @param value Value
+     * @return ItemBuilder
+     */
+    public ItemBuilder setPersistentData(String key, String value) {
+        NamespacedKey namepace = new NamespacedKey(Bukkit.getPluginManager().getPlugin("CustomItemAPI"), key);
+        meta.getPersistentDataContainer().set(namepace, PersistentDataType.STRING, value);
+        return this;
+    }
+
+    /**
+     * Save persistent data to the item.
+     * @param key Key
+     * @param value value
+     * @return ItemBuilder
+     */
+    public ItemBuilder setPersistentData(String key, int value) {
+        NamespacedKey namepace = new NamespacedKey(Bukkit.getPluginManager().getPlugin("CustomItemAPI"), key);
+        meta.getPersistentDataContainer().set(namepace, PersistentDataType.INTEGER, value);
         return this;
     }
 
