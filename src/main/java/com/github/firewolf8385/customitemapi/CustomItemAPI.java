@@ -19,6 +19,7 @@ public final class CustomItemAPI extends JavaPlugin {
 
         // Registers the main plugin command.
         getCommand("customitemsapi").setExecutor(new CustomItemsCMD());
+        getCommand("customitemsapi").setTabCompleter(new CustomItemsCMD());
 
         // Registers events
         Bukkit.getPluginManager().registerEvents(new PlayerItemDamageListener(), this);
