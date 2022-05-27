@@ -1,6 +1,7 @@
 package com.github.firewolf8385.customitemapi.items.recipe;
 
 import com.github.firewolf8385.customitemapi.CustomItemAPI;
+import com.github.firewolf8385.customitemapi.items.CustomItem;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -32,14 +33,36 @@ public class ShapedRecipeBuilder {
     }
 
     /**
-     * Adds a material to the recipe.
+     * Adds a material to the recipe using a string.
      * Can be either from Material enum or a CustomItem.
      * @param character Character representing the material.
      * @param material Material to add.
-     * @return
+     * @return ShapedRecipeBuilder.
      */
     public ShapedRecipeBuilder addMaterial(char character, String material) {
         materials.put(character, material);
+        return this;
+    }
+
+    /**
+     * Adds a material to the recipe using the Material enum.
+     * @param character Character representing the material.
+     * @param material Material to add.
+     * @return ShapedRecipeBuilder.
+     */
+    public ShapedRecipeBuilder addMaterial(char character, Material material) {
+        materials.put(character, material.toString());
+        return this;
+    }
+
+    /**
+     * Adds a material to the recipe using the CustomItem.
+     * @param character Character represeting the material.
+     * @param customItem Material to add.
+     * @return ShapedRecipeBuilder.
+     */
+    public ShapedRecipeBuilder addMaterial(char character, CustomItem customItem) {
+        materials.put(character, customItem.getID());
         return this;
     }
 
