@@ -7,7 +7,6 @@ import com.github.firewolf8385.customitemapi.items.CustomItem;
 import com.github.firewolf8385.customitemapi.items.items.AdminSwordItem;
 import com.github.firewolf8385.customitemapi.items.items.TestStickItem;
 import com.github.firewolf8385.customitemapi.listeners.PlayerItemHeldListener;
-import com.github.firewolf8385.customitemapi.listeners.PrepareAnvilListener;
 import com.github.firewolf8385.customitemapi.listeners.PrepareItemCraftListener;
 import com.github.firewolf8385.customitemapi.listeners.PrepareResultListener;
 import com.github.firewolf8385.customitemapi.utils.gui.GUIListeners;
@@ -18,7 +17,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
