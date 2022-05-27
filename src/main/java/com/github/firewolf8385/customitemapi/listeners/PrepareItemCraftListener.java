@@ -18,6 +18,11 @@ public class PrepareItemCraftListener implements Listener {
         for(int i = 0; i < e.getInventory().getMatrix().length; i++) {
             ItemStack item = e.getInventory().getMatrix()[i];
 
+            // Skip slot if the item is null.
+            if(item == null) {
+                continue;
+            }
+
             if(CustomItemAPI.isCustomItem(item)) {
                 CustomItem customItem = CustomItemAPI.fromItemStack(item);
                 namespaces[i] = customItem.getID();
@@ -28,7 +33,7 @@ public class PrepareItemCraftListener implements Listener {
         }
 
         for(String namespace : namespaces) {
-            Bukkit.broadcastMessage(namespace);
+            //Bukkit.broadcastMessage(namespace);
         }
     }
 
