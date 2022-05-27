@@ -32,6 +32,16 @@ public final class CustomItemAPI extends JavaPlugin {
      */
     @Override
     public void onEnable() {
+        // Makes sure the server is running paper.
+        try {
+            boolean isPaper = Class.forName("com.destroystokyo.paper.VersionHistoryManager$VersionData") != null;
+        }
+        catch (ClassNotFoundException exception) {
+            Bukkit.getLogger().warning("CustomItemAPI only works on Paper and its forks.");
+            getServer().getPluginManager().disablePlugin(this);
+        }
+
+        // Registers all required listeners.
         Bukkit.getPluginManager().registerEvents(new PrepareResultListener(), this);
         Bukkit.getPluginManager().registerEvents(new PrepareItemCraftListener(), this);
         Bukkit.getPluginManager().registerEvents(new GUIListeners(), this);
