@@ -59,6 +59,11 @@ public final class CustomItemAPI extends JavaPlugin {
         addonManager.registerAddon(addon);
     }
 
+    /**
+     * Get a CustomItem from an ItemStack.
+     * @param item ItemStack to check.
+     * @return CustomItem object.
+     */
     public static CustomItem fromItemStack(ItemStack item) {
         // Makes sure the item is a custom item.
         if(!isCustomItem(item)) {
@@ -66,7 +71,6 @@ public final class CustomItemAPI extends JavaPlugin {
         }
 
         CustomItem customItem = null;
-
         String id = ItemUtils.getStringData(item, "ci-id");
 
         try {
@@ -75,17 +79,26 @@ public final class CustomItemAPI extends JavaPlugin {
             ItemMeta meta = item.getItemMeta();
             customItem.setEnchantments(meta.getEnchants());
         }
-        catch (Exception e) {
-            e.printStackTrace();
+        catch (Exception exception) {
+            exception.printStackTrace();
         }
 
         return customItem;
     }
 
+    /**
+     * Get a map of all custom items.
+     * @return All registered custom items.
+     */
     public static Map<String, CustomItem> getCustomItems() {
         return  items;
     }
 
+    /**
+     * Get a custom item based off an Id.
+     * @param id Id of the Custom Item.
+     * @return Custom Item object,
+     */
     public static CustomItem getItem(String id) {
         return items.get(id);
     }
@@ -99,10 +112,18 @@ public final class CustomItemAPI extends JavaPlugin {
         return ItemUtils.getStringData(item, "ci-id") != null;
     }
 
+    /**
+     * Registers an item without the use of addons.
+     * @param item Item to register.
+     */
     public static void registerItem(CustomItem item) {
         items.put(item.getID(), item);
     }
 
+    /**
+     * Get the AddonManager instance, which manages all Addons.
+     * @return AddonManager.
+     */
     public static AddonManager getAddonManager() {
         return addonManager;
     }
