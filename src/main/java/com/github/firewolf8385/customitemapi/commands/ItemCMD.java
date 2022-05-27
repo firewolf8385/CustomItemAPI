@@ -32,6 +32,7 @@ public class ItemCMD extends AbstractCommand {
     @Override
     public void execute(CommandSender sender, String[] args) {
         if(args.length == 0) {
+            help(sender);
             return;
         }
 
@@ -50,7 +51,7 @@ public class ItemCMD extends AbstractCommand {
                 new ItemBrowseGUI(1).open(player);
             }
 
-            default -> {
+            case "info" -> {
                 sender.sendMessage("");
                 ChatUtils.centeredChat(sender, "&a&lCustomItemAPI");
                 sender.sendMessage("");
@@ -59,6 +60,8 @@ public class ItemCMD extends AbstractCommand {
                 ChatUtils.chat(sender, "  &8» &aGitHub: &fhttps://github.com/firewolf8385/CustomItemsAPI");
                 sender.sendMessage("");
             }
+
+            default -> help(sender);
         }
     }
 
@@ -71,7 +74,7 @@ public class ItemCMD extends AbstractCommand {
     public List<String> tabComplete(String[] args) {
 
         if(args.length == 1) {
-            return Arrays.asList("give", "update", "set", "browse");
+            return Arrays.asList("give", "update", "set", "browse", "info");
         }
 
         switch (args[0]) {
@@ -119,6 +122,21 @@ public class ItemCMD extends AbstractCommand {
         }
 
         return Collections.emptyList();
+    }
+
+    /**
+     * Shows the plugin help menu.
+     * @param sender Command sender.
+     */
+    private void help(CommandSender sender) {
+        ChatUtils.chat(sender, "&8&m+-----------------------***-----------------------+");
+        ChatUtils.centeredChat(sender, "&a&lCustomItemAPI");
+        ChatUtils.chat(sender, "  &8» &a/items browse");
+        ChatUtils.chat(sender, "  &8» &a/items give");
+        ChatUtils.chat(sender, "  &8» &a/items info");
+        ChatUtils.chat(sender, "  &8» &a/items update");
+        ChatUtils.chat(sender, "  &8» &a/items set [attribute] [value]");
+        ChatUtils.chat(sender, "&8&m+-----------------------***-----------------------+");
     }
 
     /**
