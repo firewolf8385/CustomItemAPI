@@ -14,12 +14,14 @@ import org.bukkit.util.StringUtil;
 import java.util.*;
 
 public class ItemCMD extends AbstractCommand {
+    private final CustomItemAPI plugin;
 
     /**
      * Registers the command.
      */
-    public ItemCMD() {
+    public ItemCMD(CustomItemAPI plugin) {
         super("items", "ci.item", true);
+        this.plugin = plugin;
     }
 
     /**
@@ -52,8 +54,8 @@ public class ItemCMD extends AbstractCommand {
                 sender.sendMessage("");
                 ChatUtils.centeredChat(sender, "&a&lCustomItemAPI");
                 sender.sendMessage("");
-                ChatUtils.chat(sender, "  &8» &aAuthor: &ffirewolf8385");
-                ChatUtils.chat(sender, "  &8» &aVersion: &f1.0");
+                ChatUtils.chat(sender, "  &8» &aAuthor: &f" + plugin.getDescription().getAuthors().get(0));
+                ChatUtils.chat(sender, "  &8» &aVersion: &f" + plugin.getDescription().getVersion());
                 ChatUtils.chat(sender, "  &8» &aGitHub: &fhttps://github.com/firewolf8385/CustomItemsAPI");
                 sender.sendMessage("");
             }
