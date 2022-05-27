@@ -1,4 +1,4 @@
-package com.github.firewolf8385.customitemapi.utils;
+package com.github.firewolf8385.customitemapi.utils.chat;
 
 /**
  * Stores information about the default font.

@@ -1,6 +1,8 @@
 # CustomItemAPI &middot; [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/firewolf8385/CustomItemAPI/blob/master/LICENSE)
 
-CustomItemAPI is a simple and lightweight plugin for [Paper](http://www.papermc.io) servers running Minecraft 1.14 or later. It allows plugin developers to easily create custom items, along with interacting with custom items created by other plugins
+CustomItemAPI is a simple and lightweight plugin for [Paper](http://www.papermc.io) servers running Minecraft 1.18 or later. It allows plugin developers to easily create custom items, along with interacting with custom items created by other plugins
+
+**This plugin is in early development. The API is likely to change between now and a full release.**
 
 ## Requirements
 * Java 17 or newer

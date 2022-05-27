@@ -1,44 +1,69 @@
-package com.github.firewolf8385.customitemapi.utils;
+package com.github.firewolf8385.customitemapi.utils.items;
 
+import com.github.firewolf8385.customitemapi.utils.chat.ChatUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeModifier;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.persistence.PersistentDataType;
 
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
-public class ItemBuilder {
+public class SkullBuilder {
     private ItemStack item;
-    private ItemMeta meta;
+    private SkullMeta meta;
 
     /**
-     * Create a new ItemStack with Material m
-     * @param m Material for the ItemStack
+     * Create a SkullBuilder
+     * @param texture Skull Texture
      */
-    public ItemBuilder(Material m) {
-        this(m, 1);
+    public SkullBuilder(String texture) {
+        UUID id = UUID.nameUUIDFromBytes(texture.getBytes());
+        int less = (int) id.getLeastSignificantBits();
+        int most = (int) id.getMostSignificantBits();
+
+        item = Bukkit.getUnsafe().modifyItemStack(new ItemStack(Material.PLAYER_HEAD), "{SkullOwner:{Id:[I;" + (less * most) + "," + (less >> 23) + "," + (most / less) + "," + (most * 8731) + "],Properties:{textures:[{Value:\"" + texture + "\"}]}}}");
+        meta = (SkullMeta) item.getItemMeta();
+    }
+
+    public SkullBuilder addAttributeModifier(Attribute attribute, AttributeModifier modifier) {
+        meta.addAttributeModifier(attribute, modifier);
+        return this;
     }
 
     /**
-     * Create a new ItemStack of i items with material m
-     * @param m Material for the ItemStack
-     * @param i Number of items in the ItemStack
+     * Add an enchantment to the item.
+     * @param e Enchantment to add.
+     * @param level Level of the enchantment.
+     * @return ItemBuilder
      */
-    public ItemBuilder(Material m, int i) {
-        this(new ItemStack(m, i));
+    public SkullBuilder addEnchantment(Enchantment e, int level) {
+        addEnchantment(e, level, true);
+        return this;
     }
 
     /**
-     * Start a builder with an existing ItemStack
-     * @param item ItemStack
+     * Add an enchantment to the item.
+     * @param e Enchantment to add.
+     * @param level Level of the enchantment.
+     * @return ItemBuilder
      */
-    public ItemBuilder(ItemStack item) {
-        this.item = item;
-        meta = item.getItemMeta();
+    public SkullBuilder addEnchantment(Enchantment e, int level, boolean ignore) {
+        meta.addEnchant(e, level, ignore);
+        return this;
+    }
+
+    public SkullBuilder addFlag(ItemFlag flag) {
+        meta.addItemFlags(flag);
+        return this;
     }
 
     /**
@@ -46,7 +71,7 @@ public class ItemBuilder {
      * @param str String
      * @return ItemBuilder
      */
-    public ItemBuilder addLore(String str) {
+    public SkullBuilder addLore(String str) {
         List<String> lore = meta.getLore();
 
         if(lore == null) {
@@ -64,7 +89,7 @@ public class ItemBuilder {
      * @param arr List of lore.
      * @return ItemBuilder.
      */
-    public ItemBuilder addLore(List<String> arr) {
+    public SkullBuilder addLore(List<String> arr) {
         List<String> lore = meta.getLore();
 
         if(lore == null) {
@@ -78,14 +103,15 @@ public class ItemBuilder {
 
         return this;
     }
-
-    /**
-     * Get the ItemStack from the builder.
-     * @return ItemStack
-     */
     public ItemStack build() {
         item.setItemMeta(meta);
         return item;
+    }
+
+    private static byte[] longToBytes(long x) {
+        var buffer = ByteBuffer.allocate(Long.BYTES);
+        buffer.putLong(x);
+        return buffer.array();
     }
 
     /**
@@ -93,7 +119,7 @@ public class ItemBuilder {
      * @param data Data
      * @return ItemBuilder
      */
-    public ItemBuilder setCustomModelData(int data) {
+    public SkullBuilder setCustomModelData(int data) {
         meta.setCustomModelData(data);
         return this;
     }
@@ -103,7 +129,7 @@ public class ItemBuilder {
      * @param durability Durability to set
      * @return ItemBuilder
      */
-    public ItemBuilder setCustomDurability(int durability) {
+    public SkullBuilder setCustomDurability(int durability) {
         NamespacedKey maxDurability = new NamespacedKey(Bukkit.getPluginManager().getPlugin("CustomItemAPI"), "max-durability");
         NamespacedKey currentDurability = new NamespacedKey(Bukkit.getPluginManager().getPlugin("CustomItemAPI"), "current-durability");
 
@@ -118,26 +144,8 @@ public class ItemBuilder {
      * @param str Display name
      * @return ItemBuilder
      */
-    public ItemBuilder setDisplayName(String str) {
+    public SkullBuilder setDisplayName(String str) {
         meta.setDisplayName(ChatUtils.translate(str));
-        return this;
-    }
-
-    /**
-     * Set the item stack
-     * @param item item Stack
-     */
-    protected void setItem(ItemStack item) {
-        this.item = item;
-    }
-
-    /**
-     * Set the lore of an item.
-     * @param lore
-     * @return ItemBuilder
-     */
-    public ItemBuilder setLore(String... lore) {
-        meta.setLore(Arrays.asList(lore));
         return this;
     }
 
@@ -147,7 +155,7 @@ public class ItemBuilder {
      * @param value Value
      * @return ItemBuilder
      */
-    public ItemBuilder setPersistentData(String key, String value) {
+    public SkullBuilder setPersistentData(String key, String value) {
         NamespacedKey namepace = new NamespacedKey(Bukkit.getPluginManager().getPlugin("CustomItemAPI"), key);
         meta.getPersistentDataContainer().set(namepace, PersistentDataType.STRING, value);
         return this;
@@ -159,20 +167,9 @@ public class ItemBuilder {
      * @param value value
      * @return ItemBuilder
      */
-    public ItemBuilder setPersistentData(String key, int value) {
+    public SkullBuilder setPersistentData(String key, int value) {
         NamespacedKey namepace = new NamespacedKey(Bukkit.getPluginManager().getPlugin("CustomItemAPI"), key);
         meta.getPersistentDataContainer().set(namepace, PersistentDataType.INTEGER, value);
         return this;
     }
-
-    /**
-     * Set if the item should be unbreakbale.
-     * @param unbreakable Whether or not it should be unbreakable.
-     * @return ItemBuilder.
-     */
-    public ItemBuilder setUnbreakable(boolean unbreakable) {
-        meta.setUnbreakable(true);
-        return this;
-    }
-
 }

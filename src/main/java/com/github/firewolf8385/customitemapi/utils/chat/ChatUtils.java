@@ -1,4 +1,4 @@
-package com.github.firewolf8385.customitemapi.utils;
+package com.github.firewolf8385.customitemapi.utils.chat;
 
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
@@ -58,7 +58,7 @@ public class ChatUtils {
             sb.append(" ");
             compensated += spaceLength;
         }
-        sender.sendMessage(sb.toString() + message);
+        sender.sendMessage(sb + message);
     }
 
     /**

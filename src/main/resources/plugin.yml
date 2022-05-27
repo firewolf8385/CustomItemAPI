@@ -1,12 +1,12 @@
 name: CustomItemAPI
-version: ${project.version}
+version: 0.1
 main: com.github.firewolf8385.customitemapi.CustomItemAPI
-api-version: 1.14
+api-version: 1.18
 authors: [ firewolf8385 ]
 website: github.com/firewolf8385
 
 commands:
-  customitemsapi:
+  items:
     description: Main plugin command.
     usage: /<command>
-    aliases: [customitems,ci,items]
+    aliases: [customitems,ci,customitemapi,ciapi]
