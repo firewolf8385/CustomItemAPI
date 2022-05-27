@@ -238,11 +238,16 @@ public class CustomItem implements Cloneable {
                 }
                 builder.addEnchantment(enchantment, item.getItemMeta().getEnchants().get(enchantment));
             }
-            builder.addLore("");
+
+            if(rarity != ItemRarity.NONE) {
+                builder.addLore("");
+            }
         }
 
         // Add rarity lore
-        builder.addLore(rarity.getColor() + "&l" + rarity.toString() + type.toString());
+        if(rarity != ItemRarity.NONE) {
+            builder.addLore(rarity.getColor() + "&l" + rarity.toString() + type.toString());
+        }
 
         // Add custom data.
         builder.setPersistentData("ci-id", id)

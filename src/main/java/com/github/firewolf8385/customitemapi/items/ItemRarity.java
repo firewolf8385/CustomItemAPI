@@ -6,6 +6,7 @@ import net.md_5.bungee.api.ChatColor;
  * Represents the rarity of an item.
  */
 public enum ItemRarity {
+    NONE(ChatColor.RESET, ""),
     COMMON(ChatColor.WHITE, "COMMON"),
     UNCOMMON(ChatColor.GREEN, "UNCOMMON"),
     RARE(ChatColor.BLUE, "RARE"),
