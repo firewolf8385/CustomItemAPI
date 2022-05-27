@@ -5,6 +5,9 @@ import com.github.firewolf8385.customitemapi.utils.items.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.event.enchantment.EnchantItemEvent;
+import org.bukkit.event.inventory.*;
+import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -259,4 +262,30 @@ public class CustomItem implements Cloneable {
 
         return builder.build();
     }
+
+    public void onBreak(PlayerItemBreakEvent event) {}
+
+    public void onClick(InventoryClickEvent event) {}
+
+    public void onConsume(PlayerItemConsumeEvent event) {}
+
+    public void onCraft(CraftItemEvent event) {}
+
+    public void onDamage(PlayerItemDamageEvent event) {}
+
+    public void onDrag(InventoryDragEvent event) {}
+
+    public void onDrop(PlayerDropItemEvent event) {}
+
+    public void onEnchant(EnchantItemEvent event) {}
+
+    public void onHold(PlayerItemHeldEvent event) {}
+
+    public void onInteract(PlayerInteractEvent event) {}
+
+    public void onMend(PlayerItemMendEvent event) {}
+
+    public void onSmelt(FurnaceSmeltEvent event) {}
+
+    public void onSmith(SmithItemEvent event) {}
 }

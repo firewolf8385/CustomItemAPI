@@ -6,9 +6,7 @@ import com.github.firewolf8385.customitemapi.commands.AbstractCommand;
 import com.github.firewolf8385.customitemapi.items.CustomItem;
 import com.github.firewolf8385.customitemapi.items.items.AdminSwordItem;
 import com.github.firewolf8385.customitemapi.items.items.TestStickItem;
-import com.github.firewolf8385.customitemapi.listeners.PlayerItemHeldListener;
-import com.github.firewolf8385.customitemapi.listeners.PrepareItemCraftListener;
-import com.github.firewolf8385.customitemapi.listeners.PrepareResultListener;
+import com.github.firewolf8385.customitemapi.listeners.*;
 import com.github.firewolf8385.customitemapi.settings.SettingsManager;
 import com.github.firewolf8385.customitemapi.utils.gui.GUIListeners;
 import com.github.firewolf8385.customitemapi.utils.items.ItemUtils;
@@ -46,10 +44,22 @@ public final class CustomItemAPI extends JavaPlugin {
         settingsManager = new SettingsManager(this);
 
         // Registers all required listeners.
-        Bukkit.getPluginManager().registerEvents(new PrepareResultListener(), this);
-        Bukkit.getPluginManager().registerEvents(new PrepareItemCraftListener(), this);
+        Bukkit.getPluginManager().registerEvents(new CraftItemListener(), this);
+        Bukkit.getPluginManager().registerEvents(new EnchantItemListener(), this);
+        Bukkit.getPluginManager().registerEvents(new FurnaceSmeltListener(), this);
         Bukkit.getPluginManager().registerEvents(new GUIListeners(), this);
+        Bukkit.getPluginManager().registerEvents(new InventoryClickListener(), this);
+        Bukkit.getPluginManager().registerEvents(new InventoryDragListener(), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerDropItemListener(), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerInteractListener(), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerItemBreakListener(), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerItemConsumeListener(), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerItemDamageListener(this), this);
         Bukkit.getPluginManager().registerEvents(new PlayerItemHeldListener(), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerItemMendListener(), this);
+        Bukkit.getPluginManager().registerEvents(new PrepareItemCraftListener(), this);
+        Bukkit.getPluginManager().registerEvents(new PrepareResultListener(), this);
+        Bukkit.getPluginManager().registerEvents(new SmithItemListener(), this);
 
         // Plugin startup logic
         AbstractCommand.registerCommands(this);

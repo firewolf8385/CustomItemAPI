@@ -46,5 +46,9 @@ public class PlayerItemDamageListener implements Listener {
                 event.getPlayer().getInventory().remove(item);
             }
         }
+
+        if(CustomItemAPI.isCustomItem(item)) {
+            CustomItemAPI.fromItemStack(item).onDamage(event);
+        }
     }
 }
