@@ -34,24 +34,21 @@ public class ItemCMD extends AbstractCommand {
         }
 
         switch (args[0]) {
-            case "give":
-                give(sender, args);
-                break;
-            case "update":
-                update(sender, args);
-                break;
-            case "set":
-                set(sender, args);
-                break;
-            case "browse":
-                if(!(sender instanceof Player)) {
+            case "give" -> give(sender, args);
+
+            case "update" -> update(sender, args);
+
+            case "set" -> set(sender, args);
+
+            case "browse" -> {
+                if(!(sender instanceof Player player)) {
                     return;
                 }
 
-                Player player = (Player) sender;
                 new ItemBrowseGUI(1).open(player);
-                break;
-            default:
+            }
+
+            default -> {
                 sender.sendMessage("");
                 ChatUtils.centeredChat(sender, "&a&lCustomItemAPI");
                 sender.sendMessage("");
@@ -59,7 +56,7 @@ public class ItemCMD extends AbstractCommand {
                 ChatUtils.chat(sender, "  &8» &aVersion: &f1.0");
                 ChatUtils.chat(sender, "  &8» &aGitHub: &fhttps://github.com/firewolf8385/CustomItemsAPI");
                 sender.sendMessage("");
-                break;
+            }
         }
     }
 
@@ -76,7 +73,7 @@ public class ItemCMD extends AbstractCommand {
         }
 
         switch (args[0]) {
-            case "give":
+            case "give" -> {
                 if(args.length == 2) {
                     List<String> online = new ArrayList<>();
 
@@ -97,9 +94,13 @@ public class ItemCMD extends AbstractCommand {
                 }
 
                 return Collections.emptyList();
-            case "update":
+            }
+
+            case "update" -> {
                 return Collections.emptyList();
-            case "set":
+            }
+
+            case "set" -> {
                 if(args.length == 2) {
                     return Arrays.asList("rarity");
                 }
@@ -112,7 +113,7 @@ public class ItemCMD extends AbstractCommand {
 
                     return rarities;
                 }
-                break;
+            }
         }
 
         return Collections.emptyList();
@@ -185,16 +186,16 @@ public class ItemCMD extends AbstractCommand {
      * @param args Command arguments.
      */
     private void set(CommandSender sender, String[] args) {
-        Player p = (Player) sender;
+        Player player = (Player) sender;
 
         switch (args[1]) {
-            case "rarity":
+            case "rarity" -> {
                 if(args.length != 3) {
                     ChatUtils.chat(sender, "&c&l(&7!&c&l) &cUsage: /item set rarity [rarity]");
                     return;
                 }
 
-                ItemStack item = p.getInventory().getItemInMainHand();
+                ItemStack item = player.getInventory().getItemInMainHand();
 
                 if(!CustomItemAPI.isCustomItem(item)) {
                     ChatUtils.chat(sender, "&cThat item is not a custom item!");
@@ -209,9 +210,8 @@ public class ItemCMD extends AbstractCommand {
 
                 CustomItem customItem = CustomItemAPI.fromItemStack(item);
                 customItem.setRarity(rarity);
-                p.getInventory().setItemInMainHand(customItem.toItemStack());
-
-                break;
+                player.getInventory().setItemInMainHand(customItem.toItemStack());
+            }
         }
     }
 }
