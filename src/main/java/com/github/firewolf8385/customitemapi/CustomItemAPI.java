@@ -9,6 +9,7 @@ import com.github.firewolf8385.customitemapi.items.items.TestStickItem;
 import com.github.firewolf8385.customitemapi.listeners.PlayerItemHeldListener;
 import com.github.firewolf8385.customitemapi.listeners.PrepareItemCraftListener;
 import com.github.firewolf8385.customitemapi.listeners.PrepareResultListener;
+import com.github.firewolf8385.customitemapi.settings.SettingsManager;
 import com.github.firewolf8385.customitemapi.utils.gui.GUIListeners;
 import com.github.firewolf8385.customitemapi.utils.items.ItemUtils;
 import org.bukkit.Bukkit;
@@ -26,6 +27,7 @@ import java.util.TreeMap;
 public final class CustomItemAPI extends JavaPlugin {
     private static final Map<String, CustomItem> items = new TreeMap<>();
     private static final AddonManager addonManager = new AddonManager();
+    private SettingsManager settingsManager;
 
     /**
      * This is called when Paper first loads the plugin.
@@ -40,6 +42,8 @@ public final class CustomItemAPI extends JavaPlugin {
             Bukkit.getLogger().warning("CustomItemAPI only works on Paper and its forks.");
             getServer().getPluginManager().disablePlugin(this);
         }
+
+        settingsManager = new SettingsManager(this);
 
         // Registers all required listeners.
         Bukkit.getPluginManager().registerEvents(new PrepareResultListener(), this);
@@ -57,6 +61,14 @@ public final class CustomItemAPI extends JavaPlugin {
         addon.registerItem(new TestStickItem());
         addon.registerItem(new AdminSwordItem());
         addonManager.registerAddon(addon);
+    }
+
+    /**
+     * Get the Settings Manager, which gives us access to the plugin Configuration.
+     * @return Settings Manager.
+     */
+    public SettingsManager getSettingsManager() {
+        return settingsManager;
     }
 
     /**

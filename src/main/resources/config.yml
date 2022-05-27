@@ -1,0 +1,31 @@
+Rarities:
+  COMMON:
+    name: "COMMON"
+    color: "&f"
+  UNCOMMON:
+    name: "UNCOMMON"
+    color: "&a"
+  RARE:
+    name: "RARE"
+    color: "&9"
+  EPIC:
+    name: "EPIC"
+    color: "&5"
+  LEGENDARY:
+    name: "LEGENDARY"
+    color: "&6"
+  MYTHIC:
+    name: "MYTHIC"
+    color: "&d"
+  SUPREME:
+    name: "SUPREME"
+    color: "&4"
+  SPECIAL:
+    name: "SPECIAL"
+    color: "&c"
+  VERY SPECIAL:
+    name: "VERY SPECIAL"
+    color: "&c"
+  UNFINISHED:
+    name: "UNFINISHED"
+    color: "&7"
