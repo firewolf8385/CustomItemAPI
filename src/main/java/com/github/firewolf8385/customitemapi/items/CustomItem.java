@@ -187,7 +187,7 @@ public class CustomItem implements Cloneable {
             }
             else {
                 ItemRarity newRarity = ItemRarity.getByWeight(rarity.getWeight() + 1);
-                builder.addLore(newRarity.getColor() + "&k#" + newRarity.getColor() + "&l" + newRarity.getName() + type.toString() + "&k#");
+                builder.addLore(newRarity.getColor() + "&k&l# " + newRarity.getName() + type.toString() + " &k#");
             }
         }
 
@@ -285,7 +285,7 @@ public class CustomItem implements Cloneable {
             }
             else {
                 ItemRarity newRarity = ItemRarity.getByWeight(rarity.getWeight() + 1);
-                clone.addLore(newRarity.getColor() + "&k#" + newRarity.getColor() + "&l" + newRarity.getName() + type.toString() + newRarity.getColor() + "&k#");
+                clone.addLore(newRarity.getColor() + "&k&l# " + newRarity.getName() + type.toString() + " &k#");
             }
         }
 
