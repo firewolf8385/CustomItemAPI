@@ -23,7 +23,7 @@ Rarities:
   SPECIAL:
     name: "SPECIAL"
     color: "&c"
-  VERY SPECIAL:
+  VERY_SPECIAL:
     name: "VERY SPECIAL"
     color: "&c"
   UNFINISHED:

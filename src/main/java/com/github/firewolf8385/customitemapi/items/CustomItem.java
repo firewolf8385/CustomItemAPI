@@ -198,7 +198,7 @@ public class CustomItem implements Cloneable {
         }
 
         // Add rarity lore
-        builder.addLore(rarity.getColor() + "&l" + rarity.toString() + type.toString());
+        builder.addLore(rarity.getColor() + "&l" + rarity.getName() + type.toString());
 
         // Add custom data.
         builder.setPersistentData("ci-id", id)
@@ -272,7 +272,7 @@ public class CustomItem implements Cloneable {
 
         // Add rarity lore
         if(rarity != ItemRarity.NONE) {
-            builder.addLore(rarity.getColor() + "&l" + rarity.toString() + type.toString());
+            builder.addLore(rarity.getColor() + "&l" + rarity.getName() + type.toString());
         }
 
         // Add custom data.
