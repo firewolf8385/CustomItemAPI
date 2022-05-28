@@ -70,13 +70,14 @@ public class ChatUtils {
         String version = Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];
         int subVersion = Integer.parseInt(version.replace("1_", "").replaceAll("_R\\d", "").replace("v", ""));
 
+        // If the server is 1.16 or later, allows hex color codes.
         if(subVersion >= 16) {
-            Pattern pattern = Pattern.compile("#[a-fA-F0-9]{6}");
+            Pattern pattern = Pattern.compile("&#[a-fA-F0-9]{6}");
             Matcher matcher = pattern.matcher(message);
 
             while (matcher.find()) {
-                String color = message.substring(matcher.start(), matcher.end());
-                message = message.replace(color, ChatColor.of(color) + "");
+                String color = message.substring(matcher.start() + 1, matcher.end());
+                message = message.replace("&" + color, ChatColor.of(color) + "");
                 matcher = pattern.matcher(message);
             }
         }
