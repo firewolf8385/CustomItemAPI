@@ -7,29 +7,32 @@ import org.bukkit.plugin.java.JavaPlugin;
  * Represents the rarity of an item.
  */
 public enum ItemRarity {
-    NONE("&r", ""),
-    COMMON("&f", "COMMON"),
-    UNCOMMON("&a", "UNCOMMON"),
-    RARE("&9", "RARE"),
-    EPIC("&5", "EPIC"),
-    LEGENDARY("&6", "LEGENDARY"),
-    MYTHIC("&d", "MYTHIC"),
-    SUPREME("&4", "SUPREME"),
-    SPECIAL("&c", "SPECIAL"),
-    VERY_SPECIAL("&c", "VERY SPECIAL"),
-    UNFINISHED("&7", "UNFINISHED");
+    NONE("&r", "", 0),
+    COMMON("&f", "COMMON", 1),
+    UNCOMMON("&a", "UNCOMMON", 2),
+    RARE("&9", "RARE", 3),
+    EPIC("&5", "EPIC", 4),
+    LEGENDARY("&6", "LEGENDARY", 5),
+    MYTHIC("&d", "MYTHIC", 6),
+    SUPREME("&4", "SUPREME", 7),
+    SPECIAL("&c", "SPECIAL", 8),
+    VERY_SPECIAL("&c", "VERY SPECIAL", 9),
+    UNFINISHED("&7", "UNFINISHED", 10);
 
     private final String defaultColor;
     private final String defaultName;
+    private final int weight;
 
     /**
      * Creates a rarity.
      * @param defaultColor The color of the rarity.
      * @param defaultName The rarity in string form.
+     * @param weight How important a rarity is. Higher is better.
      */
-    ItemRarity(String defaultColor, String defaultName) {
+    ItemRarity(String defaultColor, String defaultName, int weight) {
         this.defaultColor = defaultColor;
         this.defaultName = defaultName;
+        this.weight = weight;
     }
 
     /**
@@ -62,5 +65,14 @@ public enum ItemRarity {
         else {
             return defaultName;
         }
+    }
+
+    /**
+     * Get the weight of the rarity.
+     * Higher weights take more priority.
+     * @return Weight of the rarity.
+     */
+    public int getWeight() {
+        return weight;
     }
 }
