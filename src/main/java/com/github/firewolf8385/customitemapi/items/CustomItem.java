@@ -191,8 +191,6 @@ public class CustomItem implements Cloneable {
             }
         }
 
-        builder.addLore(rarity.getColor() + "&l" + rarity.getName() + type.toString());
-
         // Add custom data.
         builder.setPersistentData("ci-id", id)
                 .setPersistentData("ci-rarity", rarity.toString());
