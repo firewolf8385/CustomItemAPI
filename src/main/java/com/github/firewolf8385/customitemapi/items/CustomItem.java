@@ -3,6 +3,7 @@ package com.github.firewolf8385.customitemapi.items;
 import com.github.firewolf8385.customitemapi.utils.items.EnchantmentUtils;
 import com.github.firewolf8385.customitemapi.utils.items.ItemBuilder;
 import org.bukkit.Material;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.enchantment.EnchantItemEvent;
@@ -12,8 +13,7 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Represents a Custom Item, not available in vanilla.
@@ -25,6 +25,7 @@ public class CustomItem implements Cloneable {
     private ItemType type;
     private Material material;
     private ItemStack item;
+    private final List<ItemAtrribute> itemAtrributes = new ArrayList<>();
 
     private Map<Enchantment, Integer> enchantments = new HashMap<>();
 
@@ -40,6 +41,10 @@ public class CustomItem implements Cloneable {
         rarity = ItemRarity.COMMON;
         type = ItemType.NONE;
         material = Material.STICK;
+    }
+
+    public void addItemAttribute(ItemAtrribute itemAtrribute) {
+        itemAtrributes.add(itemAtrribute);
     }
 
     /**
@@ -115,6 +120,31 @@ public class CustomItem implements Cloneable {
 
         builder.setDisplayName(rarity.getColor() + meta.getDisplayName());
 
+        boolean hasAttributes = false;
+        for(ItemAtrribute itemAtrribute : itemAtrributes) {
+            hasAttributes = true;
+
+            AttributeModifier attribute = new AttributeModifier(UUID.randomUUID(), itemAtrribute.getType().getAttributeName(), itemAtrribute.getAmount(), AttributeModifier.Operation.ADD_NUMBER, itemAtrribute.getSlot().getSlot());
+            builder.addAttributeModifier(itemAtrribute.getType().getAttribute(), attribute);
+
+            String attributeName = itemAtrribute.getType().getName();
+            String amount = "";
+            if(itemAtrribute.getOperation() == ItemAtrribute.Operation.ADD) {
+                amount += "&a";
+            }
+            else {
+                amount += "&c-";
+            }
+            amount += "" + itemAtrribute.getAmount();
+
+            builder.addLore("&7" + attributeName + ": " + amount);
+        }
+
+        if(hasAttributes) {
+            builder.addLore("");
+        }
+
+        /*
         if(meta.getAttributeModifiers() != null) {
             int attackDamage = 0;
             int attackSpeed = 0;
@@ -149,6 +179,8 @@ public class CustomItem implements Cloneable {
                 if(flag) builder.addLore("");
             }
         }
+
+         */
 
         // Add appropriate space after any added lore.
         if(meta.getLore() != null && meta.getLore().size() != 0) {
@@ -186,39 +218,30 @@ public class CustomItem implements Cloneable {
         ItemBuilder builder = new ItemBuilder(clone);
         ItemMeta meta = this.item.getItemMeta();
 
-        if(meta.getAttributeModifiers() != null) {
-            int attackDamage = 0;
-            int attackSpeed = 0;
-            int movementSpeed = 0;
+        // Adds item attributes if there are any.
+        boolean hasAttributes = false;
+        for(ItemAtrribute itemAtrribute : itemAtrributes) {
+            hasAttributes = true;
 
-            boolean flag = false;
-            for(AttributeModifier modifier : meta.getAttributeModifiers().values()) {
-                if(modifier.getOperation() != AttributeModifier.Operation.ADD_NUMBER) {
-                    System.out.println("Only Operation Add Number is supported for Attributes!");
-                    continue;
-                }
+            AttributeModifier attribute = new AttributeModifier(UUID.randomUUID(), itemAtrribute.getType().getAttributeName(), itemAtrribute.getAmount(), AttributeModifier.Operation.ADD_NUMBER, itemAtrribute.getSlot().getSlot());
+            builder.addAttributeModifier(itemAtrribute.getType().getAttribute(), attribute);
 
-                switch (modifier.getName()) {
-                    case "generic.attackDamage" -> {
-                        attackDamage += modifier.getAmount();
-                        flag = true;
-                    }
-                    case "generic.attackSpeed" -> {
-                        attackSpeed += modifier.getAmount();
-                        flag = true;
-                    }
-                    case "generic.movementSpeed" -> {
-                        movementSpeed += modifier.getAmount();
-                        flag = true;
-                    }
-                }
-
-                if(attackDamage != 0) builder.addLore("&7Damage: &a" + attackDamage);
-                if(attackSpeed != 0) builder.addLore("&7Attack Speed: &a" + attackSpeed);
-                if(movementSpeed != 0) builder.addLore("&7Speed: &a" + movementSpeed);
-
-                if(flag) builder.addLore("");
+            String attributeName = itemAtrribute.getType().getName();
+            String amount = "";
+            if(itemAtrribute.getOperation() == ItemAtrribute.Operation.ADD) {
+                amount += "&a";
             }
+            else {
+                amount += "&c-";
+            }
+            amount += "" + itemAtrribute.getAmount();
+
+            builder.addLore("&7" + attributeName + ": " + amount);
+        }
+
+        // Extra whitepsace to separate item attributes from other things.
+        if(hasAttributes) {
+            builder.addLore("");
         }
 
         builder.setDisplayName(rarity.getColor() + meta.getDisplayName());
