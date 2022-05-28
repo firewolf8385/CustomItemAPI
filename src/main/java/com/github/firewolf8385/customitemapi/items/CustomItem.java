@@ -189,6 +189,11 @@ public class CustomItem implements Cloneable {
 
         if(!meta.getEnchants().isEmpty()) {
             for(Enchantment enchantment : meta.getEnchants().keySet()) {
+                // Skip if the enchantment level is 0.
+                if(meta.getEnchants().get(enchantment) == 0) {
+                    continue;
+                }
+
                 String name = EnchantmentUtils.enchantmentToString(enchantment);
                 String level = EnchantmentUtils.IntegerToRomanNumeral(meta.getEnchants().get(enchantment));
                 builder.addLore("&7" + name + level);
