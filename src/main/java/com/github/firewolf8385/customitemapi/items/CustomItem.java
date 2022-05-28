@@ -146,7 +146,7 @@ public class CustomItem implements Cloneable {
             String attributeName = itemAtrribute.getType().getName();
             String amount = "";
             if(itemAtrribute.getOperation() == ItemAtrribute.Operation.ADD) {
-                amount += "&a";
+                amount += "&a+";
             }
             else {
                 amount += "&c-";
@@ -243,7 +243,7 @@ public class CustomItem implements Cloneable {
             String attributeName = itemAtrribute.getType().getName();
             String amount = "";
             if(itemAtrribute.getOperation() == ItemAtrribute.Operation.ADD) {
-                amount += "&a";
+                amount += "&a+";
             }
             else {
                 amount += "&c-";
