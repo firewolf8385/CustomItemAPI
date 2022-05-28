@@ -1,5 +1,6 @@
 package com.github.firewolf8385.customitemapi.items;
 
+import com.github.firewolf8385.customitemapi.CustomItemAPI;
 import com.github.firewolf8385.customitemapi.utils.items.EnchantmentUtils;
 import com.github.firewolf8385.customitemapi.utils.items.ItemBuilder;
 import com.github.firewolf8385.customitemapi.utils.items.ItemUtils;
@@ -120,15 +121,7 @@ public class CustomItem implements Cloneable {
         ItemBuilder builder = new ItemBuilder(clone);
         ItemMeta meta = item.getItemMeta();
 
-        boolean upgraded;
-        if(ItemUtils.getStringData(item, "ci-upgraded") == null) {
-            upgraded = false;
-        }
-        else {
-            upgraded = ItemUtils.getStringData(item, "ci-upgraded").equals("true");
-        }
-
-        if(!upgraded) {
+        if(!CustomItemAPI.isUpgraded(item)) {
             builder.setDisplayName(rarity.getColor() + meta.getDisplayName());
         }
         else {
@@ -182,7 +175,7 @@ public class CustomItem implements Cloneable {
 
         // Add rarity lore
         if(rarity != ItemRarity.NONE) {
-            if(!upgraded) {
+            if(!CustomItemAPI.isUpgraded(item)) {
                 builder.addLore(rarity.getColor() + "&l" + rarity.getName() + type.toString());
             }
             else {
@@ -209,19 +202,13 @@ public class CustomItem implements Cloneable {
 
         Map<Enchantment, Integer> enchantments = item.getEnchantments();
 
-        // Checks if the item is upgraded, and if so, saves it.
-        boolean upgraded = false;
-        if(ItemUtils.getStringData(item, "ci-upgraded") != null) {
-            upgraded = ItemUtils.getStringData(item, "ci-upgraded").equals("true");
-
-            if(upgraded) {
-                clone.setPersistentData("ci-upgraded", "true");
-            }
+        if(CustomItemAPI.isUpgraded(item)) {
+            clone.setPersistentData("ci-upgraded", "true");
         }
 
         // Sets the display name.
         if(rarity != ItemRarity.NONE) {
-            if(!upgraded) {
+            if(!CustomItemAPI.isUpgraded(item)) {
                 clone.setDisplayName(rarity.getColor() + this.item.getItemMeta().getDisplayName());
             }
             else {
@@ -278,7 +265,7 @@ public class CustomItem implements Cloneable {
 
         // Add rarity lore
         if(rarity != ItemRarity.NONE) {
-            if(!upgraded) {
+            if(!CustomItemAPI.isUpgraded(item)) {
                 clone.addLore(rarity.getColor() + "&l" + rarity.getName() + type.toString());
             }
             else {

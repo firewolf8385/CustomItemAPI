@@ -134,6 +134,21 @@ public final class CustomItemAPI extends JavaPlugin {
         return ItemUtils.getStringData(item, "ci-id") != null;
     }
 
+    public static boolean isUpgraded(ItemStack item) {
+        // Non-custom items can't be upgraded.
+        if(!isCustomItem(item)) {
+            return false;
+        }
+
+        // Item can only be upgraded if it that the ci-upgraded namespace.
+        if(ItemUtils.getStringData(item, "ci-upgraded") != null) {
+            return ItemUtils.getStringData(item, "ci-upgraded").equals("true");
+        }
+
+        // all other items are not upgraded.
+        return false;
+    }
+
     /**
      * Registers an item without the use of addons.
      * @param item Item to register.
