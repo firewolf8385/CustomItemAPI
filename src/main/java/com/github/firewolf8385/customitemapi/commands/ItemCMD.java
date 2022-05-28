@@ -5,6 +5,7 @@ import com.github.firewolf8385.customitemapi.gui.ItemBrowseGUI;
 import com.github.firewolf8385.customitemapi.items.CustomItem;
 import com.github.firewolf8385.customitemapi.items.ItemRarity;
 import com.github.firewolf8385.customitemapi.utils.chat.ChatUtils;
+import com.github.firewolf8385.customitemapi.utils.items.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -107,16 +108,24 @@ public class ItemCMD extends AbstractCommand {
 
             case "set" -> {
                 if(args.length == 2) {
-                    return Arrays.asList("rarity");
+                    return Arrays.asList("rarity", "upgraded");
                 }
 
                 if(args.length == 3) {
-                    List<String> rarities = new ArrayList<>();
-                    for(ItemRarity rarity : ItemRarity.values()) {
-                        rarities.add(rarity.toString().toLowerCase(Locale.ROOT).replace(" ", "_"));
+                    if(args[1].equalsIgnoreCase("rarity")) {
+                        List<String> rarities = new ArrayList<>();
+                        for(ItemRarity rarity : ItemRarity.values()) {
+                            rarities.add(rarity.toString().toLowerCase(Locale.ROOT).replace(" ", "_"));
+                        }
+
+                        return rarities;
                     }
 
-                    return rarities;
+                    if(args[1].equalsIgnoreCase("upgraded")) {
+                        return Arrays.asList("true", "false");
+                    }
+
+                    return Collections.emptyList();
                 }
             }
         }
@@ -231,6 +240,32 @@ public class ItemCMD extends AbstractCommand {
                 CustomItem customItem = CustomItemAPI.fromItemStack(item);
                 customItem.setRarity(rarity);
                 player.getInventory().setItemInMainHand(customItem.toItemStack());
+            }
+
+            case "upgraded" -> {
+                if(args.length != 3) {
+                    ChatUtils.chat(sender, "&c&l(&7!&c&l) &cUsage: /item set upgraded [true/false]");
+                    return;
+                }
+
+                ItemStack item = player.getInventory().getItemInMainHand();
+
+                if(!CustomItemAPI.isCustomItem(item)) {
+                    ChatUtils.chat(sender, "&cThat item is not a custom item!");
+                    return;
+                }
+
+                if(args[2].equalsIgnoreCase("true")) {
+                    ItemStack upgraded = new ItemBuilder(item).setPersistentData("ci-upgraded", "true").build();
+                    CustomItem customItem = CustomItemAPI.fromItemStack(upgraded);
+                    player.getInventory().setItemInMainHand(customItem.update(upgraded));
+                }
+
+                if(args[2].equalsIgnoreCase("false")) {
+                    ItemStack upgraded = new ItemBuilder(item).setPersistentData("ci-upgraded", "false").build();
+                    CustomItem customItem = CustomItemAPI.fromItemStack(upgraded);
+                    player.getInventory().setItemInMainHand(customItem.update(upgraded));
+                }
             }
         }
     }

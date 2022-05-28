@@ -2,6 +2,8 @@ package com.github.firewolf8385.customitemapi.items;
 
 import com.github.firewolf8385.customitemapi.utils.items.EnchantmentUtils;
 import com.github.firewolf8385.customitemapi.utils.items.ItemBuilder;
+import com.github.firewolf8385.customitemapi.utils.items.ItemUtils;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
@@ -118,7 +120,21 @@ public class CustomItem implements Cloneable {
         ItemBuilder builder = new ItemBuilder(clone);
         ItemMeta meta = item.getItemMeta();
 
-        builder.setDisplayName(rarity.getColor() + meta.getDisplayName());
+        boolean upgraded;
+        if(ItemUtils.getStringData(item, "ci-upgraded") == null) {
+            upgraded = false;
+        }
+        else {
+            upgraded = ItemUtils.getStringData(item, "ci-upgraded").equals("true");
+        }
+
+        if(!upgraded) {
+            builder.setDisplayName(rarity.getColor() + meta.getDisplayName());
+        }
+        else {
+            ItemRarity newRarity = ItemRarity.getByWeight(rarity.getWeight() + 1);
+            builder.setDisplayName(newRarity.getColor() + ChatColor.stripColor(meta.getDisplayName()));
+        }
 
         boolean hasAttributes = false;
         for(ItemAtrribute itemAtrribute : itemAtrributes) {
@@ -143,44 +159,6 @@ public class CustomItem implements Cloneable {
         if(hasAttributes) {
             builder.addLore("");
         }
-
-        /*
-        if(meta.getAttributeModifiers() != null) {
-            int attackDamage = 0;
-            int attackSpeed = 0;
-            int movementSpeed = 0;
-
-            boolean flag = false;
-            for(AttributeModifier modifier : meta.getAttributeModifiers().values()) {
-                if(modifier.getOperation() != AttributeModifier.Operation.ADD_NUMBER) {
-                    System.out.println("Only Operation Add Number is supported for Attributes!");
-                    continue;
-                }
-
-                switch (modifier.getName()) {
-                    case "generic.attackDamage" -> {
-                        attackDamage += modifier.getAmount();
-                        flag = true;
-                    }
-                    case "generic.attackSpeed" -> {
-                        attackSpeed += modifier.getAmount();
-                        flag = true;
-                    }
-                    case "generic.movementSpeed" -> {
-                        movementSpeed += modifier.getAmount();
-                        flag = true;
-                    }
-                }
-
-                if(attackDamage != 0) builder.addLore("&7Damage: &a" + attackDamage);
-                if(attackSpeed != 0) builder.addLore("&7Attack Speed: &a" + attackSpeed);
-                if(movementSpeed != 0) builder.addLore("&7Speed: &a" + movementSpeed);
-
-                if(flag) builder.addLore("");
-            }
-        }
-
-         */
 
         // Add appropriate space after any added lore.
         if(meta.getLore() != null && meta.getLore().size() != 0) {
@@ -203,6 +181,16 @@ public class CustomItem implements Cloneable {
         }
 
         // Add rarity lore
+        if(rarity != ItemRarity.NONE) {
+            if(!upgraded) {
+                builder.addLore(rarity.getColor() + "&l" + rarity.getName() + type.toString());
+            }
+            else {
+                ItemRarity newRarity = ItemRarity.getByWeight(rarity.getWeight() + 1);
+                builder.addLore(newRarity.getColor() + "&k#" + newRarity.getColor() + "&l" + newRarity.getName() + type.toString() + "&k#");
+            }
+        }
+
         builder.addLore(rarity.getColor() + "&l" + rarity.getName() + type.toString());
 
         // Add custom data.
@@ -217,11 +205,32 @@ public class CustomItem implements Cloneable {
     }
 
     public ItemStack update(ItemStack item) {
-        ItemStack clone = this.item.clone();
+        // Creates a new item builder with default item meta.
+        ItemBuilder clone = new ItemBuilder(this.item.clone());
         clone.setItemMeta(this.item.getItemMeta());
 
-        ItemBuilder builder = new ItemBuilder(clone);
-        ItemMeta meta = this.item.getItemMeta();
+        Map<Enchantment, Integer> enchantments = item.getEnchantments();
+
+        // Checks if the item is upgraded, and if so, saves it.
+        boolean upgraded = false;
+        if(ItemUtils.getStringData(item, "ci-upgraded") != null) {
+            upgraded = ItemUtils.getStringData(item, "ci-upgraded").equals("true");
+
+            if(upgraded) {
+                clone.setPersistentData("ci-upgraded", "true");
+            }
+        }
+
+        // Sets the display name.
+        if(rarity != ItemRarity.NONE) {
+            if(!upgraded) {
+                clone.setDisplayName(rarity.getColor() + this.item.getItemMeta().getDisplayName());
+            }
+            else {
+                ItemRarity newRarity = ItemRarity.getByWeight(rarity.getWeight() + 1);
+                clone.setDisplayName(newRarity.getColor() + this.item.getItemMeta().getDisplayName());
+            }
+        }
 
         // Adds item attributes if there are any.
         boolean hasAttributes = false;
@@ -229,7 +238,7 @@ public class CustomItem implements Cloneable {
             hasAttributes = true;
 
             AttributeModifier attribute = new AttributeModifier(UUID.randomUUID(), itemAtrribute.getType().getAttributeName(), itemAtrribute.getAmount(), AttributeModifier.Operation.ADD_NUMBER, itemAtrribute.getSlot().getSlot());
-            builder.addAttributeModifier(itemAtrribute.getType().getAttribute(), attribute);
+            clone.addAttributeModifier(itemAtrribute.getType().getAttribute(), attribute);
 
             String attributeName = itemAtrribute.getType().getName();
             String amount = "";
@@ -241,54 +250,54 @@ public class CustomItem implements Cloneable {
             }
             amount += "" + itemAtrribute.getAmount();
 
-            builder.addLore("&7" + attributeName + ": " + amount);
+            clone.addLore("&7" + attributeName + ": " + amount);
         }
 
-        // Extra whitepsace to separate item attributes from other things.
+        // Extra whitespace to separate item attributes from other things.
         if(hasAttributes) {
-            builder.addLore("");
+            clone.addLore("");
         }
 
-        builder.setDisplayName(rarity.getColor() + meta.getDisplayName());
-
-        // Add appropriate space after any added lore.
-        if(meta.getLore() != null && meta.getLore().size() != 0) {
-            builder.addLore(" ");
-        }
-
-        if(!item.getItemMeta().getEnchants().isEmpty()) {
-            for(Enchantment enchantment : item.getItemMeta().getEnchants().keySet()) {
+        // Re-adds all old enchantments
+        if(!enchantments.isEmpty()) {
+            for(Enchantment enchantment : enchantments.keySet()) {
                 String name = EnchantmentUtils.enchantmentToString(enchantment);
 
                 if(!EnchantmentUtils.hasLevel(enchantment)) {
-                    builder.addLore("&7" + name);
+                    clone.addLore("&7" + name);
                 }
                 else {
                     String level = EnchantmentUtils.IntegerToRomanNumeral(item.getItemMeta().getEnchants().get(enchantment));
-                    builder.addLore("&7" + name + " " + level);
+                    clone.addLore("&7" + name + " " + level);
                 }
-                builder.addEnchantment(enchantment, item.getItemMeta().getEnchants().get(enchantment));
+                clone.addEnchantment(enchantment, item.getItemMeta().getEnchants().get(enchantment));
             }
 
             if(rarity != ItemRarity.NONE) {
-                builder.addLore("");
+                clone.addLore("");
             }
         }
 
         // Add rarity lore
         if(rarity != ItemRarity.NONE) {
-            builder.addLore(rarity.getColor() + "&l" + rarity.getName() + type.toString());
+            if(!upgraded) {
+                clone.addLore(rarity.getColor() + "&l" + rarity.getName() + type.toString());
+            }
+            else {
+                ItemRarity newRarity = ItemRarity.getByWeight(rarity.getWeight() + 1);
+                clone.addLore(newRarity.getColor() + "&k#" + newRarity.getColor() + "&l" + newRarity.getName() + type.toString() + newRarity.getColor() + "&k#");
+            }
         }
 
         // Add custom data.
-        builder.setPersistentData("ci-id", id)
+        clone.setPersistentData("ci-id", id)
                 .setPersistentData("ci-rarity", rarity.toString());
 
         // Add item flags.
-        builder.addFlag(ItemFlag.HIDE_ENCHANTS)
+        clone.addFlag(ItemFlag.HIDE_ENCHANTS)
                 .addFlag(ItemFlag.HIDE_ATTRIBUTES);
 
-        return builder.build();
+        return clone.build();
     }
 
     public void onBreak(PlayerItemBreakEvent event) {}

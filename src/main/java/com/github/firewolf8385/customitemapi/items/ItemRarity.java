@@ -36,6 +36,21 @@ public enum ItemRarity {
     }
 
     /**
+     * Get an ItemRarity by it's weight.
+     * @param weight Weight to get.
+     * @return ItemRarity.
+     */
+    public static ItemRarity getByWeight(int weight) {
+        for(ItemRarity rarity : values()) {
+            if(rarity.getWeight() == weight) {
+                return rarity;
+            }
+        }
+
+        return NONE;
+    }
+
+    /**
      * Get the configured color of the ItemRarity.
      * @return Configured color.
      */

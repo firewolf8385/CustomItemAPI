@@ -169,6 +169,14 @@ public class ItemBuilder {
     }
 
     /**
+     * Set the ItemMeta of the builder.
+     * @param meta ItemMeta.
+     */
+    public void setItemMeta(ItemMeta meta) {
+        this.meta = meta;
+    }
+
+    /**
      * Set the lore of an item.
      * @param lore
      * @return ItemBuilder
