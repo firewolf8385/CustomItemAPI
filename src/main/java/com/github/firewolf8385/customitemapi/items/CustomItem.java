@@ -130,6 +130,12 @@ public class CustomItem implements Cloneable {
         }
 
         boolean hasAttributes = false;
+
+        if(!itemAtrributes.isEmpty()) {
+            AttributeModifier damageFix = new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 0, AttributeModifier.Operation.MULTIPLY_SCALAR_1);
+            builder.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, damageFix);
+        }
+
         for(ItemAtrribute itemAtrribute : itemAtrributes) {
             hasAttributes = true;
 
@@ -207,6 +213,12 @@ public class CustomItem implements Cloneable {
 
         // Adds item attributes if there are any.
         boolean hasAttributes = false;
+
+        if(!itemAtrributes.isEmpty()) {
+            AttributeModifier damageFix = new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 0, AttributeModifier.Operation.MULTIPLY_SCALAR_1);
+            clone.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, damageFix);
+        }
+
         for(ItemAtrribute itemAtrribute : itemAtrributes) {
             hasAttributes = true;
 
