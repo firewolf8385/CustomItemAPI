@@ -133,20 +133,8 @@ public class CustomItem implements Cloneable {
         for(ItemAtrribute itemAtrribute : itemAtrributes) {
             hasAttributes = true;
 
-            AttributeModifier attribute = new AttributeModifier(UUID.randomUUID(), itemAtrribute.getType().getAttributeName(), itemAtrribute.getAmount(), AttributeModifier.Operation.ADD_NUMBER, itemAtrribute.getSlot().getSlot());
-            builder.addAttributeModifier(itemAtrribute.getType().getAttribute(), attribute);
-
-            String attributeName = itemAtrribute.getType().getName();
-            String amount = "";
-            if(itemAtrribute.getOperation() == ItemAtrribute.Operation.ADD) {
-                amount += "&a+";
-            }
-            else {
-                amount += "&c-";
-            }
-            amount += "" + itemAtrribute.getAmount();
-
-            builder.addLore("&7" + attributeName + ": " + amount);
+            builder.addAttributeModifier(itemAtrribute.getType().getAttribute(), itemAtrribute.toAttributeModifier());
+            builder.addLore(itemAtrribute.toString());
         }
 
         if(hasAttributes) {
@@ -222,20 +210,8 @@ public class CustomItem implements Cloneable {
         for(ItemAtrribute itemAtrribute : itemAtrributes) {
             hasAttributes = true;
 
-            AttributeModifier attribute = new AttributeModifier(UUID.randomUUID(), itemAtrribute.getType().getAttributeName(), itemAtrribute.getAmount(), AttributeModifier.Operation.ADD_NUMBER, itemAtrribute.getSlot().getSlot());
-            clone.addAttributeModifier(itemAtrribute.getType().getAttribute(), attribute);
-
-            String attributeName = itemAtrribute.getType().getName();
-            String amount = "";
-            if(itemAtrribute.getOperation() == ItemAtrribute.Operation.ADD) {
-                amount += "&a+";
-            }
-            else {
-                amount += "&c-";
-            }
-            amount += "" + itemAtrribute.getAmount();
-
-            clone.addLore("&7" + attributeName + ": " + amount);
+            clone.addAttributeModifier(itemAtrribute.getType().getAttribute(), itemAtrribute.toAttributeModifier());
+            clone.addLore(itemAtrribute.toString());
         }
 
         // Extra whitespace to separate item attributes from other things.

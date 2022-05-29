@@ -1,20 +1,22 @@
 package com.github.firewolf8385.customitemapi.items;
 
+import com.github.firewolf8385.customitemapi.utils.chat.ChatUtils;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.inventory.EquipmentSlot;
+
+import java.util.UUID;
 
 /**
  * This class is a wrapper for AttributeModifiers, allowing us to easily create and track attributes.
  */
 public class ItemAtrribute {
     private final Type type;
-    private final Operation operation;
     private final int amount;
     private final Slot slot;
 
-    public ItemAtrribute(Type type, Operation operation, int amount, Slot slot) {
+    public ItemAtrribute(Type type, int amount, Slot slot) {
         this.type = type;
-        this.operation = operation;
         this.amount = amount;
         this.slot = slot;
     }
@@ -25,15 +27,6 @@ public class ItemAtrribute {
      */
     public int getAmount() {
         return amount;
-    }
-
-    /**
-     * Gets the operation of the attribute.
-     * Returns either add or subtract.
-     * @return Attribute Opperation.
-     */
-    public Operation getOperation() {
-        return operation;
     }
 
     /**
@@ -50,6 +43,24 @@ public class ItemAtrribute {
      */
     public Type getType() {
         return type;
+    }
+
+    public AttributeModifier toAttributeModifier() {
+        double amount = this.amount;
+
+        if(type.getOperation() == AttributeModifier.Operation.ADD_SCALAR) {
+            amount = amount / 100.0;
+        }
+
+        return new AttributeModifier(UUID.randomUUID(), type.getAttributeName(), amount, type.getOperation(), slot.getSlot());
+    }
+
+    public String toString() {
+        if(amount > 0) {
+            return ChatUtils.translate("&7" + type.getName() + ": &a+" + amount);
+        }
+
+        return ChatUtils.translate("&7" + type.getName() + ": &c-" + amount);
     }
 
     /**
@@ -75,22 +86,24 @@ public class ItemAtrribute {
     }
 
     public enum Type {
-        ATTACK_SPEED("Attack Speed", Attribute.GENERIC_ATTACK_SPEED, "generic.attackSpeed"),
-        DAMAGE("Damage", Attribute.GENERIC_ATTACK_DAMAGE, "generic.attackDamage"),
-        DEFENSE("Defense", Attribute.GENERIC_ARMOR, "generic.armor"),
-        HEALTH("Health", Attribute.GENERIC_MAX_HEALTH, "generic.maxHealth"),
-        LUCK("Luck", Attribute.GENERIC_LUCK, "generic.luck"),
-        SPEED("Speed", Attribute.GENERIC_MOVEMENT_SPEED, "generic.movementSpeed"),
-        TOUGHNESS("Toughness", Attribute.GENERIC_ARMOR_TOUGHNESS, "generic.armorToughness");
+        ATTACK_SPEED("Attack Speed", Attribute.GENERIC_ATTACK_SPEED, "generic.attackSpeed", AttributeModifier.Operation.ADD_NUMBER),
+        DAMAGE("Damage", Attribute.GENERIC_ATTACK_DAMAGE, "generic.attackDamage", AttributeModifier.Operation.ADD_NUMBER),
+        DEFENSE("Defense", Attribute.GENERIC_ARMOR, "generic.armor", AttributeModifier.Operation.ADD_NUMBER),
+        HEALTH("Health", Attribute.GENERIC_MAX_HEALTH, "generic.maxHealth", AttributeModifier.Operation.ADD_NUMBER),
+        LUCK("Luck", Attribute.GENERIC_LUCK, "generic.luck", AttributeModifier.Operation.ADD_NUMBER),
+        SPEED("Speed", Attribute.GENERIC_MOVEMENT_SPEED, "generic.movementSpeed", AttributeModifier.Operation.ADD_SCALAR),
+        TOUGHNESS("Toughness", Attribute.GENERIC_ARMOR_TOUGHNESS, "generic.armorToughness", AttributeModifier.Operation.ADD_NUMBER);
 
         private final String name;
         private final Attribute attribute;
         private final String attributeName;
+        private final AttributeModifier.Operation operation;
 
-        Type(String name, Attribute attribute, String attributeName) {
+        Type(String name, Attribute attribute, String attributeName, AttributeModifier.Operation operation) {
             this.name = name;
             this.attribute = attribute;
             this.attributeName = attributeName;
+            this.operation = operation;
         }
 
         public Attribute getAttribute() {
@@ -104,13 +117,9 @@ public class ItemAtrribute {
         public String getName() {
             return name;
         }
-    }
 
-    /**
-     * Represents the
-     */
-    public enum Operation {
-        ADD,
-        SUBTRACT
+        public AttributeModifier.Operation getOperation() {
+            return operation;
+        }
     }
 }

@@ -17,8 +17,8 @@ public class AdminSwordItem extends CustomItem {
                 .setDisplayName("Admin Sword")
                 .build();
 
-        addItemAttribute(new ItemAtrribute(ItemAtrribute.Type.DAMAGE, ItemAtrribute.Operation.ADD, 100, ItemAtrribute.Slot.MAIN_HAND));
-        addItemAttribute(new ItemAtrribute(ItemAtrribute.Type.ATTACK_SPEED, ItemAtrribute.Operation.ADD, 100, ItemAtrribute.Slot.MAIN_HAND));
+        addItemAttribute(new ItemAtrribute(ItemAtrribute.Type.DAMAGE, 100, ItemAtrribute.Slot.MAIN_HAND));
+        addItemAttribute(new ItemAtrribute(ItemAtrribute.Type.ATTACK_SPEED, 100, ItemAtrribute.Slot.MAIN_HAND));
         setItem(item);
         setRarity(ItemRarity.LEGENDARY);
         setType(ItemType.SWORD);
