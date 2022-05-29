@@ -9,6 +9,7 @@ import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
@@ -157,6 +158,11 @@ public class ItemBuilder {
      */
     public ItemBuilder setDisplayName(String str) {
         meta.setDisplayName(ChatUtils.translate(str));
+        return this;
+    }
+
+    public ItemBuilder setDurability(Short durability) {
+        ((Damageable) meta).setDamage(durability);
         return this;
     }
 

@@ -15,6 +15,7 @@ public class AdminSwordItem extends CustomItem {
 
         ItemStack item = new ItemBuilder(Material.GOLDEN_SWORD)
                 .setDisplayName("Admin Sword")
+                .setCustomDurability(2)
                 .build();
 
         addItemAttribute(new ItemAtrribute(ItemAtrribute.Type.DAMAGE, 100, ItemAtrribute.Slot.MAIN_HAND));

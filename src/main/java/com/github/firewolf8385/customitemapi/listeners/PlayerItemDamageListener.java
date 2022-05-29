@@ -45,6 +45,13 @@ public class PlayerItemDamageListener implements Listener {
                 event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.ENTITY_ITEM_BREAK, 1F, 1F);
                 event.getPlayer().getInventory().remove(item);
             }
+
+            if(CustomItemAPI.isCustomItem(item)) {
+                int slot = event.getPlayer().getInventory().first(item);
+                if(slot != -1) {
+                    event.getPlayer().getInventory().setItem(slot, CustomItemAPI.fromItemStack(item).update(item));
+                }
+            }
         }
 
         if(CustomItemAPI.isCustomItem(item)) {

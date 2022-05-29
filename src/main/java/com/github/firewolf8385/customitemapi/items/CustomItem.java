@@ -121,6 +121,15 @@ public class CustomItem implements Cloneable {
         ItemBuilder builder = new ItemBuilder(clone);
         ItemMeta meta = item.getItemMeta();
 
+        // Transfer the durability
+        builder.setDurability(item.getDurability());
+
+        // Also Custom Durability
+        if(ItemUtils.getIntData(item, "max-durability") != 0) {
+            builder.setCustomDurability(ItemUtils.getIntData(item, "max-durability"));
+            builder.setPersistentData("current-durability", ItemUtils.getIntData(item, "current-durability"));
+        }
+
         if(!CustomItemAPI.isUpgraded(item)) {
             builder.setDisplayName(rarity.getColor() + meta.getDisplayName());
         }
@@ -167,6 +176,13 @@ public class CustomItem implements Cloneable {
             builder.addLore("");
         }
 
+        if(ItemUtils.getIntData(item, "max-durability") != 0) {
+            int maxDurability = ItemUtils.getIntData(item, "max-durability");
+            int currentDurability = ItemUtils.getIntData(item, "current-durability");
+
+            builder.addLore("&7Durability: &a" + currentDurability + "&7/&a" + maxDurability);
+        }
+
         // Add rarity lore
         if(rarity != ItemRarity.NONE) {
             if(!CustomItemAPI.isUpgraded(item)) {
@@ -193,6 +209,15 @@ public class CustomItem implements Cloneable {
         // Creates a new item builder with default item meta.
         ItemBuilder clone = new ItemBuilder(this.item.clone());
         clone.setItemMeta(this.item.getItemMeta());
+
+        // Also Custom Durability
+        if(ItemUtils.getIntData(item, "max-durability") != 0) {
+            clone.setCustomDurability(ItemUtils.getIntData(item, "max-durability"));
+            clone.setPersistentData("current-durability", ItemUtils.getIntData(item, "current-durability"));
+        }
+
+        // Transfer the durability
+        clone.setDurability(item.getDurability());
 
         Map<Enchantment, Integer> enchantments = item.getEnchantments();
 
@@ -249,6 +274,13 @@ public class CustomItem implements Cloneable {
             if(rarity != ItemRarity.NONE) {
                 clone.addLore("");
             }
+        }
+
+        if(ItemUtils.getIntData(item, "max-durability") != 0) {
+            int maxDurability = ItemUtils.getIntData(item, "max-durability");
+            int currentDurability = ItemUtils.getIntData(item, "current-durability");
+
+            clone.addLore("&7Durability: &a" + currentDurability + "&7/&a" + maxDurability);
         }
 
         // Add rarity lore
