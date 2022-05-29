@@ -133,6 +133,10 @@ public final class CustomItemAPI extends JavaPlugin {
      * @return Whether it is a Custom Item.
      */
     public static boolean isCustomItem(ItemStack item) {
+        if(item.getItemMeta() == null) {
+            return false;
+        }
+
         return ItemUtils.getStringData(item, "ci-id") != null;
     }
 
