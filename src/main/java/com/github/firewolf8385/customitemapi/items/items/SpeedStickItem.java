@@ -18,7 +18,7 @@ public class SpeedStickItem extends CustomItem {
         setItem(item);
         setRarity(ItemRarity.LEGENDARY);
 
-        addItemAttribute(new ItemAtrribute(ItemAtrribute.Type.SPEED, 10, ItemAtrribute.Slot.MAIN_HAND));
+        addItemAttribute(new ItemAtrribute(ItemAtrribute.Type.SPEED, 500, ItemAtrribute.Slot.MAIN_HAND));
     }
 
 }
