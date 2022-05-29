@@ -79,6 +79,7 @@ public class ItemAtrribute {
         DAMAGE("Damage", Attribute.GENERIC_ATTACK_DAMAGE, "generic.attackDamage"),
         DEFENSE("Defense", Attribute.GENERIC_ARMOR, "generic.armor"),
         HEALTH("Health", Attribute.GENERIC_MAX_HEALTH, "generic.maxHealth"),
+        LUCK("Luck", Attribute.GENERIC_LUCK, "generic.luck"),
         SPEED("Speed", Attribute.GENERIC_MOVEMENT_SPEED, "generic.movementSpeed"),
         TOUGHNESS("Toughness", Attribute.GENERIC_ARMOR_TOUGHNESS, "generic.armorToughness");
 
