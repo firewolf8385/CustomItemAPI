@@ -5,6 +5,7 @@ import com.github.firewolf8385.customitemapi.addon.AddonManager;
 import com.github.firewolf8385.customitemapi.commands.AbstractCommand;
 import com.github.firewolf8385.customitemapi.items.CustomItem;
 import com.github.firewolf8385.customitemapi.items.items.AdminSwordItem;
+import com.github.firewolf8385.customitemapi.items.items.SpeedStickItem;
 import com.github.firewolf8385.customitemapi.items.items.TestStickItem;
 import com.github.firewolf8385.customitemapi.listeners.*;
 import com.github.firewolf8385.customitemapi.settings.SettingsManager;
@@ -70,6 +71,7 @@ public final class CustomItemAPI extends JavaPlugin {
         Addon addon = new Addon(this, "customitemapi", Material.GOLDEN_SWORD);
         addon.registerItem(new TestStickItem());
         addon.registerItem(new AdminSwordItem());
+        addon.registerItem(new SpeedStickItem());
         addonManager.registerAddon(addon);
     }
 
