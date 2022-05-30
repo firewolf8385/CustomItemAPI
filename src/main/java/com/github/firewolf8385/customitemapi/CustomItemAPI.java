@@ -4,6 +4,7 @@ import com.github.firewolf8385.customitemapi.addon.Addon;
 import com.github.firewolf8385.customitemapi.addon.AddonManager;
 import com.github.firewolf8385.customitemapi.commands.AbstractCommand;
 import com.github.firewolf8385.customitemapi.items.CustomItem;
+import com.github.firewolf8385.customitemapi.items.ItemRarity;
 import com.github.firewolf8385.customitemapi.items.items.AdminBowItem;
 import com.github.firewolf8385.customitemapi.items.items.AdminSwordItem;
 import com.github.firewolf8385.customitemapi.items.items.SpeedStickItem;
@@ -98,20 +99,8 @@ public final class CustomItemAPI extends JavaPlugin {
             return null;
         }
 
-        CustomItem customItem = null;
         String id = ItemUtils.getStringData(item, "ci-id");
-
-        try {
-            customItem = (CustomItem) getItem(id).clone();
-
-            ItemMeta meta = item.getItemMeta();
-            customItem.setEnchantments(meta.getEnchants());
-        }
-        catch (Exception exception) {
-            exception.printStackTrace();
-        }
-
-        return customItem;
+        return getItem(id);
     }
 
     /**
@@ -129,6 +118,25 @@ public final class CustomItemAPI extends JavaPlugin {
      */
     public static CustomItem getItem(String id) {
         return items.get(id);
+    }
+
+    public static ItemRarity getRarity(ItemStack item) {
+        // Exit if the item isn't a custom item.
+        if(!isCustomItem(item)) {
+            return ItemRarity.NONE;
+        }
+
+        // Gets the ItemRarity of item.
+        ItemRarity rarity = CustomItemAPI.fromItemStack(item).getRarity();
+
+        // Checks if the item is upgraded.
+        if(isUpgraded(item)) {
+            // If so, returns the rarity above the existing rarity.
+            return ItemRarity.getByWeight(rarity.getWeight() + 1);
+        }
+
+        // if not, returns the rarity.
+        return rarity;
     }
 
     /**

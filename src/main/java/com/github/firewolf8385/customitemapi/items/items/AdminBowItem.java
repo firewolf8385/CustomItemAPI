@@ -15,13 +15,14 @@ public class AdminBowItem extends CustomItem {
 
         ItemStack item = new ItemBuilder(Material.BOW)
                 .setDisplayName("Admin Bow")
-                .setCustomDurability(512)
                 .build();
 
         addItemAttribute(new ItemAtrribute(ItemAtrribute.Type.DAMAGE, 100, ItemAtrribute.Slot.MAIN_HAND));
         setItem(item);
         setRarity(ItemRarity.LEGENDARY);
         setType(ItemType.BOW);
+
+        setMaxDurability(512);
     }
 
 }

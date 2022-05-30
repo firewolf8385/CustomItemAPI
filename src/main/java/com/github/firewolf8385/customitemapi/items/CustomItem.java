@@ -4,7 +4,6 @@ import com.github.firewolf8385.customitemapi.CustomItemAPI;
 import com.github.firewolf8385.customitemapi.utils.items.EnchantmentUtils;
 import com.github.firewolf8385.customitemapi.utils.items.ItemBuilder;
 import com.github.firewolf8385.customitemapi.utils.items.ItemUtils;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
@@ -14,23 +13,23 @@ import org.bukkit.event.inventory.*;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.Damageable;
 
 import java.util.*;
 
 /**
- * Represents a Custom Item, not available in vanilla.
+ * Represents a Custom Item, not available in the base game.
  */
-public class CustomItem implements Cloneable {
+public class CustomItem {
+    // Required values
     private final String id;
-    private String name;
-    private ItemRarity rarity;
-    private ItemType type;
-    private Material material;
-    private ItemStack item;
     private final List<ItemAtrribute> itemAtrributes = new ArrayList<>();
 
-    private Map<Enchantment, Integer> enchantments = new HashMap<>();
+    // Optional values
+    private ItemStack item;
+    private int maxDurability;
+    private ItemRarity rarity;
+    private ItemType type;
 
     /**
      * Creates a Custom Item.
@@ -38,221 +37,163 @@ public class CustomItem implements Cloneable {
      */
     public CustomItem(String id) {
         this.id = id;
-        this.item = new ItemBuilder(Material.STICK).build();
 
-        name = "Custom Item";
-        rarity = ItemRarity.COMMON;
-        type = ItemType.NONE;
-        material = Material.STICK;
+        this.item = new ItemBuilder(Material.STICK).setDisplayName("Custom Item").build();
+        this.maxDurability = 0;
+        this.rarity = ItemRarity.NONE;
+        this.type = ItemType.NONE;
     }
 
+    /**
+     * Adds an item attribute to the custom item.
+     * @param itemAtrribute ItemAttribute to add.
+     */
     public void addItemAttribute(ItemAtrribute itemAtrribute) {
         itemAtrributes.add(itemAtrribute);
     }
 
     /**
-     * Clone the object. Used for updating items.
-     * @return The cloned object.
-     * @throws CloneNotSupportedException
-     */
-    @Override
-    public Object clone() throws CloneNotSupportedException {
-        return super.clone();    // return shallow copy
-    }
-
-    public List<ItemAtrribute> getItemAtrributes() {
-        return itemAtrributes;
-    }
-
-    /**
      * Get the id of the custom item.
-     * @return ID of the custom item.
+     * @return id of the custom item.
      */
     public String getID() {
         return id;
     }
 
     /**
-     * Set the enchantments of the item.
-     * This is used for converting an ItemStack to a CustomItem.
-     * @param enchantments Enchantment map.
-     * @return The Custom Item.
+     * Get the item attributes of the custom item.
+     * @return Item Attributes.
      */
-    public CustomItem setEnchantments(Map<Enchantment, Integer> enchantments) {
-        this.enchantments = enchantments;
-        return  this;
+    public List<ItemAtrribute> getItemAtrributes() {
+        return itemAtrributes;
     }
 
-    public CustomItem setItem(ItemStack item) {
+    /**
+     * Get the max durability of the custom item.
+     * @return Max durability of the item.
+     */
+    public int getMaxDurability() {
+        return maxDurability;
+    }
+
+    /**
+     * Get the rarity of the Custom Item.
+     * @return Rarity of the custom item.
+     */
+    public ItemRarity getRarity() {
+        return rarity;
+    }
+
+    /**
+     * Get the ItemType of the Custom Item.
+     * @return ItemType.
+     */
+    public ItemType getType() {
+        return type;
+    }
+
+    /**
+     * Set the base ItemStack of the custom item.
+     * @param item New base ItemStack.
+     */
+    public void setItem(ItemStack item) {
         this.item = item;
-        return this;
     }
 
     /**
-     * Set the material of the item.
-     * @param material The material.
-     * @return The Custom Item.
+     * Changes the max durability of the custom item.
+     * @param maxDurability New max durability.
      */
-    public CustomItem setMaterial(Material material) {
-        this.material = material;
-        return this;
+    public void setMaxDurability(int maxDurability) {
+        this.maxDurability = maxDurability;
     }
 
     /**
-     * Set the rarity of the item.
-     * @param rarity The item rarity.
-     * @return The Custom Item.
+     * Changes the rarity of the custom item.
+     * @param rarity New rarity.
      */
-    public CustomItem setRarity(ItemRarity rarity) {
+    public void setRarity(ItemRarity rarity) {
         this.rarity = rarity;
-        return this;
     }
 
     /**
-     * Set the type of the item.
-     * @param type The item type.
-     * @return The Custom Item.
+     * Changes the type of item the custom item is.
+     * @param type New Item Type.
      */
-    public CustomItem setType(ItemType type) {
+    public void setType(ItemType type) {
         this.type = type;
-        return this;
     }
 
+    /**
+     * Gets the ItemStack that the Custom Item represents.
+     * @return Represented ItemStack.
+     */
     public ItemStack toItemStack() {
-        ItemStack clone = item.clone();
-        clone.setItemMeta(item.getItemMeta());
-
-        ItemBuilder builder = new ItemBuilder(clone);
-        ItemMeta meta = item.getItemMeta();
-
-        // Transfer the durability
-        builder.setDurability(item.getDurability());
-
-        // Also Custom Durability
-        if(ItemUtils.getIntData(item, "max-durability") != 0) {
-            builder.setCustomDurability(ItemUtils.getIntData(item, "max-durability"));
-            builder.setPersistentData("current-durability", ItemUtils.getIntData(item, "current-durability"));
-        }
-
-        if(!CustomItemAPI.isUpgraded(item)) {
-            builder.setDisplayName(rarity.getColor() + meta.getDisplayName());
-        }
-        else {
-            ItemRarity newRarity = ItemRarity.getByWeight(rarity.getWeight() + 1);
-            builder.setDisplayName(newRarity.getColor() + ChatColor.stripColor(meta.getDisplayName()));
-        }
-
-        boolean hasAttributes = false;
-
-        if(!itemAtrributes.isEmpty()) {
-            AttributeModifier damageFix = new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 0, AttributeModifier.Operation.MULTIPLY_SCALAR_1);
-            builder.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, damageFix);
-        }
-
-        for(ItemAtrribute itemAtrribute : itemAtrributes) {
-            hasAttributes = true;
-
-            builder.addAttributeModifier(itemAtrribute.getType().getAttribute(), itemAtrribute.toAttributeModifier());
-            builder.addLore(itemAtrribute.toString());
-        }
-
-        if(hasAttributes) {
-            builder.addLore("");
-        }
-
-        // Add appropriate space after any added lore.
-        if(meta.getLore() != null && meta.getLore().size() != 0) {
-            builder.addLore(" ");
-        }
-
-        if(!meta.getEnchants().isEmpty()) {
-            for(Enchantment enchantment : meta.getEnchants().keySet()) {
-                // Skip if the enchantment level is 0.
-                if(meta.getEnchants().get(enchantment) == 0) {
-                    continue;
-                }
-
-                String name = EnchantmentUtils.enchantmentToString(enchantment);
-                String level = EnchantmentUtils.IntegerToRomanNumeral(meta.getEnchants().get(enchantment));
-                builder.addLore("&7" + name + level);
-                builder.addEnchantment(enchantment, meta.getEnchants().get(enchantment));
-            }
-            builder.addLore("");
-        }
-
-        if(ItemUtils.getIntData(item, "max-durability") != 0) {
-            int maxDurability = ItemUtils.getIntData(item, "max-durability");
-            int currentDurability = ItemUtils.getIntData(item, "current-durability");
-
-            builder.addLore("&7Durability: &a" + currentDurability + "&7/&a" + maxDurability);
-        }
-
-        // Add rarity lore
-        if(rarity != ItemRarity.NONE) {
-            if(!CustomItemAPI.isUpgraded(item)) {
-                builder.addLore(rarity.getColor() + "&l" + rarity.getName() + type.toString());
-            }
-            else {
-                ItemRarity newRarity = ItemRarity.getByWeight(rarity.getWeight() + 1);
-                builder.addLore(newRarity.getColor() + "&k&l#&r " + newRarity.getColor() + "&l" + newRarity.getName() + type.toString() + " &k#");
-            }
-        }
-
-        // Add custom data.
-        builder.setPersistentData("ci-id", id)
-                .setPersistentData("ci-rarity", rarity.toString());
-
-        // Add item flags.
-        builder.addFlag(ItemFlag.HIDE_ENCHANTS)
-                .addFlag(ItemFlag.HIDE_ATTRIBUTES);
-
-        return builder.build();
+        return update(this.item);
     }
 
+    /**
+     * Updates an item stack in case of any changes to the custom item.
+     * @param item ItemStack to update.
+     * @return Updated item stack.
+     */
     public ItemStack update(ItemStack item) {
         // Creates a new item builder with default item meta.
         ItemBuilder clone = new ItemBuilder(this.item.clone());
         clone.setItemMeta(this.item.getItemMeta());
 
-        // Also Custom Durability
-        if(ItemUtils.getIntData(item, "max-durability") != 0) {
-            clone.setCustomDurability(ItemUtils.getIntData(item, "max-durability"));
-            clone.setPersistentData("current-durability", ItemUtils.getIntData(item, "current-durability"));
-        }
 
-        // Transfer the durability
-        clone.setDurability(item.getDurability());
+        // Sets the custom item id.
+        clone.setPersistentData("ci-id", id);
 
-        Map<Enchantment, Integer> enchantments = item.getEnchantments();
-
+        // Sets the item as upgraded if it is upgraded.
         if(CustomItemAPI.isUpgraded(item)) {
             clone.setPersistentData("ci-upgraded", "true");
         }
 
-        // Sets the display name.
-        if(rarity != ItemRarity.NONE) {
-            if(!CustomItemAPI.isUpgraded(item)) {
-                clone.setDisplayName(rarity.getColor() + this.item.getItemMeta().getDisplayName());
+        // Sets up custom durability if that applies.
+        if(maxDurability > 0) {
+            clone.setPersistentData("ci-max_durability", maxDurability);
+
+            if(ItemUtils.getIntData(item, "ci-current_durability") == 0) {
+                clone.setPersistentData("ci-current_durability", maxDurability);
             }
             else {
-                ItemRarity newRarity = ItemRarity.getByWeight(rarity.getWeight() + 1);
-                clone.setDisplayName(newRarity.getColor() + this.item.getItemMeta().getDisplayName());
+                clone.setPersistentData("ci-current_durability", ItemUtils.getIntData(item, "ci-current_durability"));
+            }
+
+            // Sets the item's durability if it applies.
+            if(item.getItemMeta() instanceof Damageable) {
+                clone.setDurability(item.getDurability());
             }
         }
+
+
+
+        // Sets the item's display name.
+        ItemRarity rarity;
+        if(!CustomItemAPI.isCustomItem(item)) {
+            rarity = this.rarity;
+        }
+        else {
+            rarity = CustomItemAPI.getRarity(item);
+        }
+        clone.setDisplayName(rarity.getColor() + this.item.getItemMeta().getDisplayName());
 
         // Adds item attributes if there are any.
         boolean hasAttributes = false;
 
-        if(!itemAtrributes.isEmpty()) {
+        if(itemAtrributes.isEmpty()) {
             AttributeModifier damageFix = new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 0, AttributeModifier.Operation.MULTIPLY_SCALAR_1);
             clone.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, damageFix);
         }
+        else {
+            for(ItemAtrribute itemAtrribute : itemAtrributes) {
+                hasAttributes = true;
 
-        for(ItemAtrribute itemAtrribute : itemAtrributes) {
-            hasAttributes = true;
-
-            clone.addAttributeModifier(itemAtrribute.getType().getAttribute(), itemAtrribute.toAttributeModifier());
-            clone.addLore(itemAtrribute.toString());
+                clone.addAttributeModifier(itemAtrribute.getType().getAttribute(), itemAtrribute.toAttributeModifier());
+                clone.addLore(itemAtrribute.toString());
+            }
         }
 
         // Extra whitespace to separate item attributes from other things.
@@ -261,51 +202,62 @@ public class CustomItem implements Cloneable {
         }
 
         // Re-adds all old enchantments
-        if(!enchantments.isEmpty()) {
-            for(Enchantment enchantment : enchantments.keySet()) {
-                String name = EnchantmentUtils.enchantmentToString(enchantment);
+        if(!item.getEnchantments().isEmpty()) {
+            boolean hasEnchantments = false;
 
-                if(!EnchantmentUtils.hasLevel(enchantment)) {
-                    clone.addLore("&7" + name);
+            // Loops through all enchantments on the old item.
+            for(Enchantment enchantment : item.getEnchantments().keySet()) {
+                // Skip if the enchantment level is 0.
+                if(item.getEnchantments().get(enchantment) == 0) {
+                    continue;
                 }
-                else {
-                    String level = EnchantmentUtils.IntegerToRomanNumeral(item.getItemMeta().getEnchants().get(enchantment));
-                    clone.addLore("&7" + name + " " + level);
-                }
-                clone.addEnchantment(enchantment, item.getItemMeta().getEnchants().get(enchantment));
+
+                String name = EnchantmentUtils.enchantmentToString(enchantment);
+                String level = EnchantmentUtils.IntegerToRomanNumeral(item.getEnchantments().get(enchantment));
+                clone.addLore("&7" + name + " " + level);
+                clone.addEnchantment(enchantment, item.getEnchantments().get(enchantment));
             }
 
-            if(rarity != ItemRarity.NONE) {
+            // Adds extra whitespace only if the item has visible enchantments.
+            // Used to give items a "glow" effect without displaying the enchantment used.
+            if(!hasEnchantments) {
                 clone.addLore("");
             }
         }
 
-        if(ItemUtils.getIntData(item, "max-durability") != 0) {
-            int maxDurability = ItemUtils.getIntData(item, "max-durability");
-            int currentDurability = ItemUtils.getIntData(item, "current-durability");
+        // Adds the durability counter.
+        if(maxDurability > 0) {
+            int currentDurability;
+
+            if(ItemUtils.getIntData(item, "ci-current_durability") == 0) {
+                currentDurability = maxDurability;
+            }
+            else {
+                currentDurability = ItemUtils.getIntData(item, "ci-current_durability");
+            }
 
             clone.addLore("&7Durability: &a" + currentDurability + "&7/&a" + maxDurability);
         }
 
         // Add rarity lore
         if(rarity != ItemRarity.NONE) {
+            // Checks if the item is upgraded.
             if(!CustomItemAPI.isUpgraded(item)) {
+                // If not, add normal rarity lore.
                 clone.addLore(rarity.getColor() + "&l" + rarity.getName() + type.toString());
             }
             else {
-                ItemRarity newRarity = ItemRarity.getByWeight(rarity.getWeight() + 1);
-                clone.addLore(newRarity.getColor() + "&k&l#&r " + newRarity.getColor() + "&l" + newRarity.getName() + type.toString() + " &k#");
+                // If so, use upgraded rarity lore.
+                clone.addLore(rarity.getColor() + "&k&l#&r " + rarity.getColor() + "&l" + rarity.getName() + type.toString() + " &k#");
             }
         }
 
-        // Add custom data.
-        clone.setPersistentData("ci-id", id)
-                .setPersistentData("ci-rarity", rarity.toString());
-
         // Add item flags.
-        clone.addFlag(ItemFlag.HIDE_ENCHANTS)
-                .addFlag(ItemFlag.HIDE_ATTRIBUTES);
+        clone.addFlag(ItemFlag.HIDE_ENCHANTS);
+        clone.addFlag(ItemFlag.HIDE_ATTRIBUTES);
+        clone.addFlag(ItemFlag.HIDE_UNBREAKABLE);
 
+        // Builds the updated item.
         return clone.build();
     }
 

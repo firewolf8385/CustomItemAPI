@@ -23,8 +23,8 @@ public class PlayerItemDamageListener implements Listener {
         ItemStack item = event.getItem();
         ItemMeta meta = item.getItemMeta();
 
-        NamespacedKey maxDurability = new NamespacedKey(plugin, "max-durability");
-        NamespacedKey currentDurability = new NamespacedKey(plugin, "current-durability");
+        NamespacedKey maxDurability = new NamespacedKey(plugin, "ci-max_durability");
+        NamespacedKey currentDurability = new NamespacedKey(plugin, "ci-current_durability");
         PersistentDataContainer container = meta.getPersistentDataContainer();
 
         if(container.has(maxDurability, PersistentDataType.INTEGER)) {
