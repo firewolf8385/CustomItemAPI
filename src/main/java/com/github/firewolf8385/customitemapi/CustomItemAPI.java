@@ -5,10 +5,7 @@ import com.github.firewolf8385.customitemapi.addon.AddonManager;
 import com.github.firewolf8385.customitemapi.commands.AbstractCommand;
 import com.github.firewolf8385.customitemapi.items.CustomItem;
 import com.github.firewolf8385.customitemapi.items.ItemRarity;
-import com.github.firewolf8385.customitemapi.items.items.AdminBowItem;
-import com.github.firewolf8385.customitemapi.items.items.AdminSwordItem;
-import com.github.firewolf8385.customitemapi.items.items.SpeedStickItem;
-import com.github.firewolf8385.customitemapi.items.items.TestStickItem;
+import com.github.firewolf8385.customitemapi.items.items.*;
 import com.github.firewolf8385.customitemapi.listeners.*;
 import com.github.firewolf8385.customitemapi.settings.SettingsManager;
 import com.github.firewolf8385.customitemapi.utils.gui.GUIListeners;
@@ -77,6 +74,7 @@ public final class CustomItemAPI extends JavaPlugin {
         addon.registerItem(new AdminSwordItem());
         addon.registerItem(new SpeedStickItem());
         addon.registerItem(new AdminBowItem());
+        addon.registerItem(new AdminCrossbowItem());
         addonManager.registerAddon(addon);
     }
 
