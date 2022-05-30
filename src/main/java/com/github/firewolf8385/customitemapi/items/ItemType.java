@@ -17,7 +17,8 @@ public enum ItemType {
     HELMET(" HELMET"),
     CHESTPLATE(" CHESTPLATE"),
     LEGGINGS(" LEGGINGS"),
-    BOOTS(" BOOTS");
+    BOOTS(" BOOTS"),
+    WAND(" WAND");
 
     private final String toString;
 
