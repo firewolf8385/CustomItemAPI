@@ -14,7 +14,7 @@ public class AdminBowItem extends CustomItem {
         super("admin_bow");
 
         ItemStack item = new ItemBuilder(Material.BOW)
-                .setDisplayName("Admin Sword")
+                .setDisplayName("Admin Bow")
                 .setCustomDurability(512)
                 .build();
 
