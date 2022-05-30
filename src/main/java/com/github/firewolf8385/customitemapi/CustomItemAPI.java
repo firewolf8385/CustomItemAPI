@@ -4,6 +4,7 @@ import com.github.firewolf8385.customitemapi.addon.Addon;
 import com.github.firewolf8385.customitemapi.addon.AddonManager;
 import com.github.firewolf8385.customitemapi.commands.AbstractCommand;
 import com.github.firewolf8385.customitemapi.items.CustomItem;
+import com.github.firewolf8385.customitemapi.items.items.AdminBowItem;
 import com.github.firewolf8385.customitemapi.items.items.AdminSwordItem;
 import com.github.firewolf8385.customitemapi.items.items.SpeedStickItem;
 import com.github.firewolf8385.customitemapi.items.items.TestStickItem;
@@ -47,6 +48,8 @@ public final class CustomItemAPI extends JavaPlugin {
         // Registers all required listeners.
         Bukkit.getPluginManager().registerEvents(new CraftItemListener(), this);
         Bukkit.getPluginManager().registerEvents(new EnchantItemListener(), this);
+        Bukkit.getPluginManager().registerEvents(new EntityDamageByEntityListener(), this);
+        Bukkit.getPluginManager().registerEvents(new EntityShootBowListener(this), this);
         Bukkit.getPluginManager().registerEvents(new FurnaceSmeltListener(), this);
         Bukkit.getPluginManager().registerEvents(new GUIListeners(), this);
         Bukkit.getPluginManager().registerEvents(new InventoryClickListener(), this);
@@ -72,6 +75,7 @@ public final class CustomItemAPI extends JavaPlugin {
         addon.registerItem(new TestStickItem());
         addon.registerItem(new AdminSwordItem());
         addon.registerItem(new SpeedStickItem());
+        addon.registerItem(new AdminBowItem());
         addonManager.registerAddon(addon);
     }
 

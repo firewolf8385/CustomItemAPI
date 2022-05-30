@@ -60,6 +60,10 @@ public class CustomItem implements Cloneable {
         return super.clone();    // return shallow copy
     }
 
+    public List<ItemAtrribute> getItemAtrributes() {
+        return itemAtrributes;
+    }
+
     /**
      * Get the id of the custom item.
      * @return ID of the custom item.
