@@ -216,11 +216,12 @@ public class CustomItem {
                 String level = EnchantmentUtils.IntegerToRomanNumeral(item.getEnchantments().get(enchantment));
                 clone.addLore("&7" + name + " " + level);
                 clone.addEnchantment(enchantment, item.getEnchantments().get(enchantment));
+                hasEnchantments = true;
             }
 
             // Adds extra whitespace only if the item has visible enchantments.
             // Used to give items a "glow" effect without displaying the enchantment used.
-            if(!hasEnchantments) {
+            if(hasEnchantments) {
                 clone.addLore("");
             }
         }
