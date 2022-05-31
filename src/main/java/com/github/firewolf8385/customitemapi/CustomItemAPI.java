@@ -75,6 +75,7 @@ public final class CustomItemAPI extends JavaPlugin {
         addon.registerItem(new SpeedStickItem());
         addon.registerItem(new AdminBowItem());
         addon.registerItem(new AdminCrossbowItem());
+        addon.registerItem(new AdminTridentItem());
         addonManager.registerAddon(addon);
     }
 
