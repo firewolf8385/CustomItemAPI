@@ -13,6 +13,7 @@ import org.bukkit.event.inventory.*;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.CrossbowMeta;
 import org.bukkit.inventory.meta.Damageable;
 
 import java.util.*;
@@ -251,6 +252,11 @@ public class CustomItem {
                 // If so, use upgraded rarity lore.
                 clone.addLore(rarity.getColor() + "&k&l#&r " + rarity.getColor() + "&l" + rarity.getName() + type.toString() + " &k#");
             }
+        }
+
+        // Copies loaded crossbow projectiles.
+        if(item.getItemMeta() instanceof CrossbowMeta temp) {
+            clone.setChargedProjectiles(temp.getChargedProjectiles());
         }
 
         // Add item flags.
