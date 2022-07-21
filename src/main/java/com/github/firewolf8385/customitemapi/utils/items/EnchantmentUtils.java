@@ -60,6 +60,7 @@ public class EnchantmentUtils {
             case "SILK_TOUCH" -> "Silk Touch";
             case "SOUL_SPEED" -> "Soul Speed";
             case "SWEEPING_EDGE" -> "Sweeping Edge";
+            case "SWIFT_SNEAK" -> "Swift Sneak";
             case "THORNS" -> "Thorns";
             case "VANISHING_CURSE" -> "&cCurse of Vanishing";
             case "WATER_WORKER" -> "Aqua Affinity";
