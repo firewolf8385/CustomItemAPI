@@ -6,6 +6,8 @@ import com.github.firewolf8385.customitemapi.items.CustomItem;
 import com.github.firewolf8385.customitemapi.items.ItemRarity;
 import com.github.firewolf8385.customitemapi.utils.chat.ChatUtils;
 import com.github.firewolf8385.customitemapi.utils.items.ItemBuilder;
+import com.github.firewolf8385.customitemapi.utils.items.ItemUtils;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -62,6 +64,8 @@ public class ItemCMD extends AbstractCommand {
                 sender.sendMessage("");
             }
 
+            case "rename" -> rename(sender, args);
+
             default -> help(sender);
         }
     }
@@ -75,7 +79,7 @@ public class ItemCMD extends AbstractCommand {
     public List<String> tabComplete(String[] args) {
 
         if(args.length == 1) {
-            return Arrays.asList("give", "update", "set", "browse", "info");
+            return Arrays.asList("give", "update", "set", "browse", "info", "rename");
         }
 
         switch (args[0]) {
@@ -102,7 +106,7 @@ public class ItemCMD extends AbstractCommand {
                 return Collections.emptyList();
             }
 
-            case "update" -> {
+            case "update", "rename" -> {
                 return Collections.emptyList();
             }
 
@@ -268,5 +272,37 @@ public class ItemCMD extends AbstractCommand {
                 }
             }
         }
+    }
+
+    /**
+     * Renames a custom item.
+     * @param sender Command sender.
+     * @param args Command arguments.
+     */
+    private void rename(CommandSender sender, String[] args) {
+        Player p = (Player) sender;
+
+        ItemStack item = p.getInventory().getItemInMainHand();
+
+        if(!CustomItemAPI.isCustomItem(item)) {
+            ChatUtils.chat(sender, "&c&l(&7!&c&l) &cThat is not a custom item!");
+            return;
+        }
+
+        if(args.length < 2) {
+            ChatUtils.chat(sender, "&a&l(&7!&a&l) &aItem Display Name has been reset.");
+            ItemBuilder builder = new ItemBuilder(item)
+                    .setPersistentData("ci-display_name", "");
+
+            p.getInventory().setItemInMainHand(CustomItemAPI.fromItemStack(builder.build()).update(builder.build()));
+            return;
+        }
+
+        ItemBuilder builder = new ItemBuilder(item)
+                .setPersistentData("ci-display_name", StringUtils.join(Arrays.copyOfRange(args, 1, args.length), " "));
+
+        p.getInventory().setItemInMainHand(CustomItemAPI.fromItemStack(builder.build()).update(builder.build()));
+
+        ChatUtils.chat(sender, "&a&l(&7!&a&l) &aItem name has been set to " + CustomItemAPI.getRarity(item).getColor() + StringUtils.join(Arrays.copyOfRange(args, 1, args.length), " ") + "&a.");
     }
 }

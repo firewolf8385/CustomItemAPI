@@ -179,7 +179,15 @@ public class CustomItem {
         else {
             rarity = CustomItemAPI.getRarity(item);
         }
-        clone.setDisplayName(rarity.getColor() + this.item.getItemMeta().getDisplayName());
+
+        // Sets the name of the item.
+        if(ItemUtils.getStringData(item, "ci-display_name") != null && !ItemUtils.getStringData(item, "ci-display_name").equals("")) {
+            clone.setDisplayName(rarity.getColor() + ItemUtils.getStringData(item, "ci-display_name"));
+            clone.setPersistentData("ci-display_name", ItemUtils.getStringData(item, "ci-display_name"));
+        }
+        else {
+            clone.setDisplayName(rarity.getColor() + this.item.getItemMeta().getDisplayName());
+        }
 
         // Adds item attributes if there are any.
         boolean hasAttributes = false;
