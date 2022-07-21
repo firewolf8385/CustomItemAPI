@@ -18,7 +18,8 @@ public enum ItemType {
     CHESTPLATE(" CHESTPLATE"),
     LEGGINGS(" LEGGINGS"),
     BOOTS(" BOOTS"),
-    WAND(" WAND");
+    WAND(" WAND"),
+    COMPASS(" COMPASS");
 
     private final String toString;
 
