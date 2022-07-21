@@ -223,8 +223,15 @@ public class CustomItem {
 
                 String name = EnchantmentUtils.enchantmentToString(enchantment);
                 String level = EnchantmentUtils.IntegerToRomanNumeral(item.getEnchantments().get(enchantment));
-                clone.addLore("&7" + name + " " + level);
                 clone.addEnchantment(enchantment, item.getEnchantments().get(enchantment));
+
+                if(EnchantmentUtils.hasLevel(enchantment)) {
+                    clone.addLore("&7" + name + " " + level);
+                }
+                else {
+                    clone.addLore("&7" + name);
+                }
+
                 hasEnchantments = true;
             }
 
