@@ -20,7 +20,8 @@ public enum ItemType {
     BOOTS(" BOOTS"),
     WAND(" WAND"),
     COMPASS(" COMPASS"),
-    WINGS(" WINGS");
+    WINGS(" WINGS"),
+    TOTEM(" TOTEM");
 
     private final String toString;
 
