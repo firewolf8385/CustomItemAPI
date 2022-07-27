@@ -21,7 +21,9 @@ public enum ItemType {
     WAND(" WAND"),
     COMPASS(" COMPASS"),
     WINGS(" WINGS"),
-    TOTEM(" TOTEM");
+    TOTEM(" TOTEM"),
+    DYE(" DYE"),
+    PROJECTILE(" PROJECTILE");
 
     private final String toString;
 
