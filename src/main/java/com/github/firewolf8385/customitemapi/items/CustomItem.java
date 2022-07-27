@@ -15,6 +15,7 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.CrossbowMeta;
 import org.bukkit.inventory.meta.Damageable;
+import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.PotionMeta;
 
 import java.util.*;
@@ -249,6 +250,33 @@ public class CustomItem {
             // Used to give items a "glow" effect without displaying the enchantment used.
             if(hasEnchantments) {
                 clone.addLore("");
+            }
+        }
+
+        // Re-adds stored enchantments, used in enchanted books.
+        if(item.getItemMeta() instanceof EnchantmentStorageMeta temp) {
+            boolean hasEnchantments = false;
+            for(Enchantment enchantment : temp.getStoredEnchants().keySet()) {
+                clone.addStoredEnchant(enchantment, temp.getStoredEnchantLevel(enchantment), true);
+
+                String name = EnchantmentUtils.enchantmentToString(enchantment);
+                String level = EnchantmentUtils.IntegerToRomanNumeral(temp.getStoredEnchantLevel(enchantment));
+
+                if(EnchantmentUtils.hasLevel(enchantment)) {
+                    clone.addLore("&7" + name + " " + level);
+                }
+                else {
+                    clone.addLore("&7" + name);
+                }
+
+                hasEnchantments = true;
+            }
+
+            // Adds extra whitespace only if the item has visible enchantments.
+            // Used to give items a "glow" effect without displaying the enchantment used.
+            if(hasEnchantments) {
+                clone.addLore("");
+                clone.addFlag(ItemFlag.HIDE_POTION_EFFECTS);
             }
         }
 

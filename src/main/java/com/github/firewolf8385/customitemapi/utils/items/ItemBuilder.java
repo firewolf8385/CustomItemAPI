@@ -118,6 +118,11 @@ public class ItemBuilder {
         return this;
     }
 
+    public ItemBuilder addStoredEnchant(Enchantment enchantment, int level, boolean ignoreLevelRestriction) {
+        ((EnchantmentStorageMeta) meta).addStoredEnchant(enchantment, level, ignoreLevelRestriction);
+        return this;
+    }
+
     /**
      * Get the ItemStack from the builder.
      * @return ItemStack
