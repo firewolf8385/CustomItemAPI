@@ -279,6 +279,9 @@ public class CustomItem {
         clone.addFlag(ItemFlag.HIDE_ATTRIBUTES);
         clone.addFlag(ItemFlag.HIDE_UNBREAKABLE);
 
+        // Fixes the amount of items in the stack.
+        clone.setAmount(item.getAmount());
+
         // Builds the updated item.
         return clone.build();
     }

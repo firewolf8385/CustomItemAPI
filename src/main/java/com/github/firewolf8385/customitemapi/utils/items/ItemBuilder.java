@@ -128,6 +128,11 @@ public class ItemBuilder {
         return item;
     }
 
+    public ItemBuilder setAmount(int amount) {
+        item.setAmount(amount);
+        return this;
+    }
+
     public ItemBuilder setChargedProjectiles(List<ItemStack> projectiles) {
         ((CrossbowMeta) meta).setChargedProjectiles(projectiles);
         return this;
