@@ -192,7 +192,7 @@ public class CustomItem {
         // Adds item attributes if there are any.
         boolean hasAttributes = false;
 
-        if(itemAtrributes.isEmpty()) {
+        if(itemAtrributes.isEmpty() && type != ItemType.NONE) {
             AttributeModifier damageFix = new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 0, AttributeModifier.Operation.MULTIPLY_SCALAR_1);
             clone.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, damageFix);
         }
