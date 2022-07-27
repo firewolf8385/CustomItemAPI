@@ -55,13 +55,13 @@ public class ItemCMD extends AbstractCommand {
             }
 
             case "info" -> {
-                sender.sendMessage("");
+                ChatUtils.chat(sender, "&8&m+-----------------------***-----------------------+");
                 ChatUtils.centeredChat(sender, "&a&lCustomItemAPI");
                 sender.sendMessage("");
                 ChatUtils.chat(sender, "  &8» &aAuthor: &f" + plugin.getDescription().getAuthors().get(0));
                 ChatUtils.chat(sender, "  &8» &aVersion: &f" + plugin.getDescription().getVersion());
                 ChatUtils.chat(sender, "  &8» &aGitHub: &fhttps://github.com/firewolf8385/CustomItemsAPI");
-                sender.sendMessage("");
+                ChatUtils.chat(sender, "&8&m+-----------------------***-----------------------+");
             }
 
             case "rename" -> rename(sender, args);
