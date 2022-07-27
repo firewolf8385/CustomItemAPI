@@ -1,6 +1,7 @@
 package com.github.firewolf8385.customitemapi.utils.items;
 
 import com.github.firewolf8385.customitemapi.utils.chat.ChatUtils;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -164,6 +165,11 @@ public class ItemBuilder {
      */
     public ItemBuilder setDisplayName(String str) {
         meta.setDisplayName(ChatUtils.translate(str));
+        return this;
+    }
+
+    public ItemBuilder setDisplayName(Component name) {
+        meta.displayName(name);
         return this;
     }
 
