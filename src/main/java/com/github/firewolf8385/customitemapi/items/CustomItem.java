@@ -25,6 +25,7 @@ public class CustomItem {
     // Required values
     private final String id;
     private final List<ItemAtrribute> itemAtrributes = new ArrayList<>();
+    private final List<String> description = new ArrayList<>();
 
     // Optional values
     private ItemStack item;
@@ -43,6 +44,14 @@ public class CustomItem {
         this.maxDurability = 0;
         this.rarity = ItemRarity.NONE;
         this.type = ItemType.NONE;
+    }
+
+    public void addDescription(List<String> description) {
+        this.description.addAll(description);
+    }
+
+    public void addDescription(String description) {
+        this.description.add(description);
     }
 
     /**
@@ -240,6 +249,14 @@ public class CustomItem {
             if(hasEnchantments) {
                 clone.addLore("");
             }
+        }
+
+        // Adds the item's description if it has one.
+        if(description.size() > 0) {
+            for(String line : description) {
+                clone.addLore(line);
+            }
+            clone.addLore("");
         }
 
         // Adds the durability counter.
