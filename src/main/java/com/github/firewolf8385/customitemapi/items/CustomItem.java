@@ -13,10 +13,7 @@ import org.bukkit.event.inventory.*;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.CrossbowMeta;
-import org.bukkit.inventory.meta.Damageable;
-import org.bukkit.inventory.meta.EnchantmentStorageMeta;
-import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.inventory.meta.*;
 
 import java.util.*;
 
@@ -323,6 +320,11 @@ public class CustomItem {
         // Copies potion meta.
         if(item.getItemMeta() instanceof PotionMeta temp) {
             clone.setBasePotionData(temp.getBasePotionData());
+        }
+
+        // Copies block state meta.
+        if(item.getItemMeta() instanceof BlockStateMeta temp) {
+            clone.setBlockState(temp.getBlockState());
         }
 
         // Add item flags.

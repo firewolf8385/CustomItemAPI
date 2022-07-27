@@ -7,6 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
+import org.bukkit.block.BlockState;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -139,6 +140,11 @@ public class ItemBuilder {
 
     public ItemBuilder setBasePotionData(PotionData data) {
         ((PotionMeta) meta).setBasePotionData(data);
+        return this;
+    }
+
+    public ItemBuilder setBlockState(BlockState blockState) {
+        ((BlockStateMeta) meta).setBlockState(blockState);
         return this;
     }
 
