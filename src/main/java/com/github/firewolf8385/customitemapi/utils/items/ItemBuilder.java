@@ -10,10 +10,9 @@ import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.CrossbowMeta;
-import org.bukkit.inventory.meta.Damageable;
-import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.*;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.potion.PotionData;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -45,8 +44,8 @@ public class ItemBuilder {
      * @param item ItemStack
      */
     public ItemBuilder(ItemStack item) {
-        this.item = item;
-        meta = item.getItemMeta();
+        this.item = item.clone();
+        meta = this.item.getItemMeta();
     }
 
     public ItemBuilder addAttributeModifier(Attribute attribute, AttributeModifier modifier) {
@@ -130,6 +129,11 @@ public class ItemBuilder {
 
     public ItemBuilder setAmount(int amount) {
         item.setAmount(amount);
+        return this;
+    }
+
+    public ItemBuilder setBasePotionData(PotionData data) {
+        ((PotionMeta) meta).setBasePotionData(data);
         return this;
     }
 

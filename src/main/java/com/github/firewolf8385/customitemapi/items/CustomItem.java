@@ -15,6 +15,7 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.CrossbowMeta;
 import org.bukkit.inventory.meta.Damageable;
+import org.bukkit.inventory.meta.PotionMeta;
 
 import java.util.*;
 
@@ -289,6 +290,11 @@ public class CustomItem {
         // Copies loaded crossbow projectiles.
         if(item.getItemMeta() instanceof CrossbowMeta temp) {
             clone.setChargedProjectiles(temp.getChargedProjectiles());
+        }
+
+        // Copies potion meta.
+        if(item.getItemMeta() instanceof PotionMeta temp) {
+            clone.setBasePotionData(temp.getBasePotionData());
         }
 
         // Add item flags.
