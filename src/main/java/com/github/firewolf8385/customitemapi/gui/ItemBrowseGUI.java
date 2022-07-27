@@ -56,10 +56,15 @@ public class ItemBrowseGUI extends CustomGUI {
             setItem(i, new ItemBuilder(Material.GRAY_STAINED_GLASS_PANE).setDisplayName(" ").build());
         }
 
-        int i = 0;
-        for(CustomItem customItem : addon.getItems()) {
-            setItem(i + 9, customItem.toItemStack());
-            i++;
+        List<CustomItem> items = new ArrayList<>(addon.getItems());
+        int amount = 0;
+        for(int i = ((page - 1) * 27); i <= items.size(); i++) {
+            if(amount >= 27 || i >= items.size()) {
+                break;
+            }
+
+            setItem(amount + 9, items.get(i).toItemStack());
+            amount++;
         }
 
         if(page == 1) {
@@ -67,13 +72,13 @@ public class ItemBrowseGUI extends CustomGUI {
         }
         else {
             setItem(38, new SkullBuilder("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzU0YWFhYjM5NzY0NjQxZmY4NjI3OTMyZDJmZTFhNGNjY2VkOTY1Mzc1MDhkNGFiYzZjZDVmYmJiODc5MTMifX19").setDisplayName("&aPage " + (page - 1)).build(), (p,a) -> {
-                new ItemBrowseGUI(page - 1).open(p);
+                new ItemBrowseGUI(page - 1, true).open(p);
             });
         }
 
-        if(CustomItemAPI.getAddonManager().getAddons().values().size() > (page * 21)) {
+        if(items.size() > (page * 27)) {
             setItem(42, new SkullBuilder("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjFkMGY4MmEyYTRjZGQ4NWY3OWY0ZDlkOTc5OGY5YzNhNWJjY2JlOWM3ZjJlMjdjNWZjODM2NjUxYThmM2Y0NSJ9fX0=").setDisplayName("&aPage " + (page + 1)).build(), (p,a) -> {
-                new ItemBrowseGUI(page + 1).open(p);
+                new ItemBrowseGUI(page + 1, true).open(p);
             });
         }
         else {
