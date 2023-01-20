@@ -1,10 +1,42 @@
 package com.github.firewolf8385.customitemapi.utils.items;
 
+import com.github.firewolf8385.customitemapi.enchantments.CustomEnchantment;
 import org.bukkit.enchantments.Enchantment;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class EnchantmentUtils {
+    private static final List<Enchantment> customEnchantments = new ArrayList<>();
+
+    public static void addEnchantment(CustomEnchantment enchantment) {
+        customEnchantments.add(enchantment);
+    }
+
+    public static Enchantment getEnchantment(String id) {
+        for(Enchantment enchantment : customEnchantments) {
+            if(((CustomEnchantment) enchantment).getId().equals(id)) {
+                return enchantment;
+            }
+        }
+
+        return null;
+    }
+
+    public static List<Enchantment> getEnchantments() {
+        return customEnchantments;
+    }
 
     public static boolean hasLevel(Enchantment enchantment) {
+
+        if(customEnchantments.contains(enchantment)) {
+            if(enchantment.getMaxLevel() == 1) {
+                return false;
+            }
+
+            return true;
+        }
+
         switch (enchantment.getName()) {
             default -> {
                 return true;
@@ -24,6 +56,10 @@ public class EnchantmentUtils {
     }
 
     public static String enchantmentToString(Enchantment e) {
+        if(customEnchantments.contains(e)) {
+            return ((CustomEnchantment) e).getName();
+        }
+
         return switch (e.getName()) {
             case "ARROW_DAMAGE" -> "Power";
             case "ARROW_FIRE" -> "Flame";

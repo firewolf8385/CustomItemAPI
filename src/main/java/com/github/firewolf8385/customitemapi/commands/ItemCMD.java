@@ -1,15 +1,18 @@
 package com.github.firewolf8385.customitemapi.commands;
 
 import com.github.firewolf8385.customitemapi.CustomItemAPI;
+import com.github.firewolf8385.customitemapi.enchantments.CustomEnchantment;
 import com.github.firewolf8385.customitemapi.gui.ItemBrowseGUI;
 import com.github.firewolf8385.customitemapi.items.CustomItem;
 import com.github.firewolf8385.customitemapi.items.ItemRarity;
 import com.github.firewolf8385.customitemapi.utils.chat.ChatUtils;
+import com.github.firewolf8385.customitemapi.utils.items.EnchantmentUtils;
 import com.github.firewolf8385.customitemapi.utils.items.ItemBuilder;
 import com.github.firewolf8385.customitemapi.utils.items.ItemUtils;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.StringUtil;
@@ -53,6 +56,8 @@ public class ItemCMD extends AbstractCommand {
 
                 new ItemBrowseGUI(1).open(player);
             }
+
+            case "enchant" -> enchant(sender, args);
 
             case "info" -> {
                 ChatUtils.chat(sender, "&8&m+-----------------------***-----------------------+");
@@ -132,6 +137,20 @@ public class ItemCMD extends AbstractCommand {
                     return Collections.emptyList();
                 }
             }
+
+            case  "enchant" -> {
+                if(args.length == 2) {
+                    List<String> enchantments = new ArrayList<>();
+                    EnchantmentUtils.getEnchantments().forEach(enchantment -> {
+                        String id = ((CustomEnchantment) enchantment).getId();
+                        enchantments.add(id);
+                    });
+
+                    return enchantments;
+                }
+
+                return Collections.emptyList();
+            }
         }
 
         return Collections.emptyList();
@@ -150,6 +169,39 @@ public class ItemCMD extends AbstractCommand {
         ChatUtils.chat(sender, "  &8» &a/items update");
         ChatUtils.chat(sender, "  &8» &a/items set [attribute] [value]");
         ChatUtils.chat(sender, "&8&m+-----------------------***-----------------------+");
+    }
+
+    private void enchant(CommandSender sender, String[] args) {
+        if(!sender.hasPermission("customitems.enchant")) {
+            ChatUtils.chat(sender, "&c&l(&7!&c&l) &cYou do not have access to that command!");
+            return;
+        }
+
+        if(args.length < 2) {
+            ChatUtils.chat(sender, "&c&l(&7!&c&l) &cUsage: /item enchant [enchantment]");
+            return;
+        }
+
+        Player p = (Player) sender;
+
+        ItemStack item = p.getInventory().getItemInMainHand();
+
+        if(!CustomItemAPI.isCustomItem(item)) {
+            ChatUtils.chat(sender, "&c&l(&7!&c&l) &cThat is not a custom item!");
+            return;
+        }
+
+        Enchantment enchantment = EnchantmentUtils.getEnchantment(args[1].toLowerCase());
+
+        int level = 1;
+        if(args.length == 3) {
+            level = Integer.parseInt(args[2]);
+        }
+
+        ItemStack enchantedItem = new ItemBuilder(item).addEnchantment(enchantment, level).build();
+
+        CustomItem customItem = CustomItemAPI.fromItemStack(item);
+        p.getInventory().setItemInMainHand(customItem.update(enchantedItem));
     }
 
     /**

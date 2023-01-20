@@ -3,15 +3,18 @@ package com.github.firewolf8385.customitemapi;
 import com.github.firewolf8385.customitemapi.addon.Addon;
 import com.github.firewolf8385.customitemapi.addon.AddonManager;
 import com.github.firewolf8385.customitemapi.commands.AbstractCommand;
+import com.github.firewolf8385.customitemapi.enchantments.TestEnchantment;
 import com.github.firewolf8385.customitemapi.items.CustomItem;
 import com.github.firewolf8385.customitemapi.items.ItemRarity;
 import com.github.firewolf8385.customitemapi.items.items.*;
 import com.github.firewolf8385.customitemapi.listeners.*;
 import com.github.firewolf8385.customitemapi.settings.SettingsManager;
 import com.github.firewolf8385.customitemapi.utils.gui.GUIListeners;
+import com.github.firewolf8385.customitemapi.utils.items.EnchantmentUtils;
 import com.github.firewolf8385.customitemapi.utils.items.ItemUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -77,6 +80,8 @@ public final class CustomItemAPI extends JavaPlugin {
         addon.registerItem(new AdminCrossbowItem());
         addon.registerItem(new AdminTridentItem());
         addonManager.registerAddon(addon);
+
+        EnchantmentUtils.addEnchantment(new TestEnchantment());
     }
 
     /**
