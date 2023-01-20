@@ -1,5 +1,5 @@
 name: CustomItemAPI
-version: 0.1
+version: 0.2
 main: com.github.firewolf8385.customitemapi.CustomItemAPI
 api-version: 1.18
 authors: [ firewolf8385 ]
