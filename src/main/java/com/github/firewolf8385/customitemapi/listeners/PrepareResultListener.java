@@ -7,6 +7,7 @@ import com.github.firewolf8385.customitemapi.utils.items.ItemBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -33,6 +34,9 @@ public class PrepareResultListener implements Listener {
             return;
         }
 
+        if(event.getInventory().getType() == InventoryType.ANVIL) {
+            return;
+        }
 
         CustomItem customItem = CustomItemAPI.fromItemStack(item);
 

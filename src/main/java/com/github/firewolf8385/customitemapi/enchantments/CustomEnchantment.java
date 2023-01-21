@@ -2,7 +2,6 @@ package com.github.firewolf8385.customitemapi.enchantments;
 
 import io.papermc.paper.enchantments.EnchantmentRarity;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.ComponentBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
@@ -12,7 +11,6 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-import java.lang.reflect.Field;
 import java.util.Set;
 
 public class CustomEnchantment extends Enchantment {
@@ -31,15 +29,6 @@ public class CustomEnchantment extends Enchantment {
         target = EnchantmentTarget.ALL;
         maxLevel = 5;
         rarity = EnchantmentRarity.COMMON;
-
-        try {
-            Field f = Enchantment.class.getDeclaredField("acceptingNew");
-            f.setAccessible(true);
-            f.set(null, true);
-            Enchantment.registerEnchantment(this);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     public String getId() {

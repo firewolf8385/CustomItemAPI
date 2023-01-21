@@ -1,6 +1,7 @@
 package com.github.firewolf8385.customitemapi.items;
 
 import com.github.firewolf8385.customitemapi.CustomItemAPI;
+import com.github.firewolf8385.customitemapi.enchantments.CustomEnchantment;
 import com.github.firewolf8385.customitemapi.utils.items.EnchantmentUtils;
 import com.github.firewolf8385.customitemapi.utils.items.ItemBuilder;
 import com.github.firewolf8385.customitemapi.utils.items.ItemUtils;
@@ -229,11 +230,11 @@ public class CustomItem {
                     continue;
                 }
 
-                String name = EnchantmentUtils.enchantmentToString(enchantment);
-                String level = EnchantmentUtils.IntegerToRomanNumeral(item.getEnchantments().get(enchantment));
+                String name = CustomItemAPI.getEnchantmentManager().enchantmentToString(enchantment);
+                String level = CustomItemAPI.getEnchantmentManager().integerToRomanNumeral(item.getEnchantments().get(enchantment));
                 clone.addEnchantment(enchantment, item.getEnchantments().get(enchantment));
 
-                if(EnchantmentUtils.hasLevel(enchantment)) {
+                if(enchantment.getMaxLevel() > 1) {
                     clone.addLore("&7" + name + " " + level);
                 }
                 else {
@@ -256,10 +257,10 @@ public class CustomItem {
             for(Enchantment enchantment : temp.getStoredEnchants().keySet()) {
                 clone.addStoredEnchant(enchantment, temp.getStoredEnchantLevel(enchantment), true);
 
-                String name = EnchantmentUtils.enchantmentToString(enchantment);
-                String level = EnchantmentUtils.IntegerToRomanNumeral(temp.getStoredEnchantLevel(enchantment));
+                String name = CustomItemAPI.getEnchantmentManager().enchantmentToString(enchantment);
+                String level = CustomItemAPI.getEnchantmentManager().integerToRomanNumeral(temp.getStoredEnchantLevel(enchantment));
 
-                if(EnchantmentUtils.hasLevel(enchantment)) {
+                if(enchantment.getMaxLevel() > 1) {
                     clone.addLore("&7" + name + " " + level);
                 }
                 else {

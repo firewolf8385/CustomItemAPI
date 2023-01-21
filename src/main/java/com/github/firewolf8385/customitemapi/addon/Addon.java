@@ -1,6 +1,7 @@
 package com.github.firewolf8385.customitemapi.addon;
 
 import com.github.firewolf8385.customitemapi.CustomItemAPI;
+import com.github.firewolf8385.customitemapi.enchantments.CustomEnchantment;
 import com.github.firewolf8385.customitemapi.items.CustomItem;
 import com.github.firewolf8385.customitemapi.utils.items.ItemBuilder;
 import org.bukkit.Material;
@@ -19,6 +20,7 @@ public class Addon {
     private String id;
     private ItemStack icon;
     private final List<CustomItem> items = new ArrayList<>();
+    private final List<CustomEnchantment> enchantments = new ArrayList<>();
 
     /**
      * Creates an Addon.
@@ -88,11 +90,24 @@ public class Addon {
     }
 
     /**
+     * Registers a custom enchantment to the addon.
+     * @param customEnchantment Custom Enchantment to register.
+     * @return Instance of the addon.
+     */
+    public Addon registerEnchantment(CustomEnchantment customEnchantment) {
+        enchantments.add(customEnchantment);
+        CustomItemAPI.registerEnchantment(customEnchantment);
+        return this;
+    }
+
+    /**
      * Register an item to the addon.
      * @param item Item to add to the Addon.
+     * @return Instance of the addon.
      */
-    public void registerItem(CustomItem item) {
+    public Addon registerItem(CustomItem item) {
         items.add(item);
         CustomItemAPI.registerItem(item);
+        return this;
     }
 }

@@ -3,6 +3,8 @@ package com.github.firewolf8385.customitemapi;
 import com.github.firewolf8385.customitemapi.addon.Addon;
 import com.github.firewolf8385.customitemapi.addon.AddonManager;
 import com.github.firewolf8385.customitemapi.commands.AbstractCommand;
+import com.github.firewolf8385.customitemapi.enchantments.CustomEnchantment;
+import com.github.firewolf8385.customitemapi.enchantments.EnchantmentManager;
 import com.github.firewolf8385.customitemapi.enchantments.TestEnchantment;
 import com.github.firewolf8385.customitemapi.items.CustomItem;
 import com.github.firewolf8385.customitemapi.items.ItemRarity;
@@ -10,13 +12,10 @@ import com.github.firewolf8385.customitemapi.items.items.*;
 import com.github.firewolf8385.customitemapi.listeners.*;
 import com.github.firewolf8385.customitemapi.settings.SettingsManager;
 import com.github.firewolf8385.customitemapi.utils.gui.GUIListeners;
-import com.github.firewolf8385.customitemapi.utils.items.EnchantmentUtils;
 import com.github.firewolf8385.customitemapi.utils.items.ItemUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Map;
@@ -29,6 +28,7 @@ public final class CustomItemAPI extends JavaPlugin {
     private static final Map<String, CustomItem> items = new TreeMap<>();
     private static final AddonManager addonManager = new AddonManager();
     private SettingsManager settingsManager;
+    private static final EnchantmentManager enchantmentManager = new EnchantmentManager();
 
     /**
      * This is called when Paper first loads the plugin.
@@ -62,6 +62,7 @@ public final class CustomItemAPI extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new PlayerItemDamageListener(this), this);
         Bukkit.getPluginManager().registerEvents(new PlayerItemHeldListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerItemMendListener(), this);
+        Bukkit.getPluginManager().registerEvents(new PrepareAnvilListener(), this);
         Bukkit.getPluginManager().registerEvents(new PrepareItemCraftListener(), this);
         Bukkit.getPluginManager().registerEvents(new PrepareResultListener(), this);
         Bukkit.getPluginManager().registerEvents(new SmithItemListener(), this);
@@ -72,16 +73,15 @@ public final class CustomItemAPI extends JavaPlugin {
         // Metrics
         Metrics metrics = new Metrics(this, 10115);
 
-        Addon addon = new Addon(this, "customitemapi", Material.GOLDEN_SWORD);
-        addon.registerItem(new TestStickItem());
-        addon.registerItem(new AdminSwordItem());
-        addon.registerItem(new SpeedStickItem());
-        addon.registerItem(new AdminBowItem());
-        addon.registerItem(new AdminCrossbowItem());
-        addon.registerItem(new AdminTridentItem());
+        Addon addon = new Addon(this, "customitemapi", Material.GOLDEN_SWORD)
+                .registerItem(new TestStickItem())
+                .registerItem(new AdminSwordItem())
+                .registerItem(new SpeedStickItem())
+                .registerItem(new AdminBowItem())
+                .registerItem(new AdminCrossbowItem())
+                .registerItem(new AdminTridentItem())
+                .registerEnchantment(new TestEnchantment());
         addonManager.registerAddon(addon);
-
-        EnchantmentUtils.addEnchantment(new TestEnchantment());
     }
 
     /**
@@ -149,6 +149,10 @@ public final class CustomItemAPI extends JavaPlugin {
      * @return Whether it is a Custom Item.
      */
     public static boolean isCustomItem(ItemStack item) {
+        if(item == null) {
+            return false;
+        }
+
         if(item.getItemMeta() == null) {
             return false;
         }
@@ -171,6 +175,10 @@ public final class CustomItemAPI extends JavaPlugin {
         return false;
     }
 
+    public static void registerEnchantment(CustomEnchantment enchantment) {
+        enchantmentManager.registerEnchantment(enchantment);
+    }
+
     /**
      * Registers an item without the use of addons.
      * @param item Item to register.
@@ -185,5 +193,9 @@ public final class CustomItemAPI extends JavaPlugin {
      */
     public static AddonManager getAddonManager() {
         return addonManager;
+    }
+
+    public static EnchantmentManager getEnchantmentManager() {
+        return enchantmentManager;
     }
 }

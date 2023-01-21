@@ -15,6 +15,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.util.StringUtil;
 
 import java.util.*;
@@ -44,6 +45,8 @@ public class ItemCMD extends AbstractCommand {
 
         switch (args[0]) {
             case "give" -> give(sender, args);
+
+            case "debug" -> debug(sender);
 
             case "update" -> update(sender, args);
 
@@ -141,7 +144,7 @@ public class ItemCMD extends AbstractCommand {
             case  "enchant" -> {
                 if(args.length == 2) {
                     List<String> enchantments = new ArrayList<>();
-                    EnchantmentUtils.getEnchantments().forEach(enchantment -> {
+                    CustomItemAPI.getEnchantmentManager().getEnchantments().forEach(enchantment -> {
                         String id = ((CustomEnchantment) enchantment).getId();
                         enchantments.add(id);
                     });
@@ -171,6 +174,29 @@ public class ItemCMD extends AbstractCommand {
         ChatUtils.chat(sender, "&8&m+-----------------------***-----------------------+");
     }
 
+    private void debug(CommandSender sender) {
+        if(!sender.hasPermission("customitems.debug")) {
+            ChatUtils.chat(sender, "&c&l(&7!&c&l) &cYou do not have access to that command!");
+            return;
+        }
+
+        Player p = (Player) sender;
+
+        ItemStack item = p.getInventory().getItemInMainHand();
+
+        ChatUtils.chat(sender, "&a&lEnchantments:");
+        for(Enchantment enchantment : item.getEnchantments().keySet()) {
+            ChatUtils.chat(sender, "  - " + CustomItemAPI.getEnchantmentManager().enchantmentToString(enchantment) + " " + CustomItemAPI.getEnchantmentManager().integerToRomanNumeral(item.getEnchantments().get(enchantment)));
+        }
+
+        if(item.getItemMeta() instanceof EnchantmentStorageMeta storage) {
+            ChatUtils.chat(sender, "&a&lStored Enchantments");
+            for(Enchantment enchantment : storage.getStoredEnchants().keySet()) {
+                ChatUtils.chat(sender, "  - " + CustomItemAPI.getEnchantmentManager().enchantmentToString(enchantment) + " " + CustomItemAPI.getEnchantmentManager().integerToRomanNumeral(storage.getStoredEnchants().get(enchantment)));
+            }
+        }
+    }
+
     private void enchant(CommandSender sender, String[] args) {
         if(!sender.hasPermission("customitems.enchant")) {
             ChatUtils.chat(sender, "&c&l(&7!&c&l) &cYou do not have access to that command!");
@@ -191,17 +217,26 @@ public class ItemCMD extends AbstractCommand {
             return;
         }
 
-        Enchantment enchantment = EnchantmentUtils.getEnchantment(args[1].toLowerCase());
+        Enchantment enchantment = CustomItemAPI.getEnchantmentManager().getEnchantment(args[1].toLowerCase());
 
         int level = 1;
         if(args.length == 3) {
             level = Integer.parseInt(args[2]);
         }
 
-        ItemStack enchantedItem = new ItemBuilder(item).addEnchantment(enchantment, level).build();
+        if(item.getItemMeta() instanceof EnchantmentStorageMeta temp) {
+            temp.addStoredEnchant(enchantment, level, true);
+            item.setItemMeta(temp);
+        }
+
+        ItemBuilder enchantedItem = new ItemBuilder(item);
+
+        if(!(item.getItemMeta() instanceof EnchantmentStorageMeta)) {
+            enchantedItem.addEnchantment(enchantment, level);
+        }
 
         CustomItem customItem = CustomItemAPI.fromItemStack(item);
-        p.getInventory().setItemInMainHand(customItem.update(enchantedItem));
+        p.getInventory().setItemInMainHand(customItem.update(enchantedItem.build()));
     }
 
     /**
