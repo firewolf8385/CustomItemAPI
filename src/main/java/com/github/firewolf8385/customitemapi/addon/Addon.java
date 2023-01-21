@@ -3,6 +3,7 @@ package com.github.firewolf8385.customitemapi.addon;
 import com.github.firewolf8385.customitemapi.CustomItemAPI;
 import com.github.firewolf8385.customitemapi.enchantments.CustomEnchantment;
 import com.github.firewolf8385.customitemapi.items.CustomItem;
+import com.github.firewolf8385.customitemapi.items.attributes.ItemAttribute;
 import com.github.firewolf8385.customitemapi.utils.items.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemFlag;
@@ -21,6 +22,7 @@ public class Addon {
     private ItemStack icon;
     private final List<CustomItem> items = new ArrayList<>();
     private final List<CustomEnchantment> enchantments = new ArrayList<>();
+    private final List<ItemAttribute> attributes = new ArrayList<>();
 
     /**
      * Creates an Addon.
@@ -87,6 +89,12 @@ public class Addon {
      */
     public Plugin getPlugin() {
         return plugin;
+    }
+
+    public Addon registerAttribute(ItemAttribute attribute) {
+        attributes.add(attribute);
+        CustomItemAPI.getAttributeManager().registerAttribute(attribute);
+        return this;
     }
 
     /**

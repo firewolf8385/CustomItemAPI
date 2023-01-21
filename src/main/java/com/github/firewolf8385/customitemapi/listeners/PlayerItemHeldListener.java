@@ -31,6 +31,11 @@ public class PlayerItemHeldListener implements Listener {
         }
 
         CustomItem customItem = CustomItemAPI.fromItemStack(item);
+
+        if(customItem == null) {
+            return;
+        }
+
         player.getInventory().setItemInMainHand(customItem.update(item));
 
         customItem.onHold(event);

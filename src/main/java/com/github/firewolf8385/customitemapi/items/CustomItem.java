@@ -2,6 +2,7 @@ package com.github.firewolf8385.customitemapi.items;
 
 import com.github.firewolf8385.customitemapi.CustomItemAPI;
 import com.github.firewolf8385.customitemapi.enchantments.CustomEnchantment;
+import com.github.firewolf8385.customitemapi.items.attributes.ItemAttribute;
 import com.github.firewolf8385.customitemapi.utils.items.EnchantmentUtils;
 import com.github.firewolf8385.customitemapi.utils.items.ItemBuilder;
 import com.github.firewolf8385.customitemapi.utils.items.ItemUtils;
@@ -24,8 +25,8 @@ import java.util.*;
 public class CustomItem {
     // Required values
     private final String id;
-    private final List<ItemAtrribute> itemAtrributes = new ArrayList<>();
     private final List<String> description = new ArrayList<>();
+    private final Map<ItemAttribute, Integer> itemAttributes = new HashMap<>();
 
     // Optional values
     private ItemStack item;
@@ -56,11 +57,22 @@ public class CustomItem {
 
     /**
      * Adds an item attribute to the custom item.
-     * @param itemAtrribute ItemAttribute to add.
+     * @param atrribute ItemAttribute to add.
+     * @param value Value of the attribute to add.
      */
-    public void addItemAttribute(ItemAtrribute itemAtrribute) {
-        itemAtrributes.add(itemAtrribute);
+    public void addItemAttribute(ItemAttribute atrribute, int value) {
+        if(value == 0) {
+            return;
+        }
+
+        if(itemAttributes.containsKey(atrribute)) {
+            itemAttributes.put(atrribute ,itemAttributes.get(atrribute) + value);
+            return;
+        }
+
+        itemAttributes.put(atrribute, value);
     }
+
 
     /**
      * Get the id of the custom item.
@@ -74,8 +86,8 @@ public class CustomItem {
      * Get the item attributes of the custom item.
      * @return Item Attributes.
      */
-    public List<ItemAtrribute> getItemAtrributes() {
-        return itemAtrributes;
+    public Map<ItemAttribute, Integer> getItemAttributes() {
+        return itemAttributes;
     }
 
     /**
@@ -201,17 +213,29 @@ public class CustomItem {
         // Adds item attributes if there are any.
         boolean hasAttributes = false;
 
-        if(itemAtrributes.isEmpty() && type != ItemType.NONE) {
+        for(ItemAttribute attribute : itemAttributes.keySet()) {
+            int value = itemAttributes.get(attribute);
+
+            if(value == 0) {
+                continue;
+            }
+
+            hasAttributes = true;
+
+            attribute.addedToItem(this, clone, value);
+
+            if(value > 0) {
+                clone.addLore("&7" + attribute.getName() + ": &a+" + value);
+            }
+            else {
+                clone.addLore("&7" + attribute.getName() + ": &c-" + value);
+            }
+        }
+
+        // Fixes weapon damage.
+        if(!itemAttributes.containsKey(CustomItemAPI.getAttributeManager().getAttribute("damage")) && type != ItemType.NONE) {
             AttributeModifier damageFix = new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 0, AttributeModifier.Operation.MULTIPLY_SCALAR_1);
             clone.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, damageFix);
-        }
-        else {
-            for(ItemAtrribute itemAtrribute : itemAtrributes) {
-                hasAttributes = true;
-
-                clone.addAttributeModifier(itemAtrribute.getType().getAttribute(), itemAtrribute.toAttributeModifier());
-                clone.addLore(itemAtrribute.toString());
-            }
         }
 
         // Extra whitespace to separate item attributes from other things.

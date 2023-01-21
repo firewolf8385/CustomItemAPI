@@ -8,6 +8,8 @@ import com.github.firewolf8385.customitemapi.enchantments.EnchantmentManager;
 import com.github.firewolf8385.customitemapi.enchantments.TestEnchantment;
 import com.github.firewolf8385.customitemapi.items.CustomItem;
 import com.github.firewolf8385.customitemapi.items.ItemRarity;
+import com.github.firewolf8385.customitemapi.items.attributes.AttributeManager;
+import com.github.firewolf8385.customitemapi.items.attributes.attributes.*;
 import com.github.firewolf8385.customitemapi.items.items.*;
 import com.github.firewolf8385.customitemapi.listeners.*;
 import com.github.firewolf8385.customitemapi.settings.SettingsManager;
@@ -29,6 +31,7 @@ public final class CustomItemAPI extends JavaPlugin {
     private static final AddonManager addonManager = new AddonManager();
     private SettingsManager settingsManager;
     private static final EnchantmentManager enchantmentManager = new EnchantmentManager();
+    private static final AttributeManager attributeManager = new AttributeManager();
 
     /**
      * This is called when Paper first loads the plugin.
@@ -80,7 +83,14 @@ public final class CustomItemAPI extends JavaPlugin {
                 .registerItem(new AdminBowItem())
                 .registerItem(new AdminCrossbowItem())
                 .registerItem(new AdminTridentItem())
-                .registerEnchantment(new TestEnchantment());
+                .registerEnchantment(new TestEnchantment())
+                .registerAttribute(new AttackSpeedAttribute())
+                .registerAttribute(new DefenseAttribute())
+                .registerAttribute(new HealthAttribute())
+                .registerAttribute(new LuckAttribute())
+                .registerAttribute(new SpeedAttribute())
+                .registerAttribute(new ToughnessAttribute())
+                .registerAttribute(new DamageAttribute());
         addonManager.registerAddon(addon);
     }
 
@@ -197,5 +207,9 @@ public final class CustomItemAPI extends JavaPlugin {
 
     public static EnchantmentManager getEnchantmentManager() {
         return enchantmentManager;
+    }
+
+    public static AttributeManager getAttributeManager() {
+        return attributeManager;
     }
 }

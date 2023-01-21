@@ -2,7 +2,8 @@ package com.github.firewolf8385.customitemapi.listeners;
 
 import com.github.firewolf8385.customitemapi.CustomItemAPI;
 import com.github.firewolf8385.customitemapi.items.CustomItem;
-import com.github.firewolf8385.customitemapi.items.ItemAtrribute;
+import com.github.firewolf8385.customitemapi.items.attributes.ItemAttribute;
+import com.github.firewolf8385.customitemapi.items.attributes.attributes.DamageAttribute;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -28,11 +29,10 @@ public class EntityShootBowListener implements Listener {
 
         CustomItem customItem = CustomItemAPI.fromItemStack(event.getBow());
 
-
-        for(ItemAtrribute itemAtrribute : customItem.getItemAtrributes()) {
-            if(itemAtrribute.getType() == ItemAtrribute.Type.DAMAGE) {
+        for(ItemAttribute itemAttribute : customItem.getItemAttributes().keySet()) {
+            if(itemAttribute instanceof DamageAttribute) {
                 // Gets the intended damage.
-                float damage = itemAtrribute.getAmount();
+                float damage = customItem.getItemAttributes().get(itemAttribute);
 
                 // Adds in "force" to the damage.
                 damage = damage * event.getForce();
