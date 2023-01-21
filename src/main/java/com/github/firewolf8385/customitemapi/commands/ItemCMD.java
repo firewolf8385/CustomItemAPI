@@ -87,7 +87,7 @@ public class ItemCMD extends AbstractCommand {
     public List<String> tabComplete(String[] args) {
 
         if(args.length == 1) {
-            return Arrays.asList("give", "update", "set", "browse", "info", "rename");
+            return Arrays.asList("give", "update", "set", "browse", "info", "rename", "enchant", "debug");
         }
 
         switch (args[0]) {
