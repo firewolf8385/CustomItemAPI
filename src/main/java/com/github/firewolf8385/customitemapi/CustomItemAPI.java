@@ -159,15 +159,29 @@ public final class CustomItemAPI extends JavaPlugin {
      * @return Whether it is a Custom Item.
      */
     public static boolean isCustomItem(ItemStack item) {
+        // Null items can't be custom items.
         if(item == null) {
             return false;
         }
 
+        // No ItemMeta means no custom item
         if(item.getItemMeta() == null) {
             return false;
         }
 
-        return ItemUtils.getStringData(item, "ci-id") != null;
+        // Custom Items have an id in their nbt
+        if(ItemUtils.getStringData(item, "ci-id") == null) {
+            return false;
+        }
+
+        // The custom id must be valid.
+        CustomItem customItem = getItem(ItemUtils.getStringData(item, "ci-id"));
+        if(customItem == null) {
+            return false;
+        }
+
+        // If all these checks pass, then it's a custom item.
+        return true;
     }
 
     public static boolean isUpgraded(ItemStack item) {
