@@ -1,7 +1,9 @@
 package com.github.firewolf8385.customitemapi.listeners;
 
 import com.github.firewolf8385.customitemapi.CustomItemAPI;
+import com.github.firewolf8385.customitemapi.enchantments.CustomEnchantment;
 import com.github.firewolf8385.customitemapi.items.CustomItem;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -18,6 +20,13 @@ public class PlayerItemHeldListener implements Listener {
 
         if(item == null) {
             return;
+        }
+
+        // Checks for Custom Enchantments
+        for(Enchantment enchantment : item.getEnchantments().keySet()) {
+            if(CustomItemAPI.getEnchantmentManager().isCustomEnchantment(enchantment)) {
+                ((CustomEnchantment) enchantment).onHold(event);
+            }
         }
 
         ItemMeta meta = item.getItemMeta();

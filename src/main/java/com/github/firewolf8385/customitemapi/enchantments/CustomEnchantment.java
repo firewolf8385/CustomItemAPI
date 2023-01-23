@@ -7,6 +7,8 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.enchantments.EnchantmentTarget;
 import org.bukkit.entity.EntityCategory;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -126,4 +128,16 @@ public class CustomEnchantment extends Enchantment {
     public @NotNull String translationKey() {
         return null;
     }
+
+    public void onEntityDamage(EntityDamageByEntityEvent event) {}
+
+    public void onInteract(PlayerInteractEvent event) {}
+
+    public void onItemDamage(PlayerItemDamageEvent event) {}
+
+    public void onItemMend(PlayerItemMendEvent event) {}
+
+    public void onHold(PlayerItemHeldEvent event) {}
+
+    public void onMove(PlayerMoveEvent event) {}
 }
