@@ -93,7 +93,7 @@ public class Addon {
 
     public Addon registerAttribute(ItemAttribute attribute) {
         attributes.add(attribute);
-        CustomItemAPI.getAttributeManager().registerAttribute(attribute);
+        CustomItemAPI.registerAttribute(this, attribute);
         return this;
     }
 
@@ -104,7 +104,7 @@ public class Addon {
      */
     public Addon registerEnchantment(CustomEnchantment customEnchantment) {
         enchantments.add(customEnchantment);
-        CustomItemAPI.registerEnchantment(customEnchantment);
+        CustomItemAPI.registerEnchantment(this, customEnchantment);
         return this;
     }
 
@@ -115,7 +115,7 @@ public class Addon {
      */
     public Addon registerItem(CustomItem item) {
         items.add(item);
-        CustomItemAPI.registerItem(item);
+        CustomItemAPI.registerItem(this, item);
         return this;
     }
 }

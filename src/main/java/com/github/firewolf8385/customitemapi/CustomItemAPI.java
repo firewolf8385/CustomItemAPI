@@ -9,6 +9,7 @@ import com.github.firewolf8385.customitemapi.enchantments.TestEnchantment;
 import com.github.firewolf8385.customitemapi.items.CustomItem;
 import com.github.firewolf8385.customitemapi.items.ItemRarity;
 import com.github.firewolf8385.customitemapi.items.attributes.AttributeManager;
+import com.github.firewolf8385.customitemapi.items.attributes.ItemAttribute;
 import com.github.firewolf8385.customitemapi.items.attributes.attributes.*;
 import com.github.firewolf8385.customitemapi.items.items.*;
 import com.github.firewolf8385.customitemapi.listeners.*;
@@ -199,7 +200,11 @@ public final class CustomItemAPI extends JavaPlugin {
         return false;
     }
 
-    public static void registerEnchantment(CustomEnchantment enchantment) {
+    public static void registerAttribute(Addon addon, ItemAttribute attribute) {
+        attributeManager.registerAttribute(attribute);
+    }
+
+    public static void registerEnchantment(Addon addon, CustomEnchantment enchantment) {
         enchantmentManager.registerEnchantment(enchantment);
     }
 
@@ -207,7 +212,7 @@ public final class CustomItemAPI extends JavaPlugin {
      * Registers an item without the use of addons.
      * @param item Item to register.
      */
-    public static void registerItem(CustomItem item) {
+    public static void registerItem(Addon addon, CustomItem item) {
         items.put(item.getID(), item);
     }
 
