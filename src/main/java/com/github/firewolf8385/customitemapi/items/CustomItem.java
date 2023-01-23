@@ -26,7 +26,7 @@ public class CustomItem {
     // Required values
     private final String id;
     private final List<String> description = new ArrayList<>();
-    private final Map<ItemAttribute, Integer> itemAttributes = new HashMap<>();
+    private final Map<ItemAttribute, Double> itemAttributes = new HashMap<>();
 
     // Optional values
     private ItemStack item;
@@ -60,7 +60,7 @@ public class CustomItem {
      * @param atrribute ItemAttribute to add.
      * @param value Value of the attribute to add.
      */
-    public void addItemAttribute(ItemAttribute atrribute, int value) {
+    public void addItemAttribute(ItemAttribute atrribute, double value) {
         if(value == 0) {
             return;
         }
@@ -86,7 +86,7 @@ public class CustomItem {
      * Get the item attributes of the custom item.
      * @return Item Attributes.
      */
-    public Map<ItemAttribute, Integer> getItemAttributes() {
+    public Map<ItemAttribute, Double> getItemAttributes() {
         return itemAttributes;
     }
 
@@ -214,7 +214,7 @@ public class CustomItem {
         boolean hasAttributes = false;
 
         for(ItemAttribute attribute : itemAttributes.keySet()) {
-            int value = itemAttributes.get(attribute);
+            double value = itemAttributes.get(attribute);
 
             if(value == 0) {
                 continue;
@@ -224,11 +224,21 @@ public class CustomItem {
 
             attribute.addedToItem(this, clone, value);
 
-            if(value > 0) {
-                clone.addLore("&7" + attribute.getName() + ": &a+" + value);
+            if(Math.floor(value) == value) {
+                if(value > 0) {
+                    clone.addLore("&7" + attribute.getName() + ": &a+" + ((int) value));
+                }
+                else {
+                    clone.addLore("&7" + attribute.getName() + ": &c-" + ((int) value));
+                }
             }
             else {
-                clone.addLore("&7" + attribute.getName() + ": &c-" + value);
+                if(value > 0) {
+                    clone.addLore("&7" + attribute.getName() + ": &a+" + value);
+                }
+                else {
+                    clone.addLore("&7" + attribute.getName() + ": &c-" + value);
+                }
             }
         }
 

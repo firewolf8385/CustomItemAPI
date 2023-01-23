@@ -32,7 +32,7 @@ public class EntityShootBowListener implements Listener {
         for(ItemAttribute itemAttribute : customItem.getItemAttributes().keySet()) {
             if(itemAttribute instanceof DamageAttribute) {
                 // Gets the intended damage.
-                float damage = customItem.getItemAttributes().get(itemAttribute);
+                float damage = customItem.getItemAttributes().get(itemAttribute).floatValue();
 
                 // Adds in "force" to the damage.
                 damage = damage * event.getForce();

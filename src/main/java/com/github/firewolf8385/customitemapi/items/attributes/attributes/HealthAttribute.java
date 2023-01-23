@@ -17,7 +17,7 @@ public class HealthAttribute extends ItemAttribute {
     }
 
     @Override
-    public void addedToItem(CustomItem customItem, ItemBuilder item, int value) {
+    public void addedToItem(CustomItem customItem, ItemBuilder item, double value) {
         Attribute attribute = Attribute.GENERIC_MAX_HEALTH;
 
         switch (customItem.getType()) {

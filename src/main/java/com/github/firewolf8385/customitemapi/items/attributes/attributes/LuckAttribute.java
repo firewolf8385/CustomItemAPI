@@ -17,7 +17,7 @@ public class LuckAttribute extends ItemAttribute {
     }
 
     @Override
-    public void addedToItem(CustomItem customItem, ItemBuilder item, int value) {
+    public void addedToItem(CustomItem customItem, ItemBuilder item, double value) {
         Attribute attribute = Attribute.GENERIC_LUCK;
 
         switch (customItem.getType()) {

@@ -27,7 +27,7 @@ public abstract class ItemAttribute {
      * @param item ItemBuilder of the item the attribute is being added to.
      * @param value The value of the attribute being added.
      */
-    public void addedToItem(CustomItem customItem, ItemBuilder item, int value) {}
+    public void addedToItem(CustomItem customItem, ItemBuilder item, double value) {}
 
     /**
      * Get the id of the attribute.
