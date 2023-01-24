@@ -2,6 +2,7 @@ package com.github.firewolf8385.customitemapi.commands;
 
 import com.github.firewolf8385.customitemapi.CustomItemAPI;
 import com.github.firewolf8385.customitemapi.enchantments.CustomEnchantment;
+import com.github.firewolf8385.customitemapi.gui.AddonBrowseGUI;
 import com.github.firewolf8385.customitemapi.gui.ItemBrowseGUI;
 import com.github.firewolf8385.customitemapi.items.CustomItem;
 import com.github.firewolf8385.customitemapi.items.ItemRarity;
@@ -60,6 +61,14 @@ public class ItemCMD extends AbstractCommand {
                 new ItemBrowseGUI(1).open(player);
             }
 
+            case "addons" -> {
+                if(!(sender instanceof Player player)) {
+                    return;
+                }
+
+                new AddonBrowseGUI(1).open(player);
+            }
+
             case "enchant" -> enchant(sender, args);
 
             case "info" -> {
@@ -87,7 +96,7 @@ public class ItemCMD extends AbstractCommand {
     public List<String> tabComplete(String[] args) {
 
         if(args.length == 1) {
-            return Arrays.asList("give", "update", "set", "browse", "info", "rename", "enchant", "debug");
+            return Arrays.asList("give", "update", "set", "browse", "info", "rename", "enchant", "debug", "addons");
         }
 
         switch (args[0]) {
