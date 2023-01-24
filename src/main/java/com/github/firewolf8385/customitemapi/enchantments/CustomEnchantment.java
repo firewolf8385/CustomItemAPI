@@ -1,5 +1,6 @@
 package com.github.firewolf8385.customitemapi.enchantments;
 
+import com.destroystokyo.paper.event.player.PlayerArmorChangeEvent;
 import io.papermc.paper.enchantments.EnchantmentRarity;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
@@ -140,4 +141,8 @@ public class CustomEnchantment extends Enchantment {
     public void onHold(PlayerItemHeldEvent event) {}
 
     public void onMove(PlayerMoveEvent event) {}
+
+    public void onEquip(PlayerArmorChangeEvent event) {}
+
+    public void onUnequip(PlayerArmorChangeEvent event) {}
 }

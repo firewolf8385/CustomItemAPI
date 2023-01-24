@@ -62,6 +62,7 @@ public final class CustomItemAPI extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new GUIListeners(), this);
         Bukkit.getPluginManager().registerEvents(new InventoryClickListener(), this);
         Bukkit.getPluginManager().registerEvents(new InventoryDragListener(), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerAmorChangeListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerDropItemListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerInteractListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerItemBreakListener(), this);
