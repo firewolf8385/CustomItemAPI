@@ -3,6 +3,7 @@ package com.github.firewolf8385.customitemapi.utils.items;
 import com.github.firewolf8385.customitemapi.utils.chat.ChatUtils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
+import org.bukkit.FireworkEffect;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
@@ -150,6 +151,16 @@ public class ItemBuilder {
 
     public ItemBuilder setChargedProjectiles(List<ItemStack> projectiles) {
         ((CrossbowMeta) meta).setChargedProjectiles(projectiles);
+        return this;
+    }
+
+    public ItemBuilder setPower(int power) {
+        ((FireworkMeta) meta).setPower(power);
+        return this;
+    }
+
+    public ItemBuilder addEffect(FireworkEffect effect) {
+        ((FireworkMeta) meta).addEffect(effect);
         return this;
     }
 

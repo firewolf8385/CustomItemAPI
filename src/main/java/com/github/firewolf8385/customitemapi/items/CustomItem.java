@@ -1,11 +1,11 @@
 package com.github.firewolf8385.customitemapi.items;
 
 import com.github.firewolf8385.customitemapi.CustomItemAPI;
-import com.github.firewolf8385.customitemapi.enchantments.CustomEnchantment;
 import com.github.firewolf8385.customitemapi.items.attributes.ItemAttribute;
 import com.github.firewolf8385.customitemapi.utils.items.EnchantmentUtils;
 import com.github.firewolf8385.customitemapi.utils.items.ItemBuilder;
 import com.github.firewolf8385.customitemapi.utils.items.ItemUtils;
+import org.bukkit.FireworkEffect;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
@@ -360,6 +360,15 @@ public class CustomItem {
         // Copies block state meta.
         if(item.getItemMeta() instanceof BlockStateMeta temp) {
             clone.setBlockState(temp.getBlockState());
+        }
+
+        // Copies firework meta.
+        if(item.getItemMeta() instanceof FireworkMeta temp) {
+            clone.setPower(temp.getPower());
+
+            for(FireworkEffect effect : temp.getEffects()) {
+                clone.addEffect(effect);
+            }
         }
 
         // Add item flags.
