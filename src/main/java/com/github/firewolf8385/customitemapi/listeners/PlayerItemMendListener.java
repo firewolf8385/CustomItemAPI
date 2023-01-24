@@ -14,7 +14,7 @@ public class PlayerItemMendListener implements Listener {
 
         // Checks for Custom Enchantments
         for(Enchantment enchantment : event.getItem().getEnchantments().keySet()) {
-            if(CustomItemAPI.getEnchantmentManager().isCustomEnchantment(enchantment)) {
+            if(CustomItemAPI.isCustomEnchantment(enchantment)) {
                 ((CustomEnchantment) enchantment).onItemMend(event);
             }
         }

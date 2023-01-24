@@ -24,7 +24,7 @@ public class PlayerItemHeldListener implements Listener {
 
         // Checks for Custom Enchantments
         for(Enchantment enchantment : item.getEnchantments().keySet()) {
-            if(CustomItemAPI.getEnchantmentManager().isCustomEnchantment(enchantment)) {
+            if(CustomItemAPI.isCustomEnchantment(enchantment)) {
                 ((CustomEnchantment) enchantment).onHold(event);
             }
         }

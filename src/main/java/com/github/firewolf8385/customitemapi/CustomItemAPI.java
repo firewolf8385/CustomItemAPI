@@ -18,9 +18,12 @@ import com.github.firewolf8385.customitemapi.utils.gui.GUIListeners;
 import com.github.firewolf8385.customitemapi.utils.items.ItemUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -220,15 +223,38 @@ public final class CustomItemAPI extends JavaPlugin {
      * Get the AddonManager instance, which manages all Addons.
      * @return AddonManager.
      */
+    @Deprecated
     public static AddonManager getAddonManager() {
         return addonManager;
     }
 
+    @Deprecated
     public static EnchantmentManager getEnchantmentManager() {
         return enchantmentManager;
     }
 
+    @Deprecated
     public static AttributeManager getAttributeManager() {
         return attributeManager;
+    }
+
+    public static ItemAttribute getAttribute(String attributeID) {
+        return attributeManager.getAttribute(attributeID);
+    }
+
+    public static List<Enchantment> getCustomEnchantments() {
+        return enchantmentManager.getEnchantments();
+    }
+
+    public static Collection<Addon> getAddons() {
+        return addonManager.getAddons().values();
+    }
+
+    public static Enchantment getEnchantment(String id) {
+        return enchantmentManager.getEnchantment(id);
+    }
+
+    public static boolean isCustomEnchantment(Enchantment enchantment) {
+        return enchantmentManager.isCustomEnchantment(enchantment);
     }
 }

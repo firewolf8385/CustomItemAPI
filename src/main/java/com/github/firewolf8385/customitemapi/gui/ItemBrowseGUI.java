@@ -22,7 +22,7 @@ public class ItemBrowseGUI extends CustomGUI {
         }
 
         int i = 0;
-        for(Addon addon : CustomItemAPI.getAddonManager().getAddons().values()) {
+        for(Addon addon : CustomItemAPI.getAddons()) {
             setItem(i + 9, addon.getIcon(), (p, a) -> new ItemBrowseGUI(addon, 1).open(p));
             i++;
         }
@@ -36,7 +36,7 @@ public class ItemBrowseGUI extends CustomGUI {
             });
         }
 
-        if(CustomItemAPI.getAddonManager().getAddons().values().size() > (page * 21)) {
+        if(CustomItemAPI.getAddons().size() > (page * 21)) {
             setItem(42, new SkullBuilder("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjFkMGY4MmEyYTRjZGQ4NWY3OWY0ZDlkOTc5OGY5YzNhNWJjY2JlOWM3ZjJlMjdjNWZjODM2NjUxYThmM2Y0NSJ9fX0=").setDisplayName("&aPage " + (page + 1)).build(), (p,a) -> {
                 new ItemBrowseGUI(page + 1).open(p);
             });

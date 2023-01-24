@@ -243,7 +243,7 @@ public class CustomItem {
         }
 
         // Fixes weapon damage.
-        if(!itemAttributes.containsKey(CustomItemAPI.getAttributeManager().getAttribute("damage")) && type != ItemType.NONE) {
+        if(!itemAttributes.containsKey(CustomItemAPI.getAttribute("damage")) && type != ItemType.NONE) {
             AttributeModifier damageFix = new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 0, AttributeModifier.Operation.MULTIPLY_SCALAR_1);
             clone.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, damageFix);
         }
@@ -264,8 +264,8 @@ public class CustomItem {
                     continue;
                 }
 
-                String name = CustomItemAPI.getEnchantmentManager().enchantmentToString(enchantment);
-                String level = CustomItemAPI.getEnchantmentManager().integerToRomanNumeral(item.getEnchantments().get(enchantment));
+                String name = EnchantmentUtils.enchantmentToString(enchantment);
+                String level = EnchantmentUtils.IntegerToRomanNumeral(item.getEnchantments().get(enchantment));
                 clone.addEnchantment(enchantment, item.getEnchantments().get(enchantment));
 
                 if(enchantment.getMaxLevel() > 1) {
@@ -291,8 +291,8 @@ public class CustomItem {
             for(Enchantment enchantment : temp.getStoredEnchants().keySet()) {
                 clone.addStoredEnchant(enchantment, temp.getStoredEnchantLevel(enchantment), true);
 
-                String name = CustomItemAPI.getEnchantmentManager().enchantmentToString(enchantment);
-                String level = CustomItemAPI.getEnchantmentManager().integerToRomanNumeral(temp.getStoredEnchantLevel(enchantment));
+                String name = EnchantmentUtils.enchantmentToString(enchantment);
+                String level = EnchantmentUtils.IntegerToRomanNumeral(temp.getStoredEnchantLevel(enchantment));
 
                 if(enchantment.getMaxLevel() > 1) {
                     clone.addLore("&7" + name + " " + level);

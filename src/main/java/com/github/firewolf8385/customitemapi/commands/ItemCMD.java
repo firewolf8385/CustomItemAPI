@@ -144,7 +144,7 @@ public class ItemCMD extends AbstractCommand {
             case  "enchant" -> {
                 if(args.length == 2) {
                     List<String> enchantments = new ArrayList<>();
-                    CustomItemAPI.getEnchantmentManager().getEnchantments().forEach(enchantment -> {
+                    CustomItemAPI.getCustomEnchantments().forEach(enchantment -> {
                         String id = ((CustomEnchantment) enchantment).getId();
                         enchantments.add(id);
                     });
@@ -186,13 +186,13 @@ public class ItemCMD extends AbstractCommand {
 
         ChatUtils.chat(sender, "&a&lEnchantments:");
         for(Enchantment enchantment : item.getEnchantments().keySet()) {
-            ChatUtils.chat(sender, "  - " + CustomItemAPI.getEnchantmentManager().enchantmentToString(enchantment) + " " + CustomItemAPI.getEnchantmentManager().integerToRomanNumeral(item.getEnchantments().get(enchantment)));
+            ChatUtils.chat(sender, "  - " + EnchantmentUtils.enchantmentToString(enchantment) + " " + EnchantmentUtils.IntegerToRomanNumeral(item.getEnchantments().get(enchantment)));
         }
 
         if(item.getItemMeta() instanceof EnchantmentStorageMeta storage) {
             ChatUtils.chat(sender, "&a&lStored Enchantments");
             for(Enchantment enchantment : storage.getStoredEnchants().keySet()) {
-                ChatUtils.chat(sender, "  - " + CustomItemAPI.getEnchantmentManager().enchantmentToString(enchantment) + " " + CustomItemAPI.getEnchantmentManager().integerToRomanNumeral(storage.getStoredEnchants().get(enchantment)));
+                ChatUtils.chat(sender, "  - " + EnchantmentUtils.enchantmentToString(enchantment) + " " + EnchantmentUtils.IntegerToRomanNumeral(storage.getStoredEnchants().get(enchantment)));
             }
         }
     }
@@ -217,7 +217,7 @@ public class ItemCMD extends AbstractCommand {
             return;
         }
 
-        Enchantment enchantment = CustomItemAPI.getEnchantmentManager().getEnchantment(args[1].toLowerCase());
+        Enchantment enchantment = CustomItemAPI.getEnchantment(args[1].toLowerCase());
 
         int level = 1;
         if(args.length == 3) {

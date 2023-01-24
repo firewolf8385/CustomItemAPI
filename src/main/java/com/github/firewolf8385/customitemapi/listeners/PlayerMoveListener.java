@@ -24,7 +24,7 @@ public class PlayerMoveListener implements Listener {
         if(helmet != null) {
             // Checks for Custom Enchantments
             for(Enchantment enchantment : helmet.getEnchantments().keySet()) {
-                if(CustomItemAPI.getEnchantmentManager().isCustomEnchantment(enchantment)) {
+                if(CustomItemAPI.isCustomEnchantment(enchantment)) {
                     ((CustomEnchantment) enchantment).onMove(event);
                 }
             }
@@ -34,7 +34,7 @@ public class PlayerMoveListener implements Listener {
             if(helmet != null) {
                 // Checks for Custom Enchantments
                 for(Enchantment enchantment : chestplate.getEnchantments().keySet()) {
-                    if(CustomItemAPI.getEnchantmentManager().isCustomEnchantment(enchantment)) {
+                    if(CustomItemAPI.isCustomEnchantment(enchantment)) {
                         ((CustomEnchantment) enchantment).onMove(event);
                     }
                 }
@@ -45,7 +45,7 @@ public class PlayerMoveListener implements Listener {
             if(helmet != null) {
                 // Checks for Custom Enchantments
                 for(Enchantment enchantment : leggings.getEnchantments().keySet()) {
-                    if(CustomItemAPI.getEnchantmentManager().isCustomEnchantment(enchantment)) {
+                    if(CustomItemAPI.isCustomEnchantment(enchantment)) {
                         ((CustomEnchantment) enchantment).onMove(event);
                     }
                 }
@@ -56,7 +56,7 @@ public class PlayerMoveListener implements Listener {
             if(helmet != null) {
                 // Checks for Custom Enchantments
                 for(Enchantment enchantment : boots.getEnchantments().keySet()) {
-                    if(CustomItemAPI.getEnchantmentManager().isCustomEnchantment(enchantment)) {
+                    if(CustomItemAPI.isCustomEnchantment(enchantment)) {
                         ((CustomEnchantment) enchantment).onMove(event);
                     }
                 }
@@ -67,7 +67,7 @@ public class PlayerMoveListener implements Listener {
             if(helmet != null) {
                 // Checks for Custom Enchantments
                 for(Enchantment enchantment : heldItem.getEnchantments().keySet()) {
-                    if(CustomItemAPI.getEnchantmentManager().isCustomEnchantment(enchantment)) {
+                    if(CustomItemAPI.isCustomEnchantment(enchantment)) {
                         ((CustomEnchantment) enchantment).onMove(event);
                     }
                 }
