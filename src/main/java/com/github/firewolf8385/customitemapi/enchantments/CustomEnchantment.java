@@ -22,6 +22,7 @@ public class CustomEnchantment extends Enchantment {
     private int maxLevel;
     private EnchantmentTarget target;
     private EnchantmentRarity rarity;
+    private String description;
 
     public CustomEnchantment(String id, String name) {
         super(new NamespacedKey(Bukkit.getPluginManager().getPlugin("CustomItemAPI"), id));
@@ -32,10 +33,21 @@ public class CustomEnchantment extends Enchantment {
         target = EnchantmentTarget.ALL;
         maxLevel = 5;
         rarity = EnchantmentRarity.COMMON;
+
+        description = "";
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public String getId() {
         return id;
+    }
+
+    public CustomEnchantment setDescription(String description) {
+        this.description = description;
+        return this;
     }
 
     public CustomEnchantment setTarget(EnchantmentTarget target) {
