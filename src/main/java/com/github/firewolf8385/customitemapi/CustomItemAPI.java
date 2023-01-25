@@ -13,6 +13,7 @@ import com.github.firewolf8385.customitemapi.items.attributes.ItemAttribute;
 import com.github.firewolf8385.customitemapi.items.attributes.attributes.*;
 import com.github.firewolf8385.customitemapi.items.items.*;
 import com.github.firewolf8385.customitemapi.listeners.*;
+import com.github.firewolf8385.customitemapi.listeners.SmithItemListener;
 import com.github.firewolf8385.customitemapi.settings.SettingsManager;
 import com.github.firewolf8385.customitemapi.utils.gui.GUIListeners;
 import com.github.firewolf8385.customitemapi.utils.items.ItemUtils;
@@ -70,6 +71,7 @@ public final class CustomItemAPI extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new PlayerItemDamageListener(this), this);
         Bukkit.getPluginManager().registerEvents(new PlayerItemHeldListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerItemMendListener(), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerMoveListener(), this);
         Bukkit.getPluginManager().registerEvents(new PrepareAnvilListener(), this);
         Bukkit.getPluginManager().registerEvents(new PrepareItemCraftListener(), this);
         Bukkit.getPluginManager().registerEvents(new PrepareResultListener(), this);

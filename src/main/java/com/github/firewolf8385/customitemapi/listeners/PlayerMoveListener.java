@@ -31,45 +31,37 @@ public class PlayerMoveListener implements Listener {
         }
 
         if(chestplate != null) {
-            if(helmet != null) {
-                // Checks for Custom Enchantments
-                for(Enchantment enchantment : chestplate.getEnchantments().keySet()) {
-                    if(CustomItemAPI.isCustomEnchantment(enchantment)) {
-                        ((CustomEnchantment) enchantment).onMove(event);
-                    }
+            // Checks for Custom Enchantments
+            for(Enchantment enchantment : chestplate.getEnchantments().keySet()) {
+                if(CustomItemAPI.isCustomEnchantment(enchantment)) {
+                    ((CustomEnchantment) enchantment).onMove(event);
                 }
             }
         }
 
         if(leggings != null) {
-            if(helmet != null) {
-                // Checks for Custom Enchantments
-                for(Enchantment enchantment : leggings.getEnchantments().keySet()) {
-                    if(CustomItemAPI.isCustomEnchantment(enchantment)) {
-                        ((CustomEnchantment) enchantment).onMove(event);
-                    }
+            // Checks for Custom Enchantments
+            for(Enchantment enchantment : leggings.getEnchantments().keySet()) {
+                if(CustomItemAPI.isCustomEnchantment(enchantment)) {
+                    ((CustomEnchantment) enchantment).onMove(event);
                 }
             }
         }
 
         if(boots != null) {
-            if(helmet != null) {
-                // Checks for Custom Enchantments
-                for(Enchantment enchantment : boots.getEnchantments().keySet()) {
-                    if(CustomItemAPI.isCustomEnchantment(enchantment)) {
-                        ((CustomEnchantment) enchantment).onMove(event);
-                    }
+            // Checks for Custom Enchantments
+            for(Enchantment enchantment : boots.getEnchantments().keySet()) {
+                if(CustomItemAPI.isCustomEnchantment(enchantment)) {
+                    ((CustomEnchantment) enchantment).onMove(event);
                 }
             }
         }
 
         if(heldItem != null) {
-            if(helmet != null) {
-                // Checks for Custom Enchantments
-                for(Enchantment enchantment : heldItem.getEnchantments().keySet()) {
-                    if(CustomItemAPI.isCustomEnchantment(enchantment)) {
-                        ((CustomEnchantment) enchantment).onMove(event);
-                    }
+            // Checks for Custom Enchantments
+            for(Enchantment enchantment : heldItem.getEnchantments().keySet()) {
+                if(CustomItemAPI.isCustomEnchantment(enchantment)) {
+                    ((CustomEnchantment) enchantment).onMove(event);
                 }
             }
         }
