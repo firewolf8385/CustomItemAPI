@@ -38,7 +38,7 @@ public class EntityShootBowListener implements Listener {
         float damage = 0;
 
         // Adds the damage attribute to the damage.
-        damage += customItem.getAttributeValue("");
+        damage += customItem.getAttributeValue("damage");
 
         // Calculates critical projectiles and adds crit damage.
         if(customItem.getAttributeValue("crit_chance") > 0) {
@@ -64,6 +64,9 @@ public class EntityShootBowListener implements Listener {
         if(event.getBow().getEnchantmentLevel(Enchantment.ARROW_DAMAGE) != 0) {
             damage += (damage * 0.25 * event.getBow().getEnchantmentLevel(Enchantment.ARROW_DAMAGE) + 1);
         }
+
+        // Decrease damage if the bow is not pulled back all the way.
+        damage = (event.getForce() * damage);
 
         // Applies that damage to the arrow.
         event.getProjectile().setMetadata("damage", new FixedMetadataValue(plugin, damage));
