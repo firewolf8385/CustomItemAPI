@@ -73,6 +73,21 @@ public class CustomItem {
         itemAttributes.put(atrribute, value);
     }
 
+    /**
+     * Gets the value of an attribute on a custom item.
+     * Returns 0 if the item does not have that attribute.
+     * @param attributeId Id of the attribute to get the value of.
+     * @return Value of the attribute.
+     */
+    public double getAttributeValue(String attributeId) {
+        for(ItemAttribute attribute : itemAttributes.keySet()) {
+            if(attribute.getId().equalsIgnoreCase(attributeId)) {
+                return itemAttributes.get(attribute);
+            }
+        }
+
+        return 0;
+    }
 
     /**
      * Get the id of the custom item.
@@ -112,6 +127,21 @@ public class CustomItem {
      */
     public ItemType getType() {
         return type;
+    }
+
+    /**
+     * Check if the custom item has a certain attribute.
+     * @param id Id of the attribute.
+     * @return Whether the item has an attribute.
+     */
+    public boolean hasAttribute(String id) {
+        for(ItemAttribute attribute : itemAttributes.keySet()) {
+            if(attribute.getId().equalsIgnoreCase(id)) {
+               return true;
+            }
+        }
+
+        return false;
     }
 
     /**

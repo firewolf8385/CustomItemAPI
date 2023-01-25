@@ -98,7 +98,9 @@ public final class CustomItemAPI extends JavaPlugin {
                 .registerAttribute(new LuckAttribute())
                 .registerAttribute(new SpeedAttribute())
                 .registerAttribute(new ToughnessAttribute())
-                .registerAttribute(new DamageAttribute());
+                .registerAttribute(new DamageAttribute())
+                .registerAttribute(new CritChanceAttribute())
+                .registerAttribute(new CritDamageAttribute());
         addonManager.registerAddon(addon);
     }
 

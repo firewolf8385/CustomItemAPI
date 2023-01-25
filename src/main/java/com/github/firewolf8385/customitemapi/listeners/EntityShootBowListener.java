@@ -10,6 +10,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 
+import java.util.Random;
+
 public class EntityShootBowListener implements Listener {
     private final CustomItemAPI plugin;
 
@@ -19,33 +21,42 @@ public class EntityShootBowListener implements Listener {
 
     @EventHandler
     public void onShoot(EntityShootBowEvent event) {
+        // Makes sure the bow used isn't null.
         if(event.getBow() == null) {
             return;
         }
 
-        if(!CustomItemAPI.isCustomItem(event.getBow())) {
+        // Gets the custom item of the used bow.
+        CustomItem customItem = CustomItemAPI.fromItemStack(event.getBow());
+
+        // Makes sure the item is a custom item.
+        if(customItem == null) {
             return;
         }
 
-        CustomItem customItem = CustomItemAPI.fromItemStack(event.getBow());
+        // Sets the default damage to 0.
+        float damage = 0;
 
-        for(ItemAttribute itemAttribute : customItem.getItemAttributes().keySet()) {
-            if(itemAttribute instanceof DamageAttribute) {
-                // Gets the intended damage.
-                float damage = customItem.getItemAttributes().get(itemAttribute).floatValue();
+        // Adds the damage attribute to the damage.
+        damage += customItem.getAttributeValue("");
 
-                // Adds in "force" to the damage.
-                damage = damage * event.getForce();
+        // Calculates critical arrows and adds crit damage.
+        if(customItem.getAttributeValue("crit_chance") > 0) {
+            Random random = new Random();
+            int chosen = random.nextInt(100);
 
-                // Applies "Power" damage if enchanted.
-                if(event.getBow().getEnchantmentLevel(Enchantment.ARROW_DAMAGE) != 0) {
-                    damage += (damage * 0.25 * event.getBow().getEnchantmentLevel(Enchantment.ARROW_DAMAGE) + 1);
-                }
-
-                // Applies that damage to the arrow.
-                event.getProjectile().setMetadata("damage", new FixedMetadataValue(plugin, damage));
+            if(customItem.getAttributeValue("crit_chance") >= chosen) {
+                damage += customItem.getAttributeValue("crit_damage");
             }
         }
+
+        // Applies "Power" damage if enchanted.
+        if(event.getBow().getEnchantmentLevel(Enchantment.ARROW_DAMAGE) != 0) {
+            damage += (damage * 0.25 * event.getBow().getEnchantmentLevel(Enchantment.ARROW_DAMAGE) + 1);
+        }
+
+        // Applies that damage to the arrow.
+        event.getProjectile().setMetadata("damage", new FixedMetadataValue(plugin, damage));
     }
 
 }
