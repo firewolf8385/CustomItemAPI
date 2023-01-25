@@ -120,6 +120,21 @@ public class ItemBuilder {
         return this;
     }
 
+    public ItemBuilder addLore(String[] arr, String starter) {
+        List<String> lore = meta.getLore();
+
+        if(lore == null) {
+            lore = new ArrayList<>();
+        }
+
+        for(String str : arr) {
+            lore.add(ChatUtils.translate(starter + str));
+        }
+
+        meta.setLore(lore);
+        return this;
+    }
+
     public ItemBuilder addStoredEnchant(Enchantment enchantment, int level, boolean ignoreLevelRestriction) {
         ((EnchantmentStorageMeta) meta).addStoredEnchant(enchantment, level, ignoreLevelRestriction);
         return this;
