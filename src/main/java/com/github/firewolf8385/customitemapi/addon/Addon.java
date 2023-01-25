@@ -17,9 +17,9 @@ import java.util.List;
  * This class represents a plugin that is using the api. It stores various information used, along with all items added.
  */
 public class Addon {
-    private Plugin plugin;
-    private String id;
-    private ItemStack icon;
+    private final Plugin plugin;
+    private final String id;
+    private final ItemStack icon;
     private final List<CustomItem> items = new ArrayList<>();
     private final List<CustomEnchantment> enchantments = new ArrayList<>();
     private final List<ItemAttribute> attributes = new ArrayList<>();
@@ -59,6 +59,22 @@ public class Addon {
     }
 
     /**
+     * Get a list of all attributes registered to the addon.
+     * @return All registered attributes.
+     */
+    public List<ItemAttribute> getAttributes() {
+        return attributes;
+    }
+
+    /**
+     * Get a list of all registered enchantments to the addon.
+     * @return All registered addons.
+     */
+    public List<CustomEnchantment> getEnchantments() {
+        return enchantments;
+    }
+
+    /**
      * Gets the Addon icon.
      * This is displayed in /items browse.
      * @return Addon Icon.
@@ -77,7 +93,7 @@ public class Addon {
 
     /**
      * Get all Custom Items registered to the addon.
-     * @return
+     * @return All registered items.
      */
     public List<CustomItem> getItems() {
         return items;
