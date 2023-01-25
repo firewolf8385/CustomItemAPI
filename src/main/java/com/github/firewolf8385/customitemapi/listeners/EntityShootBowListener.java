@@ -40,14 +40,24 @@ public class EntityShootBowListener implements Listener {
         // Adds the damage attribute to the damage.
         damage += customItem.getAttributeValue("");
 
-        // Calculates critical arrows and adds crit damage.
+        // Calculates critical projectiles and adds crit damage.
         if(customItem.getAttributeValue("crit_chance") > 0) {
             Random random = new Random();
             int chosen = random.nextInt(100);
 
+            // If the crit chance is greater than the required value, the projectile is critical.
             if(customItem.getAttributeValue("crit_chance") >= chosen) {
                 damage += customItem.getAttributeValue("crit_damage");
+                event.getProjectile().setMetadata("critical", new FixedMetadataValue(plugin, true));
             }
+            else {
+                // Otherwise, the projectile is not.
+                event.getProjectile().setMetadata("critical", new FixedMetadataValue(plugin, false));
+            }
+        }
+        else {
+            // If the projectile has 0 crit chance, then it is not critical.
+            event.getProjectile().setMetadata("critical", new FixedMetadataValue(plugin, false));
         }
 
         // Applies "Power" damage if enchanted.
