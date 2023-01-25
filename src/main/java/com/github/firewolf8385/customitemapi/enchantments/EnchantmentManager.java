@@ -10,8 +10,17 @@ public class EnchantmentManager {
     private final List<Enchantment> customEnchantments =  new ArrayList<>();
 
     public Enchantment getEnchantment(String id) {
+
+        // Checks for custom enchantments.
         for(Enchantment enchantment : customEnchantments) {
             if(((CustomEnchantment) enchantment).getId().equals(id)) {
+                return enchantment;
+            }
+        }
+
+        // Checks for vanilla enchantments.
+        for(Enchantment enchantment : Enchantment.values()) {
+            if(enchantment.getName().equalsIgnoreCase(id)) {
                 return enchantment;
             }
         }
