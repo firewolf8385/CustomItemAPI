@@ -45,7 +45,7 @@ public final class CustomItemAPI extends JavaPlugin {
     public void onEnable() {
         // Makes sure the server is running paper.
         try {
-            boolean isPaper = Class.forName("com.destroystokyo.paper.VersionHistoryManager$VersionData") != null;
+            Class.forName("com.destroystokyo.paper.VersionHistoryManager$VersionData");
         }
         catch (ClassNotFoundException exception) {
             Bukkit.getLogger().warning("CustomItemAPI only works on Paper and its forks.");
@@ -81,8 +81,9 @@ public final class CustomItemAPI extends JavaPlugin {
         AbstractCommand.registerCommands(this);
 
         // Metrics
-        Metrics metrics = new Metrics(this, 10115);
+        new Metrics(this, 10115);
 
+        // Registers the default addon.
         Addon addon = new Addon(this, "customitemapi", Material.GOLDEN_SWORD)
                 .registerItem(new TestStickItem())
                 .registerItem(new AdminSwordItem())
@@ -125,11 +126,55 @@ public final class CustomItemAPI extends JavaPlugin {
     }
 
     /**
+     * Get an addon based on its id.
+     * @param id Id of the addon.
+     * @return Addon corresponding to that id.
+     */
+    public static Addon getAddon(String id) {
+        return addonManager.getAddon(id);
+    }
+
+    /**
+     * Get a collection of all registered addons.
+     * @return All registered addons.
+     */
+    public static Collection<Addon> getAddons() {
+        return addonManager.getAddons().values();
+    }
+
+    /**
+     * Get an ItemAttribute based on its id.
+     * @param attributeID Id of the attribute.
+     * @return Associated item attribute.
+     */
+    public static ItemAttribute getAttribute(String attributeID) {
+        return attributeManager.getAttribute(attributeID);
+    }
+
+    /**
+     * Get a list of all registered custom enchantments.
+     * @return All registered custom enchantments.
+     */
+    public static List<Enchantment> getCustomEnchantments() {
+        return enchantmentManager.getEnchantments();
+    }
+
+    /**
      * Get a map of all custom items.
      * @return All registered custom items.
      */
     public static Map<String, CustomItem> getCustomItems() {
         return  items;
+    }
+
+    /**
+     * Get an enchantment based on its id.
+     * Works with both vanilla and custom enchantments.
+     * @param id Id of the enchantment.
+     * @return Enchantment object corresponding to the given id.
+     */
+    public static Enchantment getEnchantment(String id) {
+        return enchantmentManager.getEnchantment(id);
     }
 
     /**
@@ -141,6 +186,12 @@ public final class CustomItemAPI extends JavaPlugin {
         return items.get(id);
     }
 
+    /**
+     * Get the rarity of a Custom Item.
+     * returns NONE if the item is not a custom item or if it has no rarity.
+     * @param item ItemStack to get rarity of.
+     * @return Rarity of the item.
+     */
     public static ItemRarity getRarity(ItemStack item) {
         // Exit if the item isn't a custom item.
         if(!isCustomItem(item)) {
@@ -158,6 +209,15 @@ public final class CustomItemAPI extends JavaPlugin {
 
         // if not, returns the rarity.
         return rarity;
+    }
+
+    /**
+     * Check if an enchantment is a Custom Enchantment.
+     * @param enchantment Enchantment to check.
+     * @return Whether it is a custom enchantment.
+     */
+    public static boolean isCustomEnchantment(Enchantment enchantment) {
+        return enchantmentManager.isCustomEnchantment(enchantment);
     }
 
     /**
@@ -183,14 +243,14 @@ public final class CustomItemAPI extends JavaPlugin {
 
         // The custom id must be valid.
         CustomItem customItem = getItem(ItemUtils.getStringData(item, "ci-id"));
-        if(customItem == null) {
-            return false;
-        }
-
-        // If all these checks pass, then it's a custom item.
-        return true;
+        return customItem != null;
     }
 
+    /**
+     * Check if an item has been set as upgraded.
+     * @param item Item to check if it has been upgraded.
+     * @return Whether is has been upgraded.
+     */
     public static boolean isUpgraded(ItemStack item) {
         // Non-custom items can't be upgraded.
         if(!isCustomItem(item)) {
@@ -206,10 +266,28 @@ public final class CustomItemAPI extends JavaPlugin {
         return false;
     }
 
+    /**
+     * Register an addon with CustomItemAPI.
+     * @param addon Addon to register.
+     */
+    public static void registerAddon(Addon addon) {
+        addonManager.registerAddon(addon);
+    }
+
+    /**
+     * Register an attribute to a specific addon.
+     * @param addon Addon to register attribute to.
+     * @param attribute Attribute to register to it.
+     */
     public static void registerAttribute(Addon addon, ItemAttribute attribute) {
         attributeManager.registerAttribute(attribute);
     }
 
+    /**
+     * Register an enchantment to a specific addon.
+     * @param addon Addon to register the enchantment to.
+     * @param enchantment Enchantment to register to it.
+     */
     public static void registerEnchantment(Addon addon, CustomEnchantment enchantment) {
         enchantmentManager.registerEnchantment(enchantment);
     }
@@ -224,6 +302,7 @@ public final class CustomItemAPI extends JavaPlugin {
 
     /**
      * Get the AddonManager instance, which manages all Addons.
+     * Use methods in CustomItemAPI.java instead.
      * @return AddonManager.
      */
     @Deprecated
@@ -231,37 +310,23 @@ public final class CustomItemAPI extends JavaPlugin {
         return addonManager;
     }
 
+    /**
+     * Gets an instance of the Enchantment manager, which manages custom enchantments.
+     * Use methods in CustomItemAPI.java instead.
+     * @return EnchantmentManager.
+     */
     @Deprecated
     public static EnchantmentManager getEnchantmentManager() {
         return enchantmentManager;
     }
 
+    /**
+     * Gets an instance of the Attribute manager, which manages custom item attributes.
+     * Use methods in CustomItemAPI.java instead.
+     * @return AttributeManager.
+     */
     @Deprecated
     public static AttributeManager getAttributeManager() {
         return attributeManager;
-    }
-
-    public static ItemAttribute getAttribute(String attributeID) {
-        return attributeManager.getAttribute(attributeID);
-    }
-
-    public static List<Enchantment> getCustomEnchantments() {
-        return enchantmentManager.getEnchantments();
-    }
-
-    public static Collection<Addon> getAddons() {
-        return addonManager.getAddons().values();
-    }
-
-    public static Enchantment getEnchantment(String id) {
-        return enchantmentManager.getEnchantment(id);
-    }
-
-    public static boolean isCustomEnchantment(Enchantment enchantment) {
-        return enchantmentManager.isCustomEnchantment(enchantment);
-    }
-
-    public static void registerAddon(Addon addon) {
-        addonManager.registerAddon(addon);
     }
 }
