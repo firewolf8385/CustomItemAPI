@@ -260,4 +260,8 @@ public final class CustomItemAPI extends JavaPlugin {
     public static boolean isCustomEnchantment(Enchantment enchantment) {
         return enchantmentManager.isCustomEnchantment(enchantment);
     }
+
+    public static void registerAddon(Addon addon) {
+        addonManager.registerAddon(addon);
+    }
 }
