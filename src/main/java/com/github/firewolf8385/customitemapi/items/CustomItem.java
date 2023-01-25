@@ -26,7 +26,7 @@ public class CustomItem {
     // Required values
     private final String id;
     private final List<String> description = new ArrayList<>();
-    private final Map<ItemAttribute, Double> itemAttributes = new HashMap<>();
+    private final Map<ItemAttribute, Double> itemAttributes = new LinkedHashMap<>();
 
     // Optional values
     private ItemStack item;
