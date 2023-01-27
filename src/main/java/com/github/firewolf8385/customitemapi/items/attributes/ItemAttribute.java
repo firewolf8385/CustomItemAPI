@@ -46,4 +46,32 @@ public abstract class ItemAttribute {
     public String getName() {
         return name;
     }
+
+    /**
+     * Get the item lore that should be displayed when the attribute has a value.
+     * @param value Value the attribute has on the item.
+     * @return Lore that should be displayed.
+     */
+    public String toLore(double value) {
+        String lore;
+
+        if(Math.floor(value) == value) {
+            if(value > 0) {
+                lore = "&7" + name + ": &a+" + ((int) value);
+            }
+            else {
+                lore = "&7" + name + ": &c-" + ((int) value);
+            }
+        }
+        else {
+            if(value > 0) {
+                lore = "&7" + name + ": &a+" + value;
+            }
+            else {
+                lore = "&7" + name + ": &c-" + value;
+            }
+        }
+
+        return lore;
+    }
 }

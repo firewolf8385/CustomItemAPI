@@ -255,23 +255,7 @@ public class CustomItem {
             hasAttributes = true;
 
             attribute.addedToItem(this, clone, value);
-
-            if(Math.floor(value) == value) {
-                if(value > 0) {
-                    clone.addLore("&7" + attribute.getName() + ": &a+" + ((int) value));
-                }
-                else {
-                    clone.addLore("&7" + attribute.getName() + ": &c-" + ((int) value));
-                }
-            }
-            else {
-                if(value > 0) {
-                    clone.addLore("&7" + attribute.getName() + ": &a+" + value);
-                }
-                else {
-                    clone.addLore("&7" + attribute.getName() + ": &c-" + value);
-                }
-            }
+            clone.addLore(attribute.toLore(value));
         }
 
         // Fixes weapon damage.
