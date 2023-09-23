@@ -48,7 +48,7 @@ public final class CustomItemAPI extends JavaPlugin {
             Class.forName("com.destroystokyo.paper.VersionHistoryManager$VersionData");
         }
         catch (ClassNotFoundException exception) {
-            Bukkit.getLogger().warning("CustomItemAPI only works on Paper and its forks.");
+            Bukkit.getLogger().severe("CustomItemAPI only works on Paper and its forks.");
             getServer().getPluginManager().disablePlugin(this);
         }
 
