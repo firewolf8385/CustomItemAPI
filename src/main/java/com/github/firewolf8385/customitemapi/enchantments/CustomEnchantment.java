@@ -23,6 +23,7 @@ public class CustomEnchantment extends Enchantment {
     private EnchantmentTarget target;
     private EnchantmentRarity rarity;
     private String description;
+    private NamespacedKey namespacedKey;
 
     /**
      * Creates a Custom Enchantment
@@ -30,8 +31,6 @@ public class CustomEnchantment extends Enchantment {
      * @param name Name of the Custom Enchantment.
      */
     public CustomEnchantment(String id, String name) {
-        super(new NamespacedKey(Bukkit.getPluginManager().getPlugin("CustomItemAPI"), id));
-
         this.id = id;
         this.name = name;
 
@@ -40,6 +39,7 @@ public class CustomEnchantment extends Enchantment {
         rarity = EnchantmentRarity.COMMON;
 
         description = "";
+        this.namespacedKey = new NamespacedKey(Bukkit.getPluginManager().getPlugin("CustomItemAPI"), id);
     }
 
 
@@ -138,6 +138,16 @@ public class CustomEnchantment extends Enchantment {
     }
 
     @Override
+    public int getMinModifiedCost(int i) {
+        return 0;
+    }
+
+    @Override
+    public int getMaxModifiedCost(int i) {
+        return 0;
+    }
+
+    @Override
     public @NotNull EnchantmentRarity getRarity() {
         return rarity;
     }
@@ -187,4 +197,9 @@ public class CustomEnchantment extends Enchantment {
     public void onEquip(PlayerArmorChangeEvent event) {}
 
     public void onUnequip(PlayerArmorChangeEvent event) {}
+
+    @Override
+    public @NotNull NamespacedKey getKey() {
+        return namespacedKey;
+    }
 }

@@ -1,6 +1,6 @@
 name: CustomItemAPI
 version: 0.3
-main: com.github.firewolf8385.customitemapi.CustomItemAPI
+main: com.github.firewolf8385.customitemapi.CustomItemAPIPlugin
 api-version: 1.20
 authors: [ firewolf8385 ]
 website: github.com/firewolf8385

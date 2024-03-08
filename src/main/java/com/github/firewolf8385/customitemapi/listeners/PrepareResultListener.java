@@ -1,7 +1,7 @@
 package com.github.firewolf8385.customitemapi.listeners;
 
 import com.destroystokyo.paper.event.inventory.PrepareResultEvent;
-import com.github.firewolf8385.customitemapi.CustomItemAPI;
+import com.github.firewolf8385.customitemapi.CustomItemAPIPlugin;
 import com.github.firewolf8385.customitemapi.items.CustomItem;
 import com.github.firewolf8385.customitemapi.utils.items.ItemBuilder;
 import org.bukkit.ChatColor;
@@ -30,7 +30,7 @@ public class PrepareResultListener implements Listener {
             return;
         }
 
-        if(!CustomItemAPI.isCustomItem(item)) {
+        if(!CustomItemAPIPlugin.isCustomItem(item)) {
             return;
         }
 
@@ -38,7 +38,7 @@ public class PrepareResultListener implements Listener {
             return;
         }
 
-        CustomItem customItem = CustomItemAPI.fromItemStack(item);
+        CustomItem customItem = CustomItemAPIPlugin.fromItemStack(item);
 
         if(ChatColor.stripColor(meta.getDisplayName()) != ChatColor.stripColor(customItem.toItemStack().getItemMeta().getDisplayName())) {
             ItemBuilder builder = new ItemBuilder(item)

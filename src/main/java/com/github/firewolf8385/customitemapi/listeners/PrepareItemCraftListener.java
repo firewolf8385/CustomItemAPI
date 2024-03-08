@@ -1,8 +1,7 @@
 package com.github.firewolf8385.customitemapi.listeners;
 
-import com.github.firewolf8385.customitemapi.CustomItemAPI;
+import com.github.firewolf8385.customitemapi.CustomItemAPIPlugin;
 import com.github.firewolf8385.customitemapi.items.CustomItem;
-import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
@@ -23,8 +22,8 @@ public class PrepareItemCraftListener implements Listener {
                 continue;
             }
 
-            if(CustomItemAPI.isCustomItem(item)) {
-                CustomItem customItem = CustomItemAPI.fromItemStack(item);
+            if(CustomItemAPIPlugin.isCustomItem(item)) {
+                CustomItem customItem = CustomItemAPIPlugin.fromItemStack(item);
                 namespaces[i] = customItem.getID();
             }
             else {

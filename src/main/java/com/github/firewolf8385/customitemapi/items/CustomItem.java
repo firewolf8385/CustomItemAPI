@@ -1,6 +1,6 @@
 package com.github.firewolf8385.customitemapi.items;
 
-import com.github.firewolf8385.customitemapi.CustomItemAPI;
+import com.github.firewolf8385.customitemapi.CustomItemAPIPlugin;
 import com.github.firewolf8385.customitemapi.enchantments.CustomEnchantment;
 import com.github.firewolf8385.customitemapi.items.attributes.ItemAttribute;
 import com.github.firewolf8385.customitemapi.utils.items.EnchantmentUtils;
@@ -201,7 +201,7 @@ public class CustomItem {
         clone.setPersistentData("ci-id", id);
 
         // Sets the item as upgraded if it is upgraded.
-        if(CustomItemAPI.isUpgraded(item)) {
+        if(CustomItemAPIPlugin.isUpgraded(item)) {
             clone.setPersistentData("ci-upgraded", "true");
         }
 
@@ -226,11 +226,11 @@ public class CustomItem {
 
         // Sets the item's display name.
         ItemRarity rarity;
-        if(!CustomItemAPI.isCustomItem(item)) {
+        if(!CustomItemAPIPlugin.isCustomItem(item)) {
             rarity = this.rarity;
         }
         else {
-            rarity = CustomItemAPI.getRarity(item);
+            rarity = CustomItemAPIPlugin.getRarity(item);
         }
 
         // Sets the name of the item.
@@ -259,7 +259,7 @@ public class CustomItem {
         }
 
         // Fixes weapon damage.
-        if(!itemAttributes.containsKey(CustomItemAPI.getAttribute("damage")) && type != ItemType.NONE) {
+        if(!itemAttributes.containsKey(CustomItemAPIPlugin.getAttribute("damage")) && type != ItemType.NONE) {
             AttributeModifier damageFix = new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 0, AttributeModifier.Operation.MULTIPLY_SCALAR_1);
             clone.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, damageFix);
         }
@@ -359,7 +359,7 @@ public class CustomItem {
         // Add rarity lore
         if(rarity != ItemRarity.NONE) {
             // Checks if the item is upgraded.
-            if(!CustomItemAPI.isUpgraded(item)) {
+            if(!CustomItemAPIPlugin.isUpgraded(item)) {
                 // If not, add normal rarity lore.
                 clone.addLore(rarity.getColor() + "&l" + rarity.getName() + type.toString());
             }

@@ -1,6 +1,6 @@
 package com.github.firewolf8385.customitemapi.listeners;
 
-import com.github.firewolf8385.customitemapi.CustomItemAPI;
+import com.github.firewolf8385.customitemapi.CustomItemAPIPlugin;
 import com.github.firewolf8385.customitemapi.items.CustomItem;
 import com.github.firewolf8385.customitemapi.utils.items.ItemBuilder;
 import org.bukkit.ChatColor;
@@ -33,7 +33,7 @@ public class PrepareAnvilListener implements Listener {
             }
 
             ItemMeta meta = result.getItemMeta();
-            CustomItem customItem = CustomItemAPI.fromItemStack(result);
+            CustomItem customItem = CustomItemAPIPlugin.fromItemStack(result);
 
             if(ChatColor.stripColor(meta.getDisplayName()) != ChatColor.stripColor(customItem.toItemStack().getItemMeta().getDisplayName())) {
                 ItemBuilder builder = new ItemBuilder(result)
@@ -46,13 +46,13 @@ public class PrepareAnvilListener implements Listener {
         }
 
         // Makes sure both items are custom items.
-        if(!CustomItemAPI.isCustomItem(firstItem) || !CustomItemAPI.isCustomItem(secondItem)) {
+        if(!CustomItemAPIPlugin.isCustomItem(firstItem) || !CustomItemAPIPlugin.isCustomItem(secondItem)) {
             if(result == null) {
                 return;
             }
 
             ItemMeta meta = result.getItemMeta();
-            CustomItem customItem = CustomItemAPI.fromItemStack(result);
+            CustomItem customItem = CustomItemAPIPlugin.fromItemStack(result);
 
             if(customItem == null) {
                 return;
@@ -68,8 +68,8 @@ public class PrepareAnvilListener implements Listener {
             }
         }
 
-        CustomItem firstCustomItem = CustomItemAPI.fromItemStack(firstItem);
-        CustomItem secondCustomItem = CustomItemAPI.fromItemStack(secondItem);
+        CustomItem firstCustomItem = CustomItemAPIPlugin.fromItemStack(firstItem);
+        CustomItem secondCustomItem = CustomItemAPIPlugin.fromItemStack(secondItem);
 
         // Makes sure the custom items are not null.
         if(firstCustomItem == null || secondCustomItem == null) {
@@ -78,7 +78,7 @@ public class PrepareAnvilListener implements Listener {
             }
 
             ItemMeta meta = result.getItemMeta();
-            CustomItem customItem = CustomItemAPI.fromItemStack(result);
+            CustomItem customItem = CustomItemAPIPlugin.fromItemStack(result);
 
             if(ChatColor.stripColor(meta.getDisplayName()) != ChatColor.stripColor(customItem.toItemStack().getItemMeta().getDisplayName())) {
                 ItemBuilder builder = new ItemBuilder(result)
@@ -179,7 +179,7 @@ public class PrepareAnvilListener implements Listener {
         }
 
         ItemMeta meta = result.getItemMeta();
-        CustomItem customItem = CustomItemAPI.fromItemStack(result);
+        CustomItem customItem = CustomItemAPIPlugin.fromItemStack(result);
 
         if(ChatColor.stripColor(meta.getDisplayName()) != ChatColor.stripColor(customItem.toItemStack().getItemMeta().getDisplayName())) {
             ItemBuilder builder = new ItemBuilder(result)

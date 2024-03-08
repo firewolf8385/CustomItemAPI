@@ -1,6 +1,6 @@
 package com.github.firewolf8385.customitemapi.items.recipe;
 
-import com.github.firewolf8385.customitemapi.CustomItemAPI;
+import com.github.firewolf8385.customitemapi.CustomItemAPIPlugin;
 import com.github.firewolf8385.customitemapi.items.CustomItem;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -79,8 +79,8 @@ public class ShapedRecipeBuilder {
         for(Character character : materials.keySet()) {
             String material = materials.get(character);
 
-            if(CustomItemAPI.getItem(material) != null) {
-                recipe.setIngredient(character, CustomItemAPI.getItem(material).toItemStack());
+            if(CustomItemAPIPlugin.getItem(material) != null) {
+                recipe.setIngredient(character, CustomItemAPIPlugin.getItem(material).toItemStack());
             }
             else {
                 recipe.setIngredient(character, Material.valueOf(material));

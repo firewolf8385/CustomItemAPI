@@ -1,6 +1,6 @@
 package com.github.firewolf8385.customitemapi.addon;
 
-import com.github.firewolf8385.customitemapi.CustomItemAPI;
+import com.github.firewolf8385.customitemapi.CustomItemAPIPlugin;
 import com.github.firewolf8385.customitemapi.enchantments.CustomEnchantment;
 import com.github.firewolf8385.customitemapi.items.CustomItem;
 import com.github.firewolf8385.customitemapi.items.attributes.ItemAttribute;
@@ -109,7 +109,7 @@ public class Addon {
 
     public Addon registerAttribute(ItemAttribute attribute) {
         attributes.add(attribute);
-        CustomItemAPI.registerAttribute(this, attribute);
+        CustomItemAPIPlugin.registerAttribute(this, attribute);
         return this;
     }
 
@@ -120,7 +120,7 @@ public class Addon {
      */
     public Addon registerEnchantment(CustomEnchantment customEnchantment) {
         enchantments.add(customEnchantment);
-        CustomItemAPI.registerEnchantment(this, customEnchantment);
+        CustomItemAPIPlugin.registerEnchantment(this, customEnchantment);
         return this;
     }
 
@@ -131,7 +131,7 @@ public class Addon {
      */
     public Addon registerItem(CustomItem item) {
         items.add(item);
-        CustomItemAPI.registerItem(this, item);
+        CustomItemAPIPlugin.registerItem(this, item);
         return this;
     }
 }

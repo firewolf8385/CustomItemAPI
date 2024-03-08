@@ -1,6 +1,6 @@
 package com.github.firewolf8385.customitemapi.listeners;
 
-import com.github.firewolf8385.customitemapi.CustomItemAPI;
+import com.github.firewolf8385.customitemapi.CustomItemAPIPlugin;
 import com.github.firewolf8385.customitemapi.enchantments.CustomEnchantment;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -37,7 +37,7 @@ public class EntityDamageByEntityListener implements Listener {
             if(helmet != null) {
                 // Checks for Custom Enchantments
                 for(Enchantment enchantment : helmet.getEnchantments().keySet()) {
-                    if(CustomItemAPI.isCustomEnchantment(enchantment)) {
+                    if(CustomItemAPIPlugin.isCustomEnchantment(enchantment)) {
                         ((CustomEnchantment) enchantment).onEntityDamage(event);
                     }
                 }
@@ -46,7 +46,7 @@ public class EntityDamageByEntityListener implements Listener {
             if(chestplate != null) {
                 // Checks for Custom Enchantments
                 for(Enchantment enchantment : chestplate.getEnchantments().keySet()) {
-                    if(CustomItemAPI.isCustomEnchantment(enchantment)) {
+                    if(CustomItemAPIPlugin.isCustomEnchantment(enchantment)) {
                         ((CustomEnchantment) enchantment).onEntityDamage(event);
                     }
                 }
@@ -55,7 +55,7 @@ public class EntityDamageByEntityListener implements Listener {
             if(leggings != null) {
                 // Checks for Custom Enchantments
                 for(Enchantment enchantment : leggings.getEnchantments().keySet()) {
-                    if(CustomItemAPI.isCustomEnchantment(enchantment)) {
+                    if(CustomItemAPIPlugin.isCustomEnchantment(enchantment)) {
                         ((CustomEnchantment) enchantment).onEntityDamage(event);
                     }
                 }
@@ -64,7 +64,7 @@ public class EntityDamageByEntityListener implements Listener {
             if(boots != null) {
                 // Checks for Custom Enchantments
                 for(Enchantment enchantment : boots.getEnchantments().keySet()) {
-                    if(CustomItemAPI.isCustomEnchantment(enchantment)) {
+                    if(CustomItemAPIPlugin.isCustomEnchantment(enchantment)) {
                         ((CustomEnchantment) enchantment).onEntityDamage(event);
                     }
                 }
@@ -73,7 +73,7 @@ public class EntityDamageByEntityListener implements Listener {
             if(heldItem != null) {
                 // Checks for Custom Enchantments
                 for(Enchantment enchantment : heldItem.getEnchantments().keySet()) {
-                    if(CustomItemAPI.isCustomEnchantment(enchantment)) {
+                    if(CustomItemAPIPlugin.isCustomEnchantment(enchantment)) {
                         ((CustomEnchantment) enchantment).onEntityDamage(event);
                     }
                 }

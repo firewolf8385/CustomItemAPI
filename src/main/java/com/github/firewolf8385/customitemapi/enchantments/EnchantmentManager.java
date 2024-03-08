@@ -43,7 +43,7 @@ public class EnchantmentManager {
             Field f = Enchantment.class.getDeclaredField("acceptingNew");
             f.setAccessible(true);
             f.set(null, true);
-            Enchantment.registerEnchantment(enchantment);
+            //Enchantment.registerEnchantment(enchantment);
         } catch (Exception e) {
             e.printStackTrace();
         }

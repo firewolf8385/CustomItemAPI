@@ -1,6 +1,6 @@
 package com.github.firewolf8385.customitemapi.commands;
 
-import com.github.firewolf8385.customitemapi.CustomItemAPI;
+import com.github.firewolf8385.customitemapi.CustomItemAPIPlugin;
 import com.github.firewolf8385.customitemapi.enchantments.CustomEnchantment;
 import com.github.firewolf8385.customitemapi.gui.AddonBrowseGUI;
 import com.github.firewolf8385.customitemapi.gui.ItemBrowseGUI;
@@ -9,8 +9,7 @@ import com.github.firewolf8385.customitemapi.items.ItemRarity;
 import com.github.firewolf8385.customitemapi.utils.chat.ChatUtils;
 import com.github.firewolf8385.customitemapi.utils.items.EnchantmentUtils;
 import com.github.firewolf8385.customitemapi.utils.items.ItemBuilder;
-import com.github.firewolf8385.customitemapi.utils.items.ItemUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
@@ -22,12 +21,12 @@ import org.bukkit.util.StringUtil;
 import java.util.*;
 
 public class ItemCMD extends AbstractCommand {
-    private final CustomItemAPI plugin;
+    private final CustomItemAPIPlugin plugin;
 
     /**
      * Registers the command.
      */
-    public ItemCMD(CustomItemAPI plugin) {
+    public ItemCMD(CustomItemAPIPlugin plugin) {
         super("items", "ci.item", true);
         this.plugin = plugin;
     }
@@ -112,7 +111,7 @@ public class ItemCMD extends AbstractCommand {
                 }
 
                 if(args.length == 3) {
-                    List<String> completions = new ArrayList<>(CustomItemAPI.getCustomItems().keySet());
+                    List<String> completions = new ArrayList<>(CustomItemAPIPlugin.getCustomItems().keySet());
                     return StringUtil.copyPartialMatches(args[2], completions, new ArrayList<>());
                 }
 
@@ -153,7 +152,7 @@ public class ItemCMD extends AbstractCommand {
             case  "enchant" -> {
                 if(args.length == 2) {
                     List<String> enchantments = new ArrayList<>();
-                    CustomItemAPI.getCustomEnchantments().forEach(enchantment -> {
+                    CustomItemAPIPlugin.getCustomEnchantments().forEach(enchantment -> {
                         String id = ((CustomEnchantment) enchantment).getId();
                         enchantments.add(id);
                     });
@@ -221,12 +220,12 @@ public class ItemCMD extends AbstractCommand {
 
         ItemStack item = p.getInventory().getItemInMainHand();
 
-        if(!CustomItemAPI.isCustomItem(item)) {
+        if(!CustomItemAPIPlugin.isCustomItem(item)) {
             ChatUtils.chat(sender, "&c&l(&7!&c&l) &cThat is not a custom item!");
             return;
         }
 
-        Enchantment enchantment = CustomItemAPI.getEnchantment(args[1].toLowerCase());
+        Enchantment enchantment = CustomItemAPIPlugin.getEnchantment(args[1].toLowerCase());
 
         int level = 1;
         if(args.length == 3) {
@@ -244,7 +243,7 @@ public class ItemCMD extends AbstractCommand {
             enchantedItem.addEnchantment(enchantment, level);
         }
 
-        CustomItem customItem = CustomItemAPI.fromItemStack(item);
+        CustomItem customItem = CustomItemAPIPlugin.fromItemStack(item);
         p.getInventory().setItemInMainHand(customItem.update(enchantedItem.build()));
     }
 
@@ -270,7 +269,7 @@ public class ItemCMD extends AbstractCommand {
             return;
         }
 
-        CustomItem item = CustomItemAPI.getCustomItems().get(args[2]);
+        CustomItem item = CustomItemAPIPlugin.getCustomItems().get(args[2]);
 
         if(item == null) {
             ChatUtils.chat(sender, "&c&l(&7!&c&l) &cThat item does not exist.");
@@ -299,12 +298,12 @@ public class ItemCMD extends AbstractCommand {
 
         ItemStack item = p.getInventory().getItemInMainHand();
 
-        if(!CustomItemAPI.isCustomItem(item)) {
+        if(!CustomItemAPIPlugin.isCustomItem(item)) {
             ChatUtils.chat(sender, "&c&l(&7!&c&l) &cThat is not a custom item!");
             return;
         }
 
-        p.getInventory().setItemInMainHand(CustomItemAPI.fromItemStack(item).toItemStack());
+        p.getInventory().setItemInMainHand(CustomItemAPIPlugin.fromItemStack(item).toItemStack());
 
         ChatUtils.chat(sender, "&a&l(&7!&a&l) &aItem has been updated.");
     }
@@ -326,7 +325,7 @@ public class ItemCMD extends AbstractCommand {
 
                 ItemStack item = player.getInventory().getItemInMainHand();
 
-                if(!CustomItemAPI.isCustomItem(item)) {
+                if(!CustomItemAPIPlugin.isCustomItem(item)) {
                     ChatUtils.chat(sender, "&cThat item is not a custom item!");
                     return;
                 }
@@ -337,7 +336,7 @@ public class ItemCMD extends AbstractCommand {
                     return;
                 }
 
-                CustomItem customItem = CustomItemAPI.fromItemStack(item);
+                CustomItem customItem = CustomItemAPIPlugin.fromItemStack(item);
                 customItem.setRarity(rarity);
                 player.getInventory().setItemInMainHand(customItem.toItemStack());
             }
@@ -350,20 +349,20 @@ public class ItemCMD extends AbstractCommand {
 
                 ItemStack item = player.getInventory().getItemInMainHand();
 
-                if(!CustomItemAPI.isCustomItem(item)) {
+                if(!CustomItemAPIPlugin.isCustomItem(item)) {
                     ChatUtils.chat(sender, "&cThat item is not a custom item!");
                     return;
                 }
 
                 if(args[2].equalsIgnoreCase("true")) {
                     ItemStack upgraded = new ItemBuilder(item).setPersistentData("ci-upgraded", "true").build();
-                    CustomItem customItem = CustomItemAPI.fromItemStack(upgraded);
+                    CustomItem customItem = CustomItemAPIPlugin.fromItemStack(upgraded);
                     player.getInventory().setItemInMainHand(customItem.update(upgraded));
                 }
 
                 if(args[2].equalsIgnoreCase("false")) {
                     ItemStack upgraded = new ItemBuilder(item).setPersistentData("ci-upgraded", "false").build();
-                    CustomItem customItem = CustomItemAPI.fromItemStack(upgraded);
+                    CustomItem customItem = CustomItemAPIPlugin.fromItemStack(upgraded);
                     player.getInventory().setItemInMainHand(customItem.update(upgraded));
                 }
             }
@@ -380,7 +379,7 @@ public class ItemCMD extends AbstractCommand {
 
         ItemStack item = p.getInventory().getItemInMainHand();
 
-        if(!CustomItemAPI.isCustomItem(item)) {
+        if(!CustomItemAPIPlugin.isCustomItem(item)) {
             ChatUtils.chat(sender, "&c&l(&7!&c&l) &cThat is not a custom item!");
             return;
         }
@@ -390,15 +389,15 @@ public class ItemCMD extends AbstractCommand {
             ItemBuilder builder = new ItemBuilder(item)
                     .setPersistentData("ci-display_name", "");
 
-            p.getInventory().setItemInMainHand(CustomItemAPI.fromItemStack(builder.build()).update(builder.build()));
+            p.getInventory().setItemInMainHand(CustomItemAPIPlugin.fromItemStack(builder.build()).update(builder.build()));
             return;
         }
 
         ItemBuilder builder = new ItemBuilder(item)
                 .setPersistentData("ci-display_name", StringUtils.join(Arrays.copyOfRange(args, 1, args.length), " "));
 
-        p.getInventory().setItemInMainHand(CustomItemAPI.fromItemStack(builder.build()).update(builder.build()));
+        p.getInventory().setItemInMainHand(CustomItemAPIPlugin.fromItemStack(builder.build()).update(builder.build()));
 
-        ChatUtils.chat(sender, "&a&l(&7!&a&l) &aItem name has been set to " + CustomItemAPI.getRarity(item).getColor() + StringUtils.join(Arrays.copyOfRange(args, 1, args.length), " ") + "&a.");
+        ChatUtils.chat(sender, "&a&l(&7!&a&l) &aItem name has been set to " + CustomItemAPIPlugin.getRarity(item).getColor() + StringUtils.join(Arrays.copyOfRange(args, 1, args.length), " ") + "&a.");
     }
 }

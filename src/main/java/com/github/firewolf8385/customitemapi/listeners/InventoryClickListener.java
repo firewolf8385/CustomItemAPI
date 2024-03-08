@@ -1,6 +1,6 @@
 package com.github.firewolf8385.customitemapi.listeners;
 
-import com.github.firewolf8385.customitemapi.CustomItemAPI;
+import com.github.firewolf8385.customitemapi.CustomItemAPIPlugin;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -15,11 +15,11 @@ public class InventoryClickListener implements Listener {
         }
 
         // Exit if the item isn't a custom item.
-        if(!CustomItemAPI.isCustomItem(event.getCurrentItem())) {
+        if(!CustomItemAPIPlugin.isCustomItem(event.getCurrentItem())) {
             return;
         }
 
         // Run the onInteract() method of the CustomItem.
-        CustomItemAPI.fromItemStack(event.getCurrentItem()).onClick(event);
+        CustomItemAPIPlugin.fromItemStack(event.getCurrentItem()).onClick(event);
     }
 }

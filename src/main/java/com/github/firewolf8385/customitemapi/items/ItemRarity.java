@@ -1,6 +1,6 @@
 package com.github.firewolf8385.customitemapi.items;
 
-import com.github.firewolf8385.customitemapi.CustomItemAPI;
+import com.github.firewolf8385.customitemapi.CustomItemAPIPlugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -55,7 +55,7 @@ public enum ItemRarity {
      * @return Configured color.
      */
     public String getColor() {
-        CustomItemAPI plugin = ((CustomItemAPI) JavaPlugin.getProvidingPlugin(CustomItemAPI.class));
+        CustomItemAPIPlugin plugin = ((CustomItemAPIPlugin) JavaPlugin.getProvidingPlugin(CustomItemAPIPlugin.class));
         String configColor = plugin.getSettingsManager().getConfig().getString("Rarities." + this + ".color");
 
         if(configColor != null) {
@@ -71,7 +71,7 @@ public enum ItemRarity {
      * @return Configured name.
      */
     public String getName() {
-        CustomItemAPI plugin = ((CustomItemAPI) JavaPlugin.getProvidingPlugin(CustomItemAPI.class));
+        CustomItemAPIPlugin plugin = ((CustomItemAPIPlugin) JavaPlugin.getProvidingPlugin(CustomItemAPIPlugin.class));
         String configName = plugin.getSettingsManager().getConfig().getString("Rarities." + this + ".name");
 
         if(configName != null) {

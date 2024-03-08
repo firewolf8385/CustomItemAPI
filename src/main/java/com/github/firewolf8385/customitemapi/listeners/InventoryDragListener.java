@@ -1,6 +1,6 @@
 package com.github.firewolf8385.customitemapi.listeners;
 
-import com.github.firewolf8385.customitemapi.CustomItemAPI;
+import com.github.firewolf8385.customitemapi.CustomItemAPIPlugin;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryDragEvent;
@@ -15,11 +15,11 @@ public class InventoryDragListener implements Listener {
         }
 
         // Exit if the item isn't a custom item.
-        if(!CustomItemAPI.isCustomItem(event.getCursor())) {
+        if(!CustomItemAPIPlugin.isCustomItem(event.getCursor())) {
             return;
         }
 
         // Run the onInteract() method of the CustomItem.
-        CustomItemAPI.fromItemStack(event.getCursor()).onDrag(event);
+        CustomItemAPIPlugin.fromItemStack(event.getCursor()).onDrag(event);
     }
 }

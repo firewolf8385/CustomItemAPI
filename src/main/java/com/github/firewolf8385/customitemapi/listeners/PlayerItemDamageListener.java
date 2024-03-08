@@ -1,6 +1,6 @@
 package com.github.firewolf8385.customitemapi.listeners;
 
-import com.github.firewolf8385.customitemapi.CustomItemAPI;
+import com.github.firewolf8385.customitemapi.CustomItemAPIPlugin;
 import com.github.firewolf8385.customitemapi.enchantments.CustomEnchantment;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
@@ -14,9 +14,9 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 public class PlayerItemDamageListener implements Listener {
-    private final CustomItemAPI plugin;
+    private final CustomItemAPIPlugin plugin;
 
-    public PlayerItemDamageListener(CustomItemAPI plugin) {
+    public PlayerItemDamageListener(CustomItemAPIPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -27,7 +27,7 @@ public class PlayerItemDamageListener implements Listener {
 
         // Checks for Custom Enchantments
         for(Enchantment enchantment : event.getItem().getEnchantments().keySet()) {
-            if(CustomItemAPI.isCustomEnchantment(enchantment)) {
+            if(CustomItemAPIPlugin.isCustomEnchantment(enchantment)) {
                 ((CustomEnchantment) enchantment).onItemDamage(event);
             }
         }
@@ -55,16 +55,16 @@ public class PlayerItemDamageListener implements Listener {
                 event.getPlayer().getInventory().remove(item);
             }
 
-            if(CustomItemAPI.isCustomItem(item)) {
+            if(CustomItemAPIPlugin.isCustomItem(item)) {
                 int slot = event.getPlayer().getInventory().first(item);
                 if(slot != -1) {
-                    event.getPlayer().getInventory().setItem(slot, CustomItemAPI.fromItemStack(item).update(item));
+                    event.getPlayer().getInventory().setItem(slot, CustomItemAPIPlugin.fromItemStack(item).update(item));
                 }
             }
         }
 
-        if(CustomItemAPI.isCustomItem(item)) {
-            CustomItemAPI.fromItemStack(item).onDamage(event);
+        if(CustomItemAPIPlugin.isCustomItem(item)) {
+            CustomItemAPIPlugin.fromItemStack(item).onDamage(event);
         }
     }
 }

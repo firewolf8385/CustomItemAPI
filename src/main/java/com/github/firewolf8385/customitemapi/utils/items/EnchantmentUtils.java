@@ -1,16 +1,13 @@
 package com.github.firewolf8385.customitemapi.utils.items;
 
-import com.github.firewolf8385.customitemapi.CustomItemAPI;
+import com.github.firewolf8385.customitemapi.CustomItemAPIPlugin;
 import com.github.firewolf8385.customitemapi.enchantments.CustomEnchantment;
 import org.bukkit.enchantments.Enchantment;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class EnchantmentUtils {
 
     public static Enchantment getEnchantment(String id) {
-        for(Enchantment enchantment : CustomItemAPI.getCustomEnchantments()) {
+        for(Enchantment enchantment : CustomItemAPIPlugin.getCustomEnchantments()) {
             if(((CustomEnchantment) enchantment).getId().equals(id)) {
                 return enchantment;
             }
@@ -21,7 +18,7 @@ public class EnchantmentUtils {
 
     public static boolean hasLevel(Enchantment enchantment) {
 
-        if(CustomItemAPI.getCustomEnchantments().contains(enchantment)) {
+        if(CustomItemAPIPlugin.getCustomEnchantments().contains(enchantment)) {
             return enchantment.getMaxLevel() != 1;
         }
 
@@ -44,7 +41,7 @@ public class EnchantmentUtils {
     }
 
     public static String enchantmentToString(Enchantment enchantment) {
-        if(CustomItemAPI.getCustomEnchantments().contains(enchantment)) {
+        if(CustomItemAPIPlugin.getCustomEnchantments().contains(enchantment)) {
             return ((CustomEnchantment) enchantment).getName();
         }
 

@@ -1,9 +1,7 @@
 package com.github.firewolf8385.customitemapi.listeners;
 
-import com.github.firewolf8385.customitemapi.CustomItemAPI;
+import com.github.firewolf8385.customitemapi.CustomItemAPIPlugin;
 import com.github.firewolf8385.customitemapi.items.CustomItem;
-import com.github.firewolf8385.customitemapi.items.attributes.ItemAttribute;
-import com.github.firewolf8385.customitemapi.items.attributes.attributes.DamageAttribute;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -13,9 +11,9 @@ import org.bukkit.metadata.FixedMetadataValue;
 import java.util.Random;
 
 public class EntityShootBowListener implements Listener {
-    private final CustomItemAPI plugin;
+    private final CustomItemAPIPlugin plugin;
 
-    public EntityShootBowListener(CustomItemAPI plugin) {
+    public EntityShootBowListener(CustomItemAPIPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -27,7 +25,7 @@ public class EntityShootBowListener implements Listener {
         }
 
         // Gets the custom item of the used bow.
-        CustomItem customItem = CustomItemAPI.fromItemStack(event.getBow());
+        CustomItem customItem = CustomItemAPIPlugin.fromItemStack(event.getBow());
 
         // Makes sure the item is a custom item.
         if(customItem == null) {

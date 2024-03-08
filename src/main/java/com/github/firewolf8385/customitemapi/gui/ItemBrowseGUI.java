@@ -1,6 +1,6 @@
 package com.github.firewolf8385.customitemapi.gui;
 
-import com.github.firewolf8385.customitemapi.CustomItemAPI;
+import com.github.firewolf8385.customitemapi.CustomItemAPIPlugin;
 import com.github.firewolf8385.customitemapi.addon.Addon;
 import com.github.firewolf8385.customitemapi.items.CustomItem;
 import com.github.firewolf8385.customitemapi.utils.gui.CustomGUI;
@@ -22,7 +22,7 @@ public class ItemBrowseGUI extends CustomGUI {
         }
 
         int i = 0;
-        for(Addon addon : CustomItemAPI.getAddons()) {
+        for(Addon addon : CustomItemAPIPlugin.getAddons()) {
             setItem(i + 9, addon.getIcon(), (p, a) -> new ItemBrowseGUI(addon, 1).open(p));
             i++;
         }
@@ -36,7 +36,7 @@ public class ItemBrowseGUI extends CustomGUI {
             });
         }
 
-        if(CustomItemAPI.getAddons().size() > (page * 21)) {
+        if(CustomItemAPIPlugin.getAddons().size() > (page * 21)) {
             setItem(42, new SkullBuilder("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjFkMGY4MmEyYTRjZGQ4NWY3OWY0ZDlkOTc5OGY5YzNhNWJjY2JlOWM3ZjJlMjdjNWZjODM2NjUxYThmM2Y0NSJ9fX0=").setDisplayName("&aPage " + (page + 1)).build(), (p,a) -> {
                 new ItemBrowseGUI(page + 1).open(p);
             });
@@ -98,7 +98,7 @@ public class ItemBrowseGUI extends CustomGUI {
             setItem(i, new ItemBuilder(Material.GRAY_STAINED_GLASS_PANE).setDisplayName(" ").build());
         }
 
-        List<CustomItem> items = new ArrayList<>(CustomItemAPI.getCustomItems().values());
+        List<CustomItem> items = new ArrayList<>(CustomItemAPIPlugin.getCustomItems().values());
 
         int amount = 0;
         for(int i = ((page - 1) * 27); i <= items.size(); i++) {

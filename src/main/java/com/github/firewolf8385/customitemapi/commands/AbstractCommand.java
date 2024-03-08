@@ -1,6 +1,6 @@
 package com.github.firewolf8385.customitemapi.commands;
 
-import com.github.firewolf8385.customitemapi.CustomItemAPI;
+import com.github.firewolf8385.customitemapi.CustomItemAPIPlugin;
 import com.github.firewolf8385.customitemapi.utils.chat.ChatUtils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -13,7 +13,7 @@ import java.util.List;
 public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
     private final String permission;
     private final boolean canConsoleUse;
-    private static CustomItemAPI plugin;
+    private static CustomItemAPIPlugin plugin;
 
     /**
      * Creates a new AbstractCommand.
@@ -32,7 +32,7 @@ public abstract class AbstractCommand implements CommandExecutor, TabCompleter {
      * Registers all commands in the plugin.
      * @param pl Plugin.
      */
-    public static void registerCommands(CustomItemAPI pl) {
+    public static void registerCommands(CustomItemAPIPlugin pl) {
         plugin = pl;
 
         new ItemCMD(pl);

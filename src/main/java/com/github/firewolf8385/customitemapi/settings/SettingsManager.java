@@ -1,6 +1,6 @@
 package com.github.firewolf8385.customitemapi.settings;
 
-import com.github.firewolf8385.customitemapi.CustomItemAPI;
+import com.github.firewolf8385.customitemapi.CustomItemAPIPlugin;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -11,14 +11,14 @@ import java.io.File;
  * files. Stores spawn and arena locations.
  */
 public class SettingsManager {
-    private final CustomItemAPI plugin;
+    private final CustomItemAPIPlugin plugin;
 
     private FileConfiguration config;
     private File configFile;
     private FileConfiguration messages;
     private File messagesFile;
 
-    public SettingsManager(CustomItemAPI plugin) {
+    public SettingsManager(CustomItemAPIPlugin plugin) {
         this.plugin = plugin;
 
         config = plugin.getConfig();
