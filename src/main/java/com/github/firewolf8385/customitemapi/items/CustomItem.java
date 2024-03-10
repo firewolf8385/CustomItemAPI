@@ -1,7 +1,6 @@
 package com.github.firewolf8385.customitemapi.items;
 
 import com.github.firewolf8385.customitemapi.CustomItemAPIPlugin;
-import com.github.firewolf8385.customitemapi.enchantments.CustomEnchantment;
 import com.github.firewolf8385.customitemapi.items.attributes.ItemAttribute;
 import com.github.firewolf8385.customitemapi.utils.items.EnchantmentUtils;
 import com.github.firewolf8385.customitemapi.utils.items.ItemBuilder;
@@ -315,12 +314,6 @@ public class CustomItem {
                 }
                 else {
                     clone.addLore("&7" + name);
-                }
-
-                if(enchantment instanceof CustomEnchantment customEnchantment) {
-                    if(!customEnchantment.getDescription().isEmpty()) {
-                        clone.addLore(ChatPaginator.wordWrap(customEnchantment.getDescription(), 35), "&8");
-                    }
                 }
 
                 hasEnchantments = true;

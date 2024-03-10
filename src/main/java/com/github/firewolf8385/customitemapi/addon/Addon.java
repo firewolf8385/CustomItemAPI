@@ -1,7 +1,6 @@
 package com.github.firewolf8385.customitemapi.addon;
 
 import com.github.firewolf8385.customitemapi.CustomItemAPIPlugin;
-import com.github.firewolf8385.customitemapi.enchantments.CustomEnchantment;
 import com.github.firewolf8385.customitemapi.items.CustomItem;
 import com.github.firewolf8385.customitemapi.items.attributes.ItemAttribute;
 import com.github.firewolf8385.customitemapi.utils.items.ItemBuilder;
@@ -21,7 +20,6 @@ public class Addon {
     private final String id;
     private final ItemStack icon;
     private final List<CustomItem> items = new ArrayList<>();
-    private final List<CustomEnchantment> enchantments = new ArrayList<>();
     private final List<ItemAttribute> attributes = new ArrayList<>();
 
     /**
@@ -67,14 +65,6 @@ public class Addon {
     }
 
     /**
-     * Get a list of all registered enchantments to the addon.
-     * @return All registered addons.
-     */
-    public List<CustomEnchantment> getEnchantments() {
-        return enchantments;
-    }
-
-    /**
      * Gets the Addon icon.
      * This is displayed in /items browse.
      * @return Addon Icon.
@@ -110,17 +100,6 @@ public class Addon {
     public Addon registerAttribute(ItemAttribute attribute) {
         attributes.add(attribute);
         CustomItemAPIPlugin.registerAttribute(this, attribute);
-        return this;
-    }
-
-    /**
-     * Registers a custom enchantment to the addon.
-     * @param customEnchantment Custom Enchantment to register.
-     * @return Instance of the addon.
-     */
-    public Addon registerEnchantment(CustomEnchantment customEnchantment) {
-        enchantments.add(customEnchantment);
-        CustomItemAPIPlugin.registerEnchantment(this, customEnchantment);
         return this;
     }
 

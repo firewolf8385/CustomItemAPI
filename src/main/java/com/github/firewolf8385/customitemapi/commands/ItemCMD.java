@@ -1,7 +1,6 @@
 package com.github.firewolf8385.customitemapi.commands;
 
 import com.github.firewolf8385.customitemapi.CustomItemAPIPlugin;
-import com.github.firewolf8385.customitemapi.enchantments.CustomEnchantment;
 import com.github.firewolf8385.customitemapi.gui.AddonBrowseGUI;
 import com.github.firewolf8385.customitemapi.gui.ItemBrowseGUI;
 import com.github.firewolf8385.customitemapi.items.CustomItem;
@@ -67,8 +66,6 @@ public class ItemCMD extends AbstractCommand {
 
                 new AddonBrowseGUI(1).open(player);
             }
-
-            case "enchant" -> enchant(sender, args);
 
             case "info" -> {
                 ChatUtils.chat(sender, "&8&m+-----------------------***-----------------------+");
@@ -148,20 +145,6 @@ public class ItemCMD extends AbstractCommand {
                     return Collections.emptyList();
                 }
             }
-
-            case  "enchant" -> {
-                if(args.length == 2) {
-                    List<String> enchantments = new ArrayList<>();
-                    CustomItemAPIPlugin.getCustomEnchantments().forEach(enchantment -> {
-                        String id = ((CustomEnchantment) enchantment).getId();
-                        enchantments.add(id);
-                    });
-
-                    return enchantments;
-                }
-
-                return Collections.emptyList();
-            }
         }
 
         return Collections.emptyList();
@@ -203,48 +186,6 @@ public class ItemCMD extends AbstractCommand {
                 ChatUtils.chat(sender, "  - " + EnchantmentUtils.enchantmentToString(enchantment) + " " + EnchantmentUtils.IntegerToRomanNumeral(storage.getStoredEnchants().get(enchantment)));
             }
         }
-    }
-
-    private void enchant(CommandSender sender, String[] args) {
-        if(!sender.hasPermission("customitems.enchant")) {
-            ChatUtils.chat(sender, "&c&l(&7!&c&l) &cYou do not have access to that command!");
-            return;
-        }
-
-        if(args.length < 2) {
-            ChatUtils.chat(sender, "&c&l(&7!&c&l) &cUsage: /item enchant [enchantment]");
-            return;
-        }
-
-        Player p = (Player) sender;
-
-        ItemStack item = p.getInventory().getItemInMainHand();
-
-        if(!CustomItemAPIPlugin.isCustomItem(item)) {
-            ChatUtils.chat(sender, "&c&l(&7!&c&l) &cThat is not a custom item!");
-            return;
-        }
-
-        Enchantment enchantment = CustomItemAPIPlugin.getEnchantment(args[1].toLowerCase());
-
-        int level = 1;
-        if(args.length == 3) {
-            level = Integer.parseInt(args[2]);
-        }
-
-        if(item.getItemMeta() instanceof EnchantmentStorageMeta temp) {
-            temp.addStoredEnchant(enchantment, level, true);
-            item.setItemMeta(temp);
-        }
-
-        ItemBuilder enchantedItem = new ItemBuilder(item);
-
-        if(!(item.getItemMeta() instanceof EnchantmentStorageMeta)) {
-            enchantedItem.addEnchantment(enchantment, level);
-        }
-
-        CustomItem customItem = CustomItemAPIPlugin.fromItemStack(item);
-        p.getInventory().setItemInMainHand(customItem.update(enchantedItem.build()));
     }
 
     /**

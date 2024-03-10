@@ -1,26 +1,11 @@
 package com.github.firewolf8385.customitemapi.utils.items;
 
 import com.github.firewolf8385.customitemapi.CustomItemAPIPlugin;
-import com.github.firewolf8385.customitemapi.enchantments.CustomEnchantment;
 import org.bukkit.enchantments.Enchantment;
 
 public class EnchantmentUtils {
 
-    public static Enchantment getEnchantment(String id) {
-        for(Enchantment enchantment : CustomItemAPIPlugin.getCustomEnchantments()) {
-            if(((CustomEnchantment) enchantment).getId().equals(id)) {
-                return enchantment;
-            }
-        }
-
-        return null;
-    }
-
     public static boolean hasLevel(Enchantment enchantment) {
-
-        if(CustomItemAPIPlugin.getCustomEnchantments().contains(enchantment)) {
-            return enchantment.getMaxLevel() != 1;
-        }
 
         switch (enchantment.getName()) {
             default -> {
@@ -41,9 +26,6 @@ public class EnchantmentUtils {
     }
 
     public static String enchantmentToString(Enchantment enchantment) {
-        if(CustomItemAPIPlugin.getCustomEnchantments().contains(enchantment)) {
-            return ((CustomEnchantment) enchantment).getName();
-        }
 
         return switch (enchantment.getName()) {
             case "ARROW_DAMAGE" -> "Power";

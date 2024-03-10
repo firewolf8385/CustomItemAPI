@@ -1,10 +1,8 @@
 package com.github.firewolf8385.customitemapi.listeners;
 
 import com.github.firewolf8385.customitemapi.CustomItemAPIPlugin;
-import com.github.firewolf8385.customitemapi.enchantments.CustomEnchantment;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerItemDamageEvent;
@@ -24,13 +22,6 @@ public class PlayerItemDamageListener implements Listener {
     public void onItemDamage(PlayerItemDamageEvent event) {
         ItemStack item = event.getItem();
         ItemMeta meta = item.getItemMeta();
-
-        // Checks for Custom Enchantments
-        for(Enchantment enchantment : event.getItem().getEnchantments().keySet()) {
-            if(CustomItemAPIPlugin.isCustomEnchantment(enchantment)) {
-                ((CustomEnchantment) enchantment).onItemDamage(event);
-            }
-        }
 
         NamespacedKey maxDurability = new NamespacedKey(plugin, "ci-max_durability");
         NamespacedKey currentDurability = new NamespacedKey(plugin, "ci-current_durability");
