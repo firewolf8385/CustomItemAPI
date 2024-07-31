@@ -95,6 +95,9 @@ public final class CustomItemAPIPlugin extends JavaPlugin {
                 .registerAttribute(new CritChanceAttribute())
                 .registerAttribute(new CritDamageAttribute());
         addonManager.registerAddon(addon);
+
+        // Setup API
+        CustomItemAPI.setPlugin(this);
     }
 
     /**
