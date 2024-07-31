@@ -1,10 +1,12 @@
 package com.github.firewolf8385.customitemapi.items.items;
 
+import com.github.firewolf8385.customitemapi.CustomItemAPIPlugin;
 import com.github.firewolf8385.customitemapi.items.CustomItem;
 import com.github.firewolf8385.customitemapi.items.ItemRarity;
 import com.github.firewolf8385.customitemapi.items.ItemType;
 import com.github.firewolf8385.customitemapi.items.attributes.attributes.AttackSpeedAttribute;
 import com.github.firewolf8385.customitemapi.items.attributes.attributes.DamageAttribute;
+import com.github.firewolf8385.customitemapi.items.attributes.attributes.ReachAttribute;
 import com.github.firewolf8385.customitemapi.utils.items.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -19,12 +21,12 @@ public class AdminSwordItem extends CustomItem {
                 .build();
 
         addItemAttribute(new DamageAttribute(), 100);
-        addItemAttribute(new AttackSpeedAttribute(), 100);
+        addItemAttribute(CustomItemAPIPlugin.getAttribute("attack_speed"), 100);
+        addItemAttribute(CustomItemAPIPlugin.getAttribute("reach"), 10);
         setItem(item);
         setRarity(ItemRarity.LEGENDARY);
         setType(ItemType.SWORD);
 
         setMaxDurability(2);
     }
-
 }

@@ -85,7 +85,7 @@ public final class CustomItemAPIPlugin extends JavaPlugin {
                 .registerItem(new AdminBowItem())
                 .registerItem(new AdminCrossbowItem())
                 .registerItem(new AdminTridentItem())
-                .registerAttribute(new AttackSpeedAttribute())
+                .registerAttribute(new AttackSpeedAttribute(this))
                 .registerAttribute(new DefenseAttribute())
                 .registerAttribute(new HealthAttribute())
                 .registerAttribute(new LuckAttribute())
@@ -93,7 +93,8 @@ public final class CustomItemAPIPlugin extends JavaPlugin {
                 .registerAttribute(new ToughnessAttribute())
                 .registerAttribute(new DamageAttribute())
                 .registerAttribute(new CritChanceAttribute())
-                .registerAttribute(new CritDamageAttribute());
+                .registerAttribute(new CritDamageAttribute())
+                .registerAttribute(new ReachAttribute(this));
         addonManager.registerAddon(addon);
 
         // Setup API

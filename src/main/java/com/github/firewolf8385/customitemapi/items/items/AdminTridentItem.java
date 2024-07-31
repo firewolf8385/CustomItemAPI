@@ -1,5 +1,6 @@
 package com.github.firewolf8385.customitemapi.items.items;
 
+import com.github.firewolf8385.customitemapi.CustomItemAPIPlugin;
 import com.github.firewolf8385.customitemapi.items.CustomItem;
 import com.github.firewolf8385.customitemapi.items.ItemRarity;
 import com.github.firewolf8385.customitemapi.items.ItemType;
@@ -19,7 +20,7 @@ public class AdminTridentItem extends CustomItem {
                 .build();
 
         addItemAttribute(new DamageAttribute(), 100);
-        addItemAttribute(new AttackSpeedAttribute(), 100);
+        addItemAttribute(CustomItemAPIPlugin.getAttribute("attack_speed"), 100);
         setItem(item);
         setRarity(ItemRarity.LEGENDARY);
         setType(ItemType.TRIDENT);
