@@ -14,7 +14,6 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.*;
 import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.potion.PotionData;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -151,11 +150,6 @@ public class ItemBuilder {
 
     public ItemBuilder setAmount(int amount) {
         item.setAmount(amount);
-        return this;
-    }
-
-    public ItemBuilder setBasePotionData(PotionData data) {
-        ((PotionMeta) meta).setBasePotionData(data);
         return this;
     }
 

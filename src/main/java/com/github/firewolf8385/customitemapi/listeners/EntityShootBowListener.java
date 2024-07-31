@@ -59,8 +59,8 @@ public class EntityShootBowListener implements Listener {
         }
 
         // Applies "Power" damage if enchanted.
-        if(event.getBow().getEnchantmentLevel(Enchantment.ARROW_DAMAGE) != 0) {
-            damage += (damage * 0.25 * event.getBow().getEnchantmentLevel(Enchantment.ARROW_DAMAGE) + 1);
+        if(event.getBow().getEnchantmentLevel(Enchantment.POWER) != 0) {
+            damage += (damage * 0.25 * event.getBow().getEnchantmentLevel(Enchantment.POWER) + 1);
         }
 
         // Decrease damage if the bow is not pulled back all the way.

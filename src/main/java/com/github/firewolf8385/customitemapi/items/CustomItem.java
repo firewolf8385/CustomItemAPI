@@ -323,7 +323,7 @@ public class CustomItem {
             // Used to give items a "glow" effect without displaying the enchantment used.
             if(hasEnchantments) {
                 clone.addLore("");
-                clone.addFlag(ItemFlag.HIDE_POTION_EFFECTS);
+                clone.addFlag(ItemFlag.HIDE_ENCHANTS);
             }
         }
 
@@ -365,11 +365,6 @@ public class CustomItem {
         // Copies loaded crossbow projectiles.
         if(item.getItemMeta() instanceof CrossbowMeta temp) {
             clone.setChargedProjectiles(temp.getChargedProjectiles());
-        }
-
-        // Copies potion meta.
-        if(item.getItemMeta() instanceof PotionMeta temp) {
-            clone.setBasePotionData(temp.getBasePotionData());
         }
 
         // Copies block state meta.
